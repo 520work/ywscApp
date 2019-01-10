@@ -1,0 +1,59 @@
+<!--pages/identifyId/identifyId.wxml-->
+<import src="../templete/model/model.wxml" />
+<view class="id-container column">
+	<view class="titlefont">
+		<text>请上传相关证件</text>
+	</view>
+	<view class="uploadarea row">
+		<view class="left column">
+			<image class="idface" src="{{idFaceImgPath}}"></image>
+			<text>上传身份证正面</text>
+		</view>
+		<view class="right">
+			<text data-id="uploadIdFace" bindtap="chooseImg" class="iconfont icon-jia"></text>
+		</view>
+	</view>
+	<view class="uploadarea row">
+		<view class="left column">
+			<image class="idback" src="{{idBackImgPath}}"></image>
+			<text>上传身份证反面</text>
+		</view>
+		<view class="right">
+			<text data-id="uploadIdBack" bindtap="chooseImg" class="iconfont icon-jia"></text>
+		</view>
+	</view>
+	<view class="uploadarea row">
+		<view class="left column">
+			<image class="head" src="{{headImgPath}}"></image>
+			<text>本人免冠照片</text>
+		</view>
+		<view class="right">
+			<text data-id="uploadHeadImg" bindtap="chooseImg" class="iconfont icon-jia"></text>
+		</view>
+	</view>
+	<view class="infoarea">
+		<view class="tips">
+			<text>温馨提示：</text>
+			<text>1、拍摄时保证证件上信息及人像清晰可见；</text>
+			<text>2、免冠照须和身份证件为同一人。</text>
+			<text>3、号卡激活时，必须上传与预约人相同的证件信息。</text>
+		</view>
+		<view class="info column">
+			<view class="name row">
+				<text class="title">姓名</text>
+				<text>{{idName}}</text>
+			</view>
+			<view class="row">
+				<text class="title">身份证</text>
+				<text>{{idCard}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="pay gotobtn" bindtap="goToPay">
+		<text>立即支付</text>
+	</view>
+	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
+	<template is="id-model" data="{{...idModelInfo}}"></template>
+	<template is="del-model" data="{{...photoModelInfo}}"></template>
+</view>
+

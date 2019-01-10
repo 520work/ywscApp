@@ -1,0 +1,149 @@
+<!--pages/myOrder/myOrder.wxml-->
+<import src="../templete/model/model.wxml" />
+<view class="myorder-container">
+	<view class="order-nav row">
+		<text data-index="0" bindtap="switchNav" class="{{navid == 0 ? 'selected': ''}}">卡号商城</text>
+		<text data-index="1" bindtap="switchNav" class="{{navid == 1 ? 'selected': ''}}">远特e卡</text>
+		<text data-index="2" bindtap="switchNav" class="{{navid == 2 ? 'selected': ''}}">远特i卡</text>
+		<text data-index="3" bindtap="switchNav" class="{{navid == 3 ? 'selected': ''}}">会员中心</text>
+	</view>
+	<view wx:if="{{navid==0}}">
+		<text class="noorder" wx:if="{{haokaNoOrder}}">暂无订单~</text>
+		<block wx:for="{{haokamall}}">
+			<view class="order-items">
+				<view class="head">
+					<view class="fl">
+						<image src="../../images/mall.jpg"></image>
+						<text>卡号商城</text>
+					</view>
+					<view class="fr">
+						<text>{{item.state}}</text>
+					</view>
+				</view>
+				<view class="middle haoka" data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" bindtap="orderDetails">
+					<view class="fl row">
+						<image src="../../images/cart.jpg"></image>
+						<view class="column">
+							<text class="cardnum">远特信时空号卡：{{item.phoneNumber}}</text>
+							<text>号码占用费：{{item.occupyMoney}}</text>
+							<text>预存话费：{{item.pre_deposit}}</text>
+						</view>
+					</view>
+					<view class="fr">
+						<text>￥{{item.totalMoney}}</text>
+					</view>
+				</view>
+				<view class="total">
+					<text>合计：￥{{item.totalMoney}}</text>
+				</view>
+				<view class="bottom">
+					<text data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-kdgs="{{item.kdgs}}"
+					 data-expressNumber="{{item.expressNumber}}" bindtap="{{item.stepuse}}">{{item.step}}</text><text wx:if="{{containuepay}}"
+					 data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" bindtap="containuePay">支付尾款</text>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view wx:if="{{navid==1}}">
+		<text class="noorder" wx:if="{{ekaNoOrder}}">暂无订单~</text>
+		<block wx:for="{{ekamall}}">
+			<view class="order-items ecard-item">
+				<view class="head">
+					<view class="fl">
+						<image src="../../images/eka.png"></image>
+						<text>远特e卡</text>
+					</view>
+					<view class="fr">
+						<text>{{item.state}}</text>
+					</view>
+				</view>
+				<view class="middle" data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" bindtap="orderDetails">
+					<view class="fl row">
+						<image src="../../images/ekalogo.png"></image>
+						<view class="column">
+							<text class="cardnum">远特e卡号段：{{item.sectionNo}} × {{item.phoneNumber}}</text>
+						</view>
+					</view>
+					<view class="fr">
+						<text>￥20.00</text>
+					</view>
+				</view>
+				<view class="total">
+					<text>合计：￥ {{item.totalMoney}}</text>
+				</view>
+				<view class="bottom">
+					<text data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-kdgs="{{item.kdgs}}"
+					 data-expressNumber="{{item.expressNumber}}" bindtap="{{item.stepuse}}">{{item.step}}</text><text wx:if="{{cancelorder}}"
+					 data-orderid="{{item.id}}" bindtap="cancelOrder">取消订单</text>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view wx:if="{{navid==2}}">
+		<text class="noorder" wx:if="{{ikaNoOrder}}">暂无订单~</text>
+		<block wx:for="{{ikamall}}">
+			<view class="order-items ecard-item icard-item">
+				<view class="head">
+					<view class="fl">
+						<image src="../../images/ikaorderinfo_03.png"></image>
+						<text>远特i卡</text>
+					</view>
+					<view class="fr">
+						<text>{{item.state}}</text>
+					</view>
+				</view>
+				<view class="middle" data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" bindtap="orderDetails">
+					<view class="fl row">
+						<image src="../../images/ikaorderinfo_023_07.png"></image>
+						<view class="column">
+							<text class="cardnum">远特i卡卡板：{{item.phoneNumber}}</text>
+						</view>
+					</view>
+					<view class="fr">
+						<text>￥20.00</text>
+					</view>
+				</view>
+				<view class="total">
+					<text>合计：￥{{item.totalMoney}}</text>
+				</view>
+				<view class="bottom">
+					<text data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-kdgs="{{item.kdgs}}"
+					 data-expressNumber="{{item.expressNumber}}" bindtap="{{item.stepuse}}">{{item.step}}</text><text wx:if="{{cancelorder}}"
+					 data-orderid="{{item.id}}" bindtap="cancelOrder">取消订单</text>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view wx:if="{{navid==3}}">
+		<text class="noorder" wx:if="{{vipNoOrder}}">暂无订单~</text>
+		<block wx:for="{{vipmall}}">
+			<view class="order-items">
+				<view class="head">
+					<view class="fl">
+						<image src="../../images/mall.jpg"></image>
+						<text>会员中心</text>
+					</view>
+					<view class="fr">
+						<text>{{item.state}}</text>
+					</view>
+				</view>
+				<view class="middle" data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" bindtap="orderDetails">
+					<view class="fl row">
+						<image src="../../images/cart.jpg"></image>
+						<view class="column">
+							<text class="cardnum">{{item.phoneNumber}}</text>
+						</view>
+					</view>
+					<view class="fr">
+						<text>￥{{item.totalMoney}}</text>
+					</view>
+				</view>
+				<view class="total">
+					<text>合计：￥{{item.totalMoney}}</text>
+				</view>
+			</view>
+		</block>
+	</view>
+	<template is="del-model" data="{{...delModelInfo}}"></template>
+	<template is="del-model1" data="{{...delModelInfo1}}"></template>
+</view>

@@ -1,0 +1,87 @@
+<!--金额大于3000的付款差一步页面-->
+<view class="pay-container">
+	<!-- 顶部图片 -->
+	<view class="top-img">
+		<image src="../../../images/pause.png"></image>
+		<text>还差一步</text>
+	</view>
+	<!-- 温馨提示 -->
+	<view class="reminder">
+		<view class="title">
+			<text>温馨提示</text>
+		</view>
+		<view class="content column">
+			<text>您的订单总价大于3000元，已受到微信支付额度限制。现可采取以下方式继续完成购买。</text>
+			<text>1、先支付1500元（定金）作为号码预定费用，可直接作为号码交易费用；</text>
+			<text>2、定金支付后，我们将在48小时内通过尾款支付渠道协助完成尾款支付；</text>
+			<text>3、若因您个人原因未在48小时内完成尾款支付，我们将扣除全部定金作为号码占用费；</text>
+			<text>4、周末及节假日自动顺延48小时；</text>
+			<text>5、如您有疑问，可以直接拨打10027或添加远微商城客服微信yuanwe2015进行咨询。</text>
+		</view>
+	</view>
+	<!-- 订单详情 -->
+	<view class="orderdetails">
+		<view class="sell-num">
+			<view class="details-top column">
+				<view class="row">
+					<image src="../../../images/book.png"></image>
+					<text class="typename">号码直选</text>
+				</view>
+				<view class="telwrap row" wx:if="{{!qinglvhao}}">
+					<view class="left">
+						<text class="telnum">{{phoneNumber}}</text>
+					</view>
+					<view class="middle">
+						<text class="from">{{city}}</text>
+					</view>
+					<view class="right">
+						<text class="np">￥{{occupyMoney}}</text>
+					</view>
+				</view>
+				<view class="telwrap row"  wx:if="{{qinglvhao}}">
+					<view class="left">
+						<view><text>{{phoneNumber}}</text></view>
+						<view><text>{{phoneNumber1}}</text></view>
+					</view>
+					<view class="middle">
+						<text>{{guishudi}}</text>
+					</view>
+					<view class="right">
+						<text class="np">￥{{occupyMoney}}</text>
+					</view>
+				</view>
+			</view>
+			<view class="details-middle column">
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">号码占用费</text>
+					<text class="textright">￥{{occupyMoney}}</text>
+				</view>
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">套餐预存费</text>
+					<text class="textright">￥{{preDeposit}}</text>
+				</view>
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">优惠金额</text>
+					<text class="textright">￥{{yhMoney}}</text>
+				</view>
+				<view class="row textstyle">
+					<text class="cardnumtitle">订单总价</text>
+					<text class="conuntprice textright">￥{{paidMoney}}</text>
+				</view>
+			</view>
+			<view class="details-bottom column">
+				<view class="row">
+					<text class="actualpaytitle">应付号码占用定金</text>
+					<text class="actualprice">￥1500.00</text>
+				</view>
+				<view class="row">
+					<text class="actualpaytitle">实付金额</text>
+					<text class="actualprice">￥{{discountMoney}}</text>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="gotobtn gotoindex" bindtap="gotoPay">
+		<text>立即支付</text>
+	</view>
+</view>

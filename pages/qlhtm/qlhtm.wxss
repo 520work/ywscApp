@@ -1,0 +1,139 @@
+/* pages/lhtm/lhtm.wxss */
+/* 头部 */
+.lhtm-head {
+	box-shadow:0rpx 8rpx 16rpx -12rpx rgba(118,97,209,1);
+}
+
+/* 搜索栏 */
+.select .font12 {
+	font-size: 24rpx;
+	color: #7661D1;
+	height: 24rpx;
+	vertical-align: middle;
+	line-height: 69rpx;
+}
+
+.font12:after {
+	margin-left: 10rpx;
+	margin-right: 10rpx;
+}
+
+.search-high text {
+	color: #999;
+	vertical-align: middle;
+}
+
+.filterhead {
+	background-color: #ebecee;
+	padding: 20rpx 30rpx;
+}
+
+.nomore{
+	text-align: center;
+}
+.nomore text{
+	font-size: 28rpx;
+	color: #7661D1;
+	padding: 30rpx 0;
+}
+
+/* 二联动 */
+.citypicker,
+picker-view {
+	z-index: 10;
+}
+
+.citybody {
+	position: fixed;
+	bottom: 0px;
+}
+
+.cityheader {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	background-color: #fff;
+	z-index: 20;
+}
+
+.city-cancel,
+.city-true {
+	font-size: 36rpx;
+}
+
+.city-cancel {
+	float: left;
+	margin: 20rpx;
+	color: #818181;
+}
+
+.city-true {
+	float: right;
+	margin: 20rpx;
+	color: #2FB42E
+}
+
+.section .picker {
+	background-color: #fff;
+	border-bottom: 1px #d9d9d9 solid;
+	border-top: 1px #d9d9d9 solid;
+	padding: 20rpx;
+}
+
+picker-view-column view {
+	font-size: 32rpx;
+	text-align: center;
+}
+/* 号板 */
+.qlhtm-body .lovetellists {
+	height: 104rpx;
+	display: flex;
+	padding-left: 42rpx;
+	margin: 18rpx 0;
+}
+
+.qlhtm-body .lovetellists .lovetll {
+	flex: 2;
+	height: 100%;
+}
+
+.qlhtm-body .lovetellists .lovetll view {
+	display: block;
+	font-size: 32rpx;
+	color: #666;
+}
+
+.qlhtm-body .lovetellists .lovetll .lovenum {
+	color: #FF8C8C;
+}
+
+.qlhtm-body .lovetellists .lovetlm {
+	flex: 1;
+
+}
+
+.qlhtm-body .lovetellists .lovetlm text {
+	line-height: 92rpx;
+	font-size: 28rpx;
+	font-weight: 400;
+	color: #999;
+	padding-left: 20rpx;
+}
+
+.qlhtm-body .lovetellists .lovetlr {
+	flex: 2;
+	text-align: right;
+	line-height: 92rpx;
+}
+
+.qlhtm-body .lovetellists .lovetlr .op {
+	font-size: 24rpx;
+	color: #999;
+	text-decoration: line-through;
+}
+
+.qlhtm-body .lovetellists .lovetlr .np {
+	font-size: 28rpx;
+	color: #7661D1;
+	padding-right: 40rpx;
+}

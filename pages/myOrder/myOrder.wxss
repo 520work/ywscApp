@@ -1,0 +1,154 @@
+/* pages/myOrder/myOrder.wxss */
+@import "../templete/model/model.wxss";
+page {
+	width: 100%;
+	height: 100%;
+	background: #f2f2f2;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+.haoka .fl{
+	width: 80%;
+}
+.haoka .fr{
+	width: 20%;
+}
+
+.myorder-container text {
+	color: #696969;
+}
+
+.order-nav {
+	background: #fff;
+}
+
+.order-nav text {
+	flex: 1;
+	font-size: 30rpx;
+	text-align: center;
+	padding: 30rpx 0;
+}
+
+.order-nav .selected {
+	color: #8f7ede
+}
+
+.order-items .head,
+.order-items .middle,
+.order-items .total,
+.order-items .bottom {
+	padding: 0 40rpx;
+	overflow: hidden;
+}
+
+.order-items {
+	margin-top: 15rpx;
+}
+
+.order-items .head {
+	background: #fff;
+}
+
+.order-items .head image {
+	width: 30rpx;
+	height: 30rpx;
+	margin-right: 8rpx;
+}
+
+.icard-item .head image {
+	width: 48rpx;
+	height: 30rpx;
+}
+
+.order-items .head text {
+	font-size: 30rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+}
+
+.order-items .head .fl,
+.order-items .middle .fl {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.order-items .head .fr text {
+	font-size: 24rpx;
+	color: #8f7edc;
+}
+
+.order-items .middle {
+	padding-top: 28rpx;
+	padding-bottom: 28rpx;
+}
+
+.order-items .middle image {
+	width: 73rpx;
+	height: 60rpx;
+	margin-right: 20rpx;
+}
+
+.ecard-item .middle image {
+	width: 60rpx;
+	height: 60rpx;
+	margin-right: 20rpx;
+}
+
+.order-items .middle .fl text {
+	font-size: 24rpx;
+}
+
+.order-items .middle .fl .cardnum {
+	font-size: 26rpx;
+}
+
+.order-items .middle .fr text {
+	font-size: 28rpx;
+}
+
+.order-items .total {
+	text-align: right;
+	background: #fff;
+	height: 48rpx;
+	border-bottom: 1px solid #b3b3b3;
+	font-size: 24rpx;
+	line-height: 48rpx;
+}
+
+.order-items .bottom {
+	height: 80rpx;
+	line-height: 70rpx;
+	background: #fff;
+	text-align: right;
+}
+
+.order-items .bottom text {
+	font-size: 24rpx;
+	color: #917ddc;
+	padding: 10rpx 16rpx;
+	border: 1px solid #917ddc;
+	margin-left: 10rpx;
+}
+
+.noorder {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: #f2f2f2;
+}
+
+.noorder {
+	display: block;
+	text-align: center;
+	background: #f2f2f2;
+	font-size: 28rpx;
+	color: #696969;
+	margin-top: 50rpx;
+}

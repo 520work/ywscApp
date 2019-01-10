@@ -1,0 +1,334 @@
+/* pages/hopeNum/hopeNum.wxss */
+@import "../templete/model/model.wxss";
+.hn-container {
+	display: flex;
+	flex-direction: column;
+}
+
+/* 头部标题 */
+.hn-title {
+	display: inline-block;
+	width: 100%;
+	height: 116rpx;
+	line-height: 116rpx;
+	text-align: center;
+	margin-top: 14rpx;
+}
+
+/* 搜索栏 */
+.font12 {
+	font-size: 24rpx;
+	color: #7661D1;
+	height: 24rpx;
+	vertical-align: middle;
+	line-height: 69rpx;
+}
+
+.font12:after {
+	margin-left: 10rpx;
+	margin-right: 10rpx;
+}
+/* 号板 */
+.hn-card-board {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 16rpx 0 16rpx 40rpx;
+}
+
+.hn-card-board view {
+	width: 48%;
+	margin: 14rpx 0;
+}
+
+.hn-card-board view text {
+	font-size: 32rpx;
+	color: #999;
+	letter-spacing: 2rpx;
+	font-weight: 500;
+
+}
+
+.hn-card-board view .hopenum {
+	color: #E24C4C;
+}
+
+.card-segment {
+	margin-bottom: 30rpx;
+	vertical-align: middle;
+}
+
+.card-segment text {
+	font-size: 28rpx;
+}
+
+.card-segment .title {
+	color: #666;
+	font-weight: 500;
+	vertical-align: middle;
+}
+
+.card-segment .num {
+	text-align: right;
+	vertical-align: middle;
+}
+
+.card-segment .num text {
+	color: #999;
+	letter-spacing: 4rpx;
+	font-weight: 500;
+}
+
+.card-segment .num .hopenum {
+	color: #E24C4C;
+}
+
+.ecardcity {
+	display: inline-block;
+	width: 104rpx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.noecardnum {
+	width: 100%;
+	text-align: center;
+	font-size: 32rpx;
+	color: #999;
+}
+
+/* 遮罩层 */
+.maskLayer {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #000;
+	opacity: 0.2;
+	overflow: hidden;
+	z-index: 1000;
+	color: #fff;
+}
+
+/*抽屉弹框 */
+.bottom_box {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 2000;
+	background: #fff;
+	box-sizing: border-box;
+	border-radius: 32rpx 32rpx 0rpx 0rpx;
+}
+
+.bottom_box_con {
+	display: flex;
+	flex-direction: column;
+	padding: 48rpx 66rpx 0 60rpx;
+	margin-bottom: 120rpx;
+}
+
+.bottom_box_con .row view {
+	flex: 1;
+}
+
+.bottom_box_con .row .fr {
+	text-align: right;
+}
+
+.showaddress {
+	margin-bottom: 50rpx;
+}
+
+.showaddress text {
+	padding-top: 14rpx;
+	display: block;
+	width: 630rpx;
+	font-size: 24rpx;
+	color: #999;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.bottom_box_con .buycardcount {
+	margin-bottom: 20rpx;
+}
+
+.stepper {
+	width: 158rpx;
+	height: 44rpx;
+	border: 2rpx solid #7661D1;
+	border-radius: 12rpx;
+	color: #7661D1;
+	font-size: 24rpx;
+	font-weight: 500;
+	float: right;
+	margin-top: 10rpx;
+}
+
+.stepper text {
+	width: 38rpx;
+	line-height: 36rpx;
+	text-align: center;
+	float: left;
+}
+
+.stepper input {
+	width: 72rpx;
+	height: 44rpx;
+	min-height: 44rpx;
+	float: left;
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+	border-left: 2rpx solid #7661D1;
+	border-right: 2rpx solid #7661D1;
+}
+
+.phClass {
+	color: red;
+}
+
+.stepper .normal {
+	color: #7661D1;
+}
+
+.stepper .disabled {
+	color: #a8c0ff;
+}
+
+.bottom_box .buycardfont1 {
+	font-size: 28rpx;
+	color: #666;
+}
+
+.bottom_box .buycardfont2,
+.bottom_box .buycardfont2 text {
+	font-size: 24rpx;
+	color: #999;
+}
+
+.bottom_box .buycardfont3 {
+	font-size: 24rpx;
+	color: #666;
+	margin-left: 20rpx;
+}
+
+.jihuo text {
+	font-size: 24rpx;
+	color: #E24C4C;
+}
+
+.xieyi checkbox {
+	width: 28rpx;
+	height: 28rpx;
+}
+
+.xieyi label {
+	padding: 10rpx;
+}
+
+.bottom_box .buycardfont2 .xieyitext {
+	color: #7661D1;
+}
+
+.xieyishuoming {
+	margin-top: 20rpx;
+}
+
+.buynext {
+	width: 100%;
+	height: 98rpx;
+	background-color: #7661D1;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+}
+
+.buynext text {
+	font-size: 36rpx;
+	color: #fff;
+	line-height: 98rpx;
+}
+
+.gotoindex {
+	background-color: #7661D1;
+}
+
+.buycardnum {
+	margin-bottom: 30rpx;
+}
+
+.bottom_box_con .buycardnum .row {
+	flex: 5;
+	align-items: center;
+}
+
+.bottom_box_con .buycardnum .fr {
+	flex: 2;
+}
+
+.goukatips {
+	font-size: 24rpx;
+	color: #7661D1;
+	margin-left: 20rpx;
+}
+
+.jihuo {
+	margin-bottom: 20rpx;
+}
+
+/* 二联动 */
+.citypicker,
+picker-view {
+	z-index: 10;
+}
+
+.citybody {
+	position: fixed;
+	bottom: 0px;
+}
+
+.cityheader {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	background-color: #fff;
+	z-index: 20;
+}
+
+.city-cancel,
+.city-true {
+	font-size: 36rpx;
+}
+
+.city-cancel {
+	float: left;
+	margin: 20rpx;
+	color: #818181;
+}
+
+.city-true {
+	float: right;
+	margin: 20rpx;
+	color: #2FB42E
+}
+
+.section .picker {
+	background-color: #fff;
+	border-bottom: 1px #d9d9d9 solid;
+	border-top: 1px #d9d9d9 solid;
+	padding: 20rpx;
+}
+
+picker-view-column view {
+	font-size: 32rpx;
+	text-align: center;
+}

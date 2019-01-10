@@ -1,0 +1,2 @@
+<!--pages/kmBuy/kmBuy.wxml-->
+<web-view src="http://km.m10027.com/kmshared.html">开卡指南</web-view>

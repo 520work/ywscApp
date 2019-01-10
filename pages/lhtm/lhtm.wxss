@@ -1,0 +1,119 @@
+/* pages/lhtm/lhtm.wxss */
+/* 头部 */
+.lhtm-head {
+	box-shadow:0rpx 8rpx 16rpx -12rpx rgba(118,97,209,1);
+}
+
+/* 搜索栏 */
+.select .font12 {
+	font-size: 24rpx;
+	color: #7661D1;
+	height: 24rpx;
+	vertical-align: middle;
+	line-height: 69rpx;
+}
+
+.font12:after {
+	margin-left: 10rpx;
+	margin-right: 10rpx;
+}
+
+.search-high text {
+	color: #999;
+	vertical-align: middle;
+}
+
+.filterhead {
+	background-color: #ebecee;
+	padding: 20rpx 30rpx;
+}
+.nomore{
+	text-align: center;
+}
+.nomore text{
+	font-size: 28rpx;
+	color: #7661D1;
+	padding: 30rpx 0;
+}
+
+/* 二联动 */
+.citypicker,
+picker-view {
+	z-index: 10;
+}
+
+.citybody {
+	position: fixed;
+	bottom: 0px;
+}
+
+.cityheader {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	background-color: #fff;
+	z-index: 20;
+}
+
+.city-cancel,
+.city-true {
+	font-size: 36rpx;
+}
+
+.city-cancel {
+	float: left;
+	margin: 20rpx;
+	color: #818181;
+}
+
+.city-true {
+	float: right;
+	margin: 20rpx;
+	color: #2FB42E
+}
+
+.section .picker {
+	background-color: #fff;
+	border-bottom: 1px #d9d9d9 solid;
+	border-top: 1px #d9d9d9 solid;
+	padding: 20rpx;
+}
+
+picker-view-column view {
+	font-size: 32rpx;
+	text-align: center;
+}
+
+/* 号板 */
+.lhtm-body view {
+	height: 90rpx;
+	justify-content:center;
+	align-items:center;
+}
+.lhtm-body .row text{
+	display: inline-block;
+}
+.telnum{
+	width: 268rpx;
+	color: #666;
+}
+.liangicon{
+	margin-right: 80rpx;
+}
+.wherefrom{
+	width: 168rpx;
+}
+.op{
+	text-decoration: line-through;
+}
+.wherefrom, .op{
+	color: #999;
+}
+.np{
+	color: #7661D1;
+}
+.numbertype{
+	width: 26rpx;
+	height: 26rpx;
+	margin-right:80rpx
+}

@@ -1,0 +1,94 @@
+/* pages/chooseNum/chooseNum.wxss */
+@import "../templete/model/model.wxss";
+.cn-container{
+	position: relative;
+}
+/* 搜索栏 */
+.search-wrap{
+	padding: 40rpx 30rpx 48rpx;
+	justify-content: center;
+	align-items: center;
+}
+.search-wrap view{
+	height: 68rpx;
+}
+.font12{
+	font-size: 24rpx;
+	color: #7661D1;
+	height: 24rpx;
+	vertical-align: middle;
+	line-height: 69rpx;
+}
+.font12:after{
+	margin-left: 10rpx;
+	margin-right: 10rpx;
+}
+.search-high text{
+	display: inline-block;
+	width: 134rpx;
+	height: 48rpx;
+	background-color: #9D90D7;
+	vertical-align: middle;
+	border-radius: 26rpx;
+	color: #fff;
+	text-align: center;
+	line-height: 48rpx;
+	padding: 10rpx;
+}
+.filterhead{
+	background-color: #ebecee;
+	padding: 20rpx 30rpx;
+}
+/* 图标icon */
+.cardtype{
+	width: 52rpx;
+	height: 26rpx;
+}
+.numbertype{
+	width: 26rpx;
+	height: 26rpx;
+}
+/* 二联动 */
+.citypicker, picker-view{
+	z-index: 10;
+}
+.citybody {
+  position: fixed;
+  bottom: 0px;
+}
+
+.cityheader {
+  position: absolute;
+  top:0px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 20;
+}
+.city-cancel, .city-true{
+	font-size: 36rpx;
+}
+
+.city-cancel {
+  float: left;
+  margin: 20rpx;
+  color: #818181;
+}
+
+.city-true {
+  float: right;
+  margin: 20rpx;
+  color: #2FB42E
+}
+
+.section .picker {
+  background-color: #fff;
+  border-bottom: 1px #d9d9d9 solid;
+  border-top: 1px #d9d9d9 solid;
+  padding: 20rpx;
+}
+picker-view-column view{
+	font-size: 32rpx;
+	text-align: center;
+}
+
+

@@ -1,0 +1,102 @@
+<!--订单详情页面-->
+<view class="orderdetails-con column">
+	<view class="orderadd row">
+		<view class="left">
+			<image src="../../images/locate.png"></image>
+		</view>
+		<view class="right column">
+			<view class="row between">
+				<text>收货人：{{userName}}</text>
+				<text>{{phone}}</text>
+			</view>
+			<view class="row">
+				<text>收货地址：{{userAddress}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="express row">
+		<view class="left">
+			<image src="../../images/car.png"></image>
+		</view>
+		<view class="right column">
+			<view>
+				<text>快递公司：{{expressCompany}}</text>
+			</view>
+			<view>
+				<text>运单编号：{{expressNumbers}}</text>
+				<text class="exptips">( 周末及节假日不发货，将在工作日第一时间为您发货 )</text>
+			</view>
+		</view>
+	</view>
+	<view class="buyinfo column">
+		<view class="cardinfo row">
+			<image src="{{orderImg}}"></image>
+			<view class="row between">
+				<text>{{orderTitle}}</text>
+				<text>￥{{paidMoney}}</text>
+			</view>
+		</view>
+		<view wx:if="{{iccidStatus}}" class="iccid-wrap">
+			<view class="iccidlists" style="height: {{toggleStatus?'100%':'424rpx'}};">
+				<block wx:for="{{iccidArr}}">
+					<view class="iccidlist between">
+						<text>卡号：{{item.ICCID}}</text>
+						<text bindtap="{{item.goactstate}}" data-ikaOreka="{{item.orderType}}" class="jihuo">{{item.iccidstate}}</text>
+					</view>
+				</block>
+			</view>
+			<view class="moreorless column" wx:if="{{toggleView}}">
+				<text wx:if="{{moreOrLess}}" bindtap="lookMore">展开更多 ↓</text>
+				<text wx:if="{{!moreOrLess}}" bindtap="lookLess">收起 ↑</text>
+			</view>
+		</view>
+		<view wx:if="{{haokaPriceDetails}}" class="pricedetails">
+			<view class="row between">
+				<text>号码占用费</text>
+				<text>￥{{occupyMoney}}</text>
+			</view>
+			<view class="row between">
+				<text>套餐预存费</text>
+				<text>￥{{preDeposit}}</text>
+			</view>
+			<view class="row between">
+				<text>优惠金额</text>
+				<text>-￥{{yhMoney}}</text>
+			</view>
+			<view class="row between">
+				<text class="black">订单总价</text>
+				<text class="black">￥{{totalMoney}}</text>
+			</view>
+		</view>
+		<view wx:if="{{ikaPriceDetails}}" class="pricedetails">
+			<view class="row between">
+				<text>制卡费</text>
+				<text>￥20.00 ✖ {{num}}</text>
+			</view>
+			<view class="row between">
+				<text class="black">订单总价</text>
+				<text class="black">￥{{totalMoney}}</text>
+			</view>
+		</view>
+		<view class="actualmoney">
+			<view class="row between">
+				<text class="black">实付款</text>
+				<text class="black">￥{{paidMoney}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="information">
+		<view class="row between">
+			<text>订单编号</text>
+			<text>{{orderId}}</text>
+		</view>
+		<view class="row between">
+			<text>下单时间</text>
+			<text>{{orderTime}}</text>
+		</view>
+		<view class="row between">
+			<text>付款时间</text>
+			<text>{{buyTime}}</text>
+		</view>
+	</view>
+</view>

@@ -1,0 +1,90 @@
+<!--远特i卡页面-->
+<import src="../templete/model/model.wxml" />
+<view class="icard-container">
+	<!-- i卡头部 -->
+	<view class="icard-head">
+		<image src="../../images/ikahead.png"></image>
+		<view>
+			<text bindtap="bindRule">规则详情</text>
+		</view>
+	</view>
+	<!-- i卡主体 -->
+	<view class="icard-body">
+		<view class="buycard">
+			<image src="../../images/buyicard_08.png"></image>
+			<view class="buycard-bottom">
+				<view class="stepper">
+					<!-- 减号 -->
+					<text class="{{minusStatus}}" bindtap="bindMinus">-</text>
+					<!-- 数值 -->
+					<input type="number" bindinput="bindManual" value="{{num}}" />
+					<!-- 加号 -->
+					<text class="{{plusStatus}}" bindtap="bindPlus">+</text>
+				</view>
+				<view class="totalprice">
+					<text>总计：￥</text>
+					<text>{{totalPrice}}</text>
+					<text class="paybtn" bindtap='showModal'>下一步</text>
+					<!--屏幕背景变暗的背景 -->
+					<view class="maskLayer" catchtouchmove="move" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+					<!--底部抽屉弹出框 -->
+					<view animation="{{animationData}}" class="bottom_box" catchtouchmove="move" wx:if="{{showModalStatus}}">
+						<view class="bottom_box_con">
+							<view class="row buycardnum">
+								<view>
+									<text class="buycardfont1">购卡张数</text>
+								</view>
+								<view class="fr">
+									<text>{{num}}张</text>
+								</view>
+							</view>
+							<view class="row">
+								<view>
+									<text class="buycardfont1">购卡金额</text>
+									<text class="buycardfont3">20元/张</text>
+								</view>
+								<view class="fr">
+									<text class="buycardfont2">共计：￥{{totalPrice}}</text>
+								</view>
+							</view>
+							<view class="row" style="margin-bottom: 10rpx;">
+								<view>
+									<text class="buycardfont1">添加收货地址</text>
+								</view>
+								<view class="fr">
+									<text bindtap="chooseAddress" class="buycardfont2 iconfont icon-arrow">请选择</text>
+								</view>
+							</view>
+							<view class="showaddress">
+								<text wx:if="{{addressStatus}}">{{addressData.showText}}</text>
+							</view>
+							<view class="xieyi">
+								<view class="buycardfont2">
+									<checkbox bindtap="checkChange" checked="{{checkValue}}"></checkbox>
+									<label>
+										我已阅读并同意
+									</label>
+									<text class="xieyitext">《远特客户入网服务协议》</text>
+								</view>
+								<view class="buycardfont2 xieyishuoming">
+									<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《远特客户入网服务协议》</text>
+								</view>
+							</view>
+							
+						</view>
+						<view class="buynext" bindtap="goToBuy">
+							<text>立即购买</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<image src="../../images/whatisika_09.png"></image>
+	</view>
+	<!-- i卡底部 -->
+	<view class="icard-foot">
+		<text class="guide" bindtap="toKkznFun">开卡指南</text>
+		<text>最终解释权归远特（北京）通信技术有限公司</text>
+	</view>	
+	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
+</view>

@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/lhtm/lhtm",
+    "pages/qlhtm/qlhtm",
+    "pages/chooseNum/chooseNum",
+    "pages/highSearch/options",
+    "pages/hopeNum/hopeNum",
+    "pages/iCard/iCard",
+    "pages/iCard/kkzn/kkzn",
+    "pages/excellent/excellent",
+    "pages/taocanBoard/taocanBoard",
+    "pages/address/addressLists/addressLists",
+    "pages/address/addAddress/addAddress",
+    "pages/pay/paySuccess/paySuccess",
+    "pages/pay/payAbovePause/pap",
+    "pages/pay/payFail/payFail",
+    "pages/identifyId/identifyId",
+    "pages/myOrder/myOrder",
+    "pages/orderDetails/orderDetails",
+    "pages/express/express",
+    "pages/templete/model/model",
+    "pages/kmBuy/kmBuy",
+    "pages/orderDetails/ikajihuo/ikajihuo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f7f7f7",
+    "navigationBarTitleText": "远微商城",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#7661D1",
+    "borderStyle": "black",
+    "list": [
+      {
+        "selectedIconPath": "images/scsy.png",
+        "iconPath": "images/scsyno.png",
+        "pagePath": "pages/index/index",
+        "text": "商城首页"
+      },
+      {
+        "selectedIconPath": "images/wddd.png",
+        "iconPath": "images/wdddno.png",
+        "pagePath": "pages/myOrder/myOrder",
+        "text": "我的订单"
+      }
+    ]
+  }
+}

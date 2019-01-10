@@ -1,0 +1,103 @@
+/* pages/addAddress/addAddress.wxss */
+.addnewaddress{
+	width: 100%;
+	height: 100%;
+	background-color: #f3f3f3;
+}
+.addnewaddress .middle view, .addnewaddress .middle input{
+	height: 134rpx;
+}
+.addnewaddress .middle view{
+	border-bottom: 1rpx solid #bdbdbd;
+}
+.addnewaddress .middle text, .addnewaddress .middle textarea{
+	font-size: 32rpx;
+	color: #666;
+	padding-left: 40rpx;
+}
+.addnewaddress .middle .shownewad{
+	padding-left: 0rpx;
+}
+.addnewaddress .middle text{
+	display: inline-block;
+	width: 160rpx;
+	line-height: 134rpx;
+}
+.addnewaddress .middle .detailed{
+	height: 300rpx;
+	padding-top: 50rpx;
+}
+.addnewaddress .middle .name, .addnewaddress .middle .telnum, .addnewaddress .middle .fromwhere{
+	display: flex;
+	flex-direction: row;
+}
+.addnewaddress .middle .fromwhere .iconfont{
+	margin-right: 50rpx;
+	text-align: right;
+}
+.middle .fromwhere .iconfont, .middle .fromwhere .title{
+	flex: 1;
+}
+.middle .fromwhere .shownewad{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 2;
+}
+.bottom{
+	width: 100%;
+	height: 120rpx;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+.bottom text{
+	display: block;
+	font-size: 28rpx;
+	color: #fff;
+	line-height: 120rpx;
+	text-align: center;
+	background-color: #917cdd;
+}
+/* 三联动 */
+.citypicker, picker-view{
+	z-index: 10;
+}
+.citybody {
+  position: fixed;
+  bottom: 0px;
+}
+
+.cityheader {
+  position: absolute;
+  top:0px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 20;
+}
+.city-cancel, .city-true{
+	font-size: 36rpx;
+}
+
+.city-cancel {
+  float: left;
+  margin: 20rpx;
+  color: #818181;
+}
+
+.city-true {
+  float: right;
+  margin: 20rpx;
+  color: #2FB42E
+}
+
+.section .picker {
+  background-color: #fff;
+  border-bottom: 1px #d9d9d9 solid;
+  border-top: 1px #d9d9d9 solid;
+  padding: 20rpx;
+}
+picker-view-column view{
+	font-size: 32rpx;
+	text-align: center;
+}

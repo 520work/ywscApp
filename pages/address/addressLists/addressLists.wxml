@@ -1,0 +1,58 @@
+<import src="../../templete/model/model.wxml" />
+<!-- 地址列表页面 -->
+<!--操作地址页面-->
+<view class="addressModal">
+	<!-- 地址列表显示窗体 -->
+	<view class="addresslists">
+		<view wx:if="{{noAddress}}" class="noaddress">
+			<text>快来添加地址吧~</text>
+		</view>
+		<view wx:if="{{haveAddress}}" class="middle">
+			<view class="default-address">
+				<view class="lineabove" bindtap="selectAddress" data-contacts="{{defaultAddress.contacts}}" data-phonenumber="{{defaultAddress.phonenumber}}" data-address="{{defaultAddress.address}}" data-street="{{defaultAddress.street}}">
+					<view class="takebodyinfo">
+						<text class="name">收货人：{{defaultAddress.contacts}}</text>
+						<text class="tel">{{defaultAddress.phonenumber}}</text>
+					</view>
+					<view>
+						<text>{{defaultAddress.address}} {{defaultAddress.street}}</text>
+					</view>
+				</view>
+				<view class="linedown">
+					<text class="flag">默认地址</text>
+					<text>此地址为默认地址</text>
+				</view>
+			</view>
+			<block wx:for="{{addressLists}}">
+				<view class="address-lists">
+					<view class="lineabove" bindtap="selectAddress" data-contacts="{{item.contacts}}" data-phonenumber="{{item.phonenumber}}" data-address="{{item.address}}" data-street="{{item.street}}">
+						<view class="takebodyinfo">
+							<text class="name">收货人：{{item.contacts}}</text>
+							<text class="tel">{{item.phonenumber}}</text>
+						</view>
+						<view>
+							<text>{{item.address}} {{item.street}}</text>
+						</view>
+					</view>
+					<view class="linedown">
+						<view class="left">
+							<checkbox bindtap="checkboxChange" data-id="{{item.id}}" id="xieyi" checked="{{item.checkValue}}"></checkbox>
+							<label>设为默认</label>
+						</view>
+						<view class="right">
+							<text bindtap="editAddress" class="edit iconfont icon-bianji" data-id="{{item.id}}">编辑</text>
+							<text bindtap="delAddress" class="del iconfont icon-shanchu" data-id="{{item.id}}">删除</text>
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+		<view class="bottom">
+			<text bindtap="addNewAddress">添加新地址</text>
+		</view>
+	</view>
+	<template is="tip-model" data="{{...setModelInfo}}"></template>
+	<template is="tip-model" data="{{...delDefaultModelInfo}}"></template>
+	<template is="del-model" data="{{...delModelInfo}}"></template>
+	<template is="tip-model" data="{{...delSuccessModel}}"></template>
+</view>

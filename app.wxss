@@ -1,0 +1,454 @@
+/** 公共样式 **/
+
+/* 字体设置 */
+.titlefont {
+	font-size: 36rpx;
+	font-weight: 500;
+	color: #7661D1;
+}
+
+.font12 {
+	font-size: 24rpx;
+}
+
+.font14 {
+	font-size: 28rpx;
+}
+
+.font18 {
+	font-size: 36rpx;
+}
+
+/* 布局 */
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+}
+
+/* 搜索栏样式 */
+.search-wrap{
+	padding: 40rpx 30rpx 48rpx;
+	justify-content: center;
+	align-items: center;
+}
+.search-wrap view{
+	height: 68rpx;
+}
+.search {
+	width: 532rpx;
+	margin-right: 18rpx;
+	box-sizing: border-box;
+	height: 68rpx;
+	border: 1px solid #7661D1;
+	border-radius: 26rpx;
+	box-shadow: 0 0 1px #7661D1 inset;
+	padding: 0 24rpx;
+	position: relative;
+}
+.search .select {
+	vertical-align: middle;
+	flex: 1;
+	text-align: center;
+}
+.search .entry {
+	flex: 2;
+}
+.icon-sanjiao1{
+	border-right: 1px solid #999;
+}
+.entry input {
+	height: 100%;
+	font-size: 24rpx;
+	color: #999;
+	vertical-align: middle;
+	padding-left: 24rpx;
+}
+
+.search-icon-wrap {
+	position: absolute;
+	right: 20rpx;
+}
+
+.search-icon {
+	font-size: 40rpx;
+	color: #7661D1;
+	vertical-align: middle;
+	text-align: center;
+}
+.search-high text, .searchBtn text{
+	display: inline-block;
+	width: 134rpx;
+	height: 48rpx;
+	background-color: #9D90D7;
+	vertical-align: middle;
+	border-radius: 26rpx;
+	color: #fff;
+	text-align: center;
+	line-height: 48rpx;
+	padding: 10rpx;
+}
+/* 页面底部按钮样式 */
+.gotobtn {
+	width: 100%;
+	height: 96rpx;
+	font-size: 36rpx;
+	color: #fff;
+	font-weight: 500;
+	text-align: center;
+	line-height: 96rpx;
+	position: absolute;
+	bottom: 0;
+}
+
+/* 远特入网协议样式 */
+.xieyi label {
+	font-size: 28rpx;
+	color: #999;
+}
+
+.xieyi .xieyitext {
+	font-size: 28rpx;
+	color: #7661D1;
+}
+
+.xieyi .xieyishuoming {
+	font-size: 24rpx;
+	color: #999;
+	margin-top: 20rpx;
+}
+/* 号板样式 */
+.number-board {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+.number-board .num-lists {
+	width: 50%;
+	display: inline-block;
+	margin-bottom: 26rpx;
+}
+.number-board .num-lists .top,
+.number-board .num-lists .bottom {
+	display: flex;
+	height: 38rpx;
+	padding: 0 36rpx;
+	justify-content: center;
+	align-items: center;
+}
+.number-board .num-lists .tel {
+	flex: 9;
+	font-size: 28rpx;
+	font-weight: 500;
+	color: #666;
+	letter-spacing: 2rpx;
+}
+.number-board .num-lists .wherefrom {
+	flex: 4;
+	font-size: 28rpx;
+	font-weight: 400;
+	color: #666;
+	height: 40rpx;
+	line-height: 40rpx;
+	letter-spacing: 2rpx;
+}
+.number-board .num-lists .op {
+	flex: 2;
+	text-decoration: line-through;
+	font-size: 24rpx;
+	color: #999;
+	text-align: right;
+}
+.number-board .num-lists .np {
+	flex: 2;
+	font-size: 28rpx;
+	color: #7661D1;
+	text-align: right;
+}
+.number-board .num-lists .liangicon {
+	width: 26rpx;
+	height: 26rpx;
+	font-size: 18rpx;
+	color: #fff;
+	text-align: center;
+	flex: 1;
+	vertical-align: middle;
+	background: #E65656;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+/* 支付页面公用样式 */
+.pay-container {
+	position: relative;
+	padding-bottom: 126rpx;
+}
+
+.top-img {
+	text-align: center;
+	padding-top: 32rpx;
+}
+
+.top-img image {
+	display: block;
+	width: 140rpx;
+	height: 140rpx;
+	margin: 0 auto;
+	margin-bottom: 16rpx;
+}
+
+.top-img text {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #7661D1;
+}
+
+.address,
+.price,
+.orderinfo,
+.orderdetails,
+.reminder {
+	width: 710rpx;
+	margin: 0 auto;
+	background: #fff;
+	box-shadow: 6rpx 8rpx 42rpx -18rpx rgba(44, 71, 148, 1);
+	border-radius: 32rpx;
+	margin-bottom: 30rpx;
+	box-sizing: border-box;
+}
+
+.pay-container .name {
+	float: left;
+}
+
+.pay-container .tel {
+	float: right;
+}
+
+.address {
+	margin-top: 40rpx;
+	padding: 32rpx;
+}
+
+.address view {
+	position: relative;
+	padding-left: 80rpx;
+}
+
+.address image {
+	width: 44rpx;
+	height: 54rpx;
+	position: absolute;
+	left: 0;
+	top: 10rpx;
+}
+
+.address text {
+	font-size: 28rpx;
+	color: #666;
+	margin-bottom: 15rpx;
+}
+
+.address .place {
+	display: flex;
+	flex-direction: column;
+}
+
+.address .place text {
+	height: 40rpx;
+	line-height: 40rpx;
+}
+
+.address .tips {
+	display: block;
+	font-size: 24rpx;
+	color: #ED462F;
+}
+
+.details-top,
+.details-middle {
+	border-bottom: 2rpx solid #D2D2D2;
+	padding: 32rpx;
+}
+
+.details-top image {
+	width: 40rpx;
+	height: 58rpx;
+}
+
+.details-top text {
+	display: inline-block;
+	height: 58rpx;
+	line-height: 58rpx;
+	font-size: 28rpx;
+	color: #666;
+	font-weight: bold;
+
+}
+
+.typename {
+	margin-left: 30rpx;
+}
+
+.textstyle text {
+	flex: 1;
+	font-size: 28rpx;
+	color: #999;
+}
+
+.textright {
+	text-align: right;
+}
+
+.cardnumtitle {
+	color: #666;
+	font-weight: bold;
+}
+
+.sell-num .cardnumtitle {
+	color: #666;
+	font-weight: normal;
+}
+
+.conuntprice {
+	color: #7661D1;
+}
+
+.details-bottom {
+	padding: 32rpx;
+}
+
+.details-bottom text {
+	flex: 1;
+	font-size: 28rpx;
+	color: #666;
+	font-weight: bold;
+}
+
+.actualpaytitle {
+	text-align: left;
+}
+
+.details-bottom .actualprice {
+	text-align: right;
+	color: #7661D1;
+}
+
+.orderinfo {
+	padding: 32rpx;
+	display: flex;
+	flex-direction: column;
+}
+
+.orderinfo text {
+	font-size: 28rpx;
+	color: #666;
+	height: 48rpx;
+	line-height: 48rpx;
+}
+
+.reminder {
+	padding: 20rpx 36rpx;
+}
+
+.reminder .title {
+	font-size: 28rpx;
+	color: #ED462F;
+	display: block;
+	height: 64rpx;
+	line-height: 64rpx;
+	text-align: center;
+}
+
+.reminder .content text {
+	font-size: 28rpx;
+	color: #7661D1;
+	line-height: 46rpx;
+}
+
+/* 更多号码和没有号码 */
+.nonum image{
+	width: 100%;
+	padding-top: 10rpx;
+}
+.nonum, .morenum{
+	width: 100%;
+	display: block;
+	text-align: center;
+}
+.nonum text, .morenum text{
+	display: block;
+	font-size: 32rpx;
+	line-height: 50rpx;
+	padding-bottom: 30rpx;
+}
+
+/** 重写 checkbox 样式 **/
+
+/* 未选中的 背景样式 */
+checkbox .wx-checkbox-input {
+	border-radius: 6rpx;
+	width: 28rpx;
+	height: 28rpx;
+}
+
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+	border: none;
+	background: #7661D1;
+}
+
+/* 选中后的 对勾样式  */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+	border-radius: 6rpx;
+	width: 28rpx;
+	height: 28rpx;
+	line-height: 28rpx;
+	text-align: center;
+	font-size: 24rpx;
+	color: #fff;
+	background: transparent;
+	transform: translate(-50%, -50%) scale(1);
+	-webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+/** icon图标 **/
+@font-face {
+    font-family: 'iconfont';
+    src: url(data:font/truetype;charset=utf-8;base64,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) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sanjiao1:after { content: "\f0122"; }
+
+.icon-backarrow:before { content: "\e61e"; }
+
+.icon-xinheart256:before { content: "\e639"; }
+
+.icon-shanchu:before { content: "\e633"; }
+
+.icon-arrow:after { content: "\e601"; }
+
+.icon-ai219:before { content: "\e6cf"; }
+
+.icon-youjiantou:after { content: "\e624"; }
+
+.icon-jia:before { content: "\e74a"; }
+
+.icon-qiehuan:after { content: "\e621"; }
+
+.icon-bianji:before { content: "\e67f"; }
+

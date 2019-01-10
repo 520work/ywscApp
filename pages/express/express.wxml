@@ -1,0 +1,28 @@
+<!--物流信息-->
+<view class="express-con">
+	<view wx:if="{{noExpress}}" class="noexpress">
+		<text>暂无快递信息~</text>
+	</view>
+	<view class="headbox">
+		<view class="express-head row">
+			<image src="../../images/express.jpg"></image>
+			<view class="column">
+				<text>快递公司：{{expressCompany}}</text>
+				<text>快递单号：{{expressNumber}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="express-body">
+		<block wx:for="{{expressLists}}">
+			<view class="express-info row">
+				<view class="left column">
+					<text>{{item.itemDay}}</text>
+					<text>{{item.itemTime}}</text>
+				</view>
+				<view class="right">
+					<text>{{item.AcceptStation}}</text>
+				</view>
+			</view>
+		</block>
+	</view>
+</view>

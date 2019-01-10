@@ -1,0 +1,40 @@
+/* 物流信息 */
+text{
+	font-size: 28rpx;
+	color: #606060;
+}
+.headbox, .express-head, .express-info{
+	padding: 40rpx;
+	box-sizing: border-box;
+}
+.headbox{
+	border-bottom: 1px solid #B6B6B6;
+}
+.express-head{
+	width: 100%;
+	align-items: center;
+	border: 3px double #B6B6B6;
+}
+.express-head image{
+	width: 124rpx;
+	height: 124rpx;
+	margin-right: 30rpx;
+}
+.express-info{
+	align-items: center;
+}
+.express-info .left{
+	width: 30%;
+}
+.express-info text{
+	color: #917ddc;
+}
+.express-info .right{
+	width: 70%;
+	border-left: 1px dashed;
+	padding-left: 20rpx;
+}
+.noexpress{
+	text-align: center;
+	padding-top: 50rpx;
+}

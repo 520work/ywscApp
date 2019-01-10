@@ -1,0 +1,107 @@
+<!--模态框组件-->
+<template name="tip-model">
+	<view class="tip-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<text class="title">{{title}}</text>
+			<!-- <text class="content">{{content}}</text> -->
+			<text class="btnback" bindtap="goBackBtn">{{btn}}</text>
+		</view>
+	</view>
+</template>
+<!-- 身份认证提示框 -->
+<template name="id-model">
+	<view class="id-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<text class="title">{{title}}</text>
+			<text class="content">{{content}}</text>
+			<text class="btnback" bindtap="goBackBtn">{{btn}}</text>
+		</view>
+	</view>
+</template>
+<!-- 删除地址确认提示框 -->
+<template name="del-model">
+	<view class="del-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<text class="title">{{title}}</text>
+			<text class="content">{{content}}</text>
+			<view class="btn-wrap row">
+				<text class="closebtn" bindtap="goBackBtn">{{cancelBtn}}</text>
+				<text class="cancelbtn" bindtap="confirmBtn">{{confirmBtn}}</text>
+			</view>
+			
+		</view>
+	</view>
+</template>
+<!-- 删除订单确认提示框 -->
+<template name="del-model1">
+	<view class="del-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<text class="title">{{title}}</text>
+			<text class="content">{{content}}</text>
+			<view class="btn-wrap row">
+				<text class="closebtn" bindtap="goBackBtn">{{cancelBtn}}</text>
+				<text class="cancelbtn" bindtap="confirmBtn1">{{confirmBtn}}</text>
+			</view>
+			
+		</view>
+	</view>
+</template>
+<!-- 套餐详情提示框 -->
+<template name="taocan-model">
+	<view class="taocan-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<text class="title">{{title}}</text>
+			<view class="content-wrap column">
+				<text>资费标准：</text>
+				<text>{{standard}}</text>
+				<text>资费说明：</text>
+				<block wx:for="{{fee_describe}}">
+					<text>{{item}}</text>
+				</block>
+			</view>
+			<view class="btn-wrap row">
+				<text class="closebtn" bindtap="closeBtn">关闭</text>
+				<text wx:if="{{chooseBtnStatus}}" class="cancelbtn" bindtap="chooseZzbtn">{{chooseBtnText}}</text>
+			</view>
+		</view>
+	</view>
+</template>
+<!-- 心仪数字号段提示框 -->
+<template name="hn-model">
+	<view class="hn-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<!-- <image wx:if="{{sellStatus}}" src="../../../images/sellout.png"></image> -->
+			<image wx:if="{{sellout}}" src="../../../images/sellout.png"></image>
+			<text class="title">非常抱歉</text>
+			<view class="content-wrap column">
+				<text class="content">{{text1}}</text>
+				<text class="content">{{text2}}</text>
+				<text class="content">{{text3}}</text>
+			</view>
+
+			<text class="btnback" bindtap="goBackBtn">返回</text>
+		</view>
+	</view>
+</template>
+<!-- 重置模态框 -->
+<template name="reset-model">
+	<view class="reset-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="modalDlg">
+			<view class="title-wrap column">
+				<text>重置之后您需要重新选择</text>
+				<text>确定重置吗？</text>
+			</view>
+			<view class="btn-wrap row">
+				<text class="resetbtn" bindtap="closeBtn">确认重置</text>
+				<text class="noresetbtn" bindtap="cancelBtn">暂不重置</text>
+			</view>
+		</view>
+	</view>
+</template>

@@ -1,0 +1,86 @@
+/* pages/address/address.wxss */
+@import "../../templete/model/model.wxss";
+page{
+	width: 100%;
+	height: 100%;
+	background-color: #f3f3f3;
+}
+.addressModal{
+	background-color: #f3f3f3;
+	position: relative;
+}
+.addressModal .middle{
+	padding-bottom: 136rpx;
+}
+.addressModal .middle text, .addressModal .middle label{
+	font-size: 28rpx;
+	color: #666;
+}
+.addressModal .middle .takebodyinfo{
+	display: flex;
+	flex-direction: row;
+}
+.addressModal .middle .takebodyinfo text{
+	flex: 1;
+}
+.addressModal .middle .takebodyinfo .tel{
+	text-align: right;
+}
+.addressModal .middle .linedown{
+	display: flex;
+	flex-direction: row;
+}
+.addressModal .middle .linedown view{
+	flex: 1;
+}
+.addressModal .middle .linedown .right{
+	text-align: right;
+}
+.addressModal .middle .linedown .right text{
+	margin-left: 20rpx;
+}
+.addressModal .middle .lineabove{
+	border-bottom: 1rpx solid #bdbdbd;
+}
+.addressModal .middle .lineabove, .addressModal .middle .linedown{
+	padding: 30rpx 60rpx;
+}
+.addressModal .bottom{
+	width: 100%;
+	height: 120rpx;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+}
+.addressModal .bottom text{
+	display: block;
+	font-size: 28rpx;
+	color: #fff;
+	line-height: 120rpx;
+	text-align: center;
+	background-color: #917cdd;
+}
+.noaddress{
+	text-align: center;
+	padding-top: 50rpx;
+}
+.noaddress text{
+	font-size: 28rpx;
+}
+.default-address, .address-lists{
+	background-color: #fff;
+	margin-bottom: 20rpx;
+}
+.default-address .linedown text{
+	margin-right: 10rpx;
+	color: #917ddc;
+}
+.default-address .linedown .flag{
+	font-size: 28rpx;
+	padding: 2rpx 20rpx;
+	border-radius: 26rpx;
+	color: #fff;
+	background-color: #917ddc;
+}
+
+

@@ -1,0 +1,142 @@
+<!--付款成功页面-->
+<view class="pay-container">
+	<!-- 顶部图片 -->
+	<view class="top-img">
+		<image src="../../../images/ok.png"></image>
+		<text>{{payStatusText}}</text>
+	</view>
+	<!-- 温馨提示 -->
+	<view wx:if="{{tipsStatus}}" class="reminder">
+		<view class="title">
+			<text>温馨提示</text>
+		</view>
+		<view class="content column">
+			<text>您将收到一条远微商城公众号的消息通知，请根据我们的提示进行尾款支付。请提高警惕，谨防诈骗。如有疑问，请拨打远特通讯官方热线：4000410027。感谢您对远微商城的支持。</text>
+		</view>
+	</view>
+	<!-- 地址 -->
+	<view class="address column">
+		<view>
+			<text class="name">收货人：{{orderCardDatil.userName}}</text>
+			<text class="tel">{{orderCardDatil.phone}}</text>
+		</view>
+		<view>
+			<image src="../../../images/place.png"></image>
+			<text class="place">收货地址：{{orderCardDatil.userAddress}}</text>
+			<text class="tips">我们会在两个工作日之内为您发货，请耐心等待</text>
+		</view>
+	</view>
+	<!-- 订单详情 -->
+	<view class="orderdetails">
+		<view class="sell-card" wx:if="{{ywscOrderType == 4}}">
+			<view class="details-top column">
+				<view class="row">
+					<image src="../../../images/book.png"></image>
+					<text class="typename">心仪数字</text>
+				</view>
+				<view class="row textstyle">
+					<text>{{guishudi}} {{orderCardDatil.sectionNo}}****</text>
+					<text class="textright">*{{orderCardDatil.num}}</text>
+				</view>
+			</view>
+			<view class="details-middle column">
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">购卡张数</text>
+					<text class="textright">{{orderCardDatil.num}}</text>
+				</view>
+				<view class="row textstyle">
+					<text class="cardnumtitle">订单总价</text>
+					<text class="conuntprice textright">￥{{totalMoney}}</text>
+				</view>
+			</view>
+			<view class="details-bottom row">
+				<text class="actualpaytitle">实际付款</text>
+				<text class="actualprice">￥{{paidMoney}}</text>
+			</view>
+		</view>
+		<view class="sell-num" wx:if="{{ywscOrderType == 1}}">
+			<view class="details-top column">
+				<view class="row">
+					<image src="../../../images/book.png"></image>
+					<text class="typename">号码直选</text>
+				</view>
+				<view class="telwrap row" wx:if="{{!qinglvhao}}">
+					<view class="left">
+						<text class="telnum">{{orderCardDatil.phoneNumber}}</text>
+					</view>
+					<view class="middle">
+						<text class="from">{{guishudi}}</text>
+					</view>
+					<view class="right">
+						<text class="np">￥{{occupyMoney}}</text>
+					</view>
+				</view>
+				<view class="telwrap row"  wx:if="{{qinglvhao}}">
+					<view class="left">
+						<view><text>{{orderCardDatil.phoneNumber}}</text></view>
+						<view><text>{{orderCardDatil.phoneNumber1}}</text></view>
+					</view>
+					<view class="middle">
+						<text>{{guishudi}}</text>
+					</view>
+					<view class="right">
+						<text class="np">￥{{occupyMoney}}</text>
+					</view>
+				</view>
+			</view>
+			<view class="details-middle column">
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">号码占用费</text>
+					<text class="textright">￥{{occupyMoney}}</text>
+				</view>
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">套餐预存费</text>
+					<text class="textright">￥{{preDeposit}}</text>
+				</view>
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">优惠金额</text>
+					<text class="textright">￥{{yhMoney}}</text>
+				</view>
+				<view class="row textstyle">
+					<text class="cardnumtitle">订单总价</text>
+					<text class="conuntprice textright">￥{{totalMoney}}</text>
+				</view>
+			</view>
+			<view class="details-bottom row">
+				<text class="actualpaytitle">{{sfje}}</text>
+				<text class="actualprice">￥{{tipsStatus?discountMoney:paidMoney}}</text>
+			</view>
+		</view>
+		<view class="sell-num" wx:if="{{ywscOrderType == 3}}">
+			<view class="details-top column">
+				<view class="row">
+					<image src="../../../images/book.png"></image>
+					<text class="typename">远特i卡</text>
+				</view>
+			</view>
+			<view class="details-middle column">
+				<view class="row textstyle" style="margin-bottom: 20rpx;">
+					<text class="cardnumtitle">购卡张数</text>
+					<text class="textright">{{orderCardDatil.num}}</text>
+				</view>
+				<view class="row textstyle">
+					<text class="cardnumtitle">订单总价</text>
+					<text class="conuntprice textright">￥{{totalMoney}}</text>
+				</view>
+			</view>
+			<view class="details-bottom row">
+				<text class="actualpaytitle">实际付款</text>
+				<text class="actualprice">￥{{paidMoney}}</text>
+			</view>
+		</view>
+	</view>
+	<!-- 订单信息 -->
+	<view class="orderinfo">
+		<text>订单编号：{{orderCardDatil.outTradeNo}}</text>
+		<text>下单时间：{{orderTime}}</text>
+		<text>付款时间：{{payTime}}</text>
+	</view>
+	<view class="gotobtn gotoindex" bindtap="goToIndex">
+		<text>返回商城首页</text>
+	</view>
+</view>

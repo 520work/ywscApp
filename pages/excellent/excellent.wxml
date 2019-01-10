@@ -1,0 +1,115 @@
+<!--优质套餐-->
+<view class="excellent-container">
+	<view class="choosetaocan row">
+		<view class="{{introduce1 ? 'first column active':'first column'}}" bindtap="chooseFisrt">
+			<text class="biger">无限时空19元档</text>
+			<text>19元/每月</text>
+		</view>
+		<view class="{{introduce2 ? 'second column active':'second column'}}" bindtap="chooseSecond">
+			<text class="biger">无限时空49元档</text>
+			<text>49元/每月</text>
+		</view>
+	</view>
+	<view class="introduce">
+		<view class="introduce1" wx:if="{{introduce1}}">
+			<view class="tcbh column">
+				<text class="title">———— 套餐包含 ————</text>
+				<view class="row">
+					<view class="column">
+						<text class="top">全国流量</text>
+						<text class="bottom">1元/每日无限用</text>
+					</view>
+					<view class="column">
+						<text class="top">来电显示</text>
+						<text class="bottom">免费</text>
+					</view>
+					<view class="column">
+						<text class="top">国内接听</text>
+						<text class="bottom">免费</text>
+					</view>
+				</view>
+			</view>
+			<view class="twzf column">
+				<text class="title">———— 餐外资费 ————</text>
+				<view class="row">
+					<view class="column">
+						<text class="top">国内语音</text>
+						<text class="bottom">0.12元/分钟</text>
+					</view>
+					<view class="column">
+						<text class="top">短信</text>
+						<text class="bottom">0.1元/条</text>
+					</view>
+					<view class="column">
+						<text class="top">彩信</text>
+						<text class="bottom">0.3元/条</text>
+					</view>
+				</view>
+			</view>
+			<view class="zfsm column">
+				<text>资费说明： </text>
+				<text>1、小贺卡套餐赠送来电显示，套餐全国流量不限量，全国免费接听；</text>
+				<text>2、全国语音拨打0.12元/分钟，短信0.1元/条，彩信0.3元/条；</text>
+				<text>3、套内语音、流量当月有效，月末24:00自动清零； </text>
+				<text>4、此套餐新老用户均可选择订购，每月最后一天无法变更套餐，老用户变更套餐，可于最后一天前申请变更，次月生效，新用户当月有效； </text>
+				<text>5、新用户入网，不区分入网时间，均按照整月收取月费； </text>
+				<text>6、用户入网默认开通国内语音主被叫（不含港澳台）、短彩信、手机上网、来电显示、可视电话等。国际及港澳台等其他业务默认关闭； </text>
+				<text>7、为保障所有用户网络公平使用权，小贺卡用户当月全部国内数据总量到达8G后上网速率会降低，入网三个月之后升级为当月全部国内数据总量达到12G后上网速率降低。</text>
+				<text>8、每月3日前一次性收取当月月费。 </text>
+			</view>
+			<view class="gotochoosnum" bindtap="goToChooseNum">
+				<text class="iconfont icon-youjiantou">前去选号</text>
+			</view>
+		</view>
+		<view class="introduce2" wx:if="{{introduce2}}">
+			<view class="tcbh column">
+				<text class="title">———— 套餐包含 ————</text>
+				<view class="row">
+					<view class="column">
+						<text class="top">全国流量</text>
+						<text class="bottom">1元/每日无限用</text>
+					</view>
+					<view class="column">
+						<text class="top">来电显示</text>
+						<text class="bottom">免费</text>
+					</view>
+					<view class="column">
+						<text class="top">国内接听</text>
+						<text class="bottom">免费</text>
+					</view>
+				</view>
+			</view>
+			<view class="twzf column">
+				<text class="title">———— 餐外资费 ————</text>
+				<view class="row">
+					<view class="column">
+						<text class="top">国内语音</text>
+						<text class="bottom">0.12元/分钟</text>
+					</view>
+					<view class="column">
+						<text class="top">短信</text>
+						<text class="bottom">0.1元/条</text>
+					</view>
+					<view class="column">
+						<text class="top">彩信</text>
+						<text class="bottom">0.3元/条</text>
+					</view>
+				</view>
+			</view>
+			<view class="zfsm column">
+				<text>资费说明： </text>
+				<text>1、小贺卡套餐赠送来电显示，套餐全国流量不限量，全国免费接听；</text>
+				<text>2、全国语音拨打0.12元/分钟，短信0.1元/条，彩信0.3元/条；</text>
+				<text>3、套内语音、流量当月有效，月末24:00自动清零； </text>
+				<text>4、此套餐新老用户均可选择订购，每月最后一天无法变更套餐，老用户变更套餐，可于最后一天前申请变更，次月生效，新用户当月有效； </text>
+				<text>5、新用户入网，不区分入网时间，均按照整月收取月费； </text>
+				<text>6、用户入网默认开通国内语音主被叫（不含港澳台）、短彩信、手机上网、来电显示、可视电话等。国际及港澳台等其他业务默认关闭； </text>
+				<text>7、为保障所有用户网络公平使用权，小贺卡用户当月全部国内数据总量到达8G后上网速率会降低，入网三个月之后升级为当月全部国内数据总量达到12G后上网速率降低。</text>
+				<text>8、每月3日前一次性收取当月月费。 </text>
+			</view>
+			<view class="gotochoosnum" bindtap="goToChooseNum">
+				<text class="iconfont icon-youjiantou">前去选号</text>
+			</view>
+		</view>
+	</view>
+</view>

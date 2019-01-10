@@ -1,0 +1,115 @@
+<import src="../templete/model/model.wxml" />
+<!--心仪数字页面-->
+<view class="container hn-container">
+	<text class="titlefont hn-title">选择心仪中间四位数</text>
+	<view class="search-wrap row">
+		<view class="hn-search search row">
+			<view class="select">
+				<text class="font12 iconfont icon-sanjiao1" bindtap="open">{{city}}</text>
+			</view>
+			<view class="entry">
+				<input bindinput = "input" type="number" placeholder="请输入四位数字" maxlength="4" value="{{inputVal}}" />
+			</view>
+		</view>
+		<view class="searchBtn" bindtap='searchFun'>
+			<text class="font14">搜索</text>
+		</view>
+	</view>
+	
+	<view class="hn-card-board">
+		<block wx:for="{{ecardData}}">
+			<view bindtap='showModal' data-sectionNo = "{{item.sectionNo}}" data-haoduanL = "{{item.haoduanL}}" data-haoduanR = "{{item.haoduanR}}" data-city = "{{item.cytyNAME}}" class="row">
+				<text class="ecardcity">{{item.cytyNAME}}</text>
+				<text>{{item.haoduanL}}<text class="hopenum">{{item.haoduanR}}</text>****</text>
+			</view>
+		</block>
+	</view>
+	<view wx:if="{{noNum}}" class="noecardnum">
+		<text>暂无更多号码啦，请客官试试搜索其他内容吧~</text>
+	</view>
+	<!--屏幕背景变暗的背景 -->
+	<view class="maskLayer" catchtouchmove="move" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+	<!--底部抽屉弹出框 -->
+	<view animation="{{animationData}}" class="bottom_box" catchtouchmove="move" wx:if="{{showModalStatus}}">
+		<view class="bottom_box_con">
+			<view class="row card-segment">
+				<view class="title">
+					<text>已选号段</text>
+				</view>
+				<view class="num">
+					<text>{{numberAttribution}}</text>
+					<text>{{haoduanL}}<text class="hopenum">{{haoduanR}}</text>****</text>
+				</view>
+			</view>
+			<view class="row buycardnum">
+				<view class="row">
+					<text class="buycardfont1">购卡张数 </text><text class="goukatips">{{sectionNum}}</text>
+				</view>
+				<view class="fr">
+					<view class="stepper">
+						<text class="{{minusStatus}}" bindtap="bindMinus">-</text>
+						<input placeholder-class="phClass" type="number" bindinput="bindManual" value="{{num}}" />
+						<text class="{{plusStatus}}" bindtap="bindPlus">+</text>
+					</view>
+				</view>
+			</view>
+			<view class="row">
+				<view>
+					<text class="buycardfont1">购卡金额</text>
+					<text class="buycardfont3">20元/张</text>
+				</view>
+				<view class="fr">
+					<text class="buycardfont2">共计：￥</text>
+					<text class="buycardfont2">{{totalPrice}}</text>
+				</view>
+			</view>
+			<view class="jihuo">
+				<text>激活成功后，购卡费用将返还到激活号码的花费账户中</text>
+			</view>
+			<view class="row">
+				<view>
+					<text class="buycardfont1">添加收货地址</text>
+				</view>
+				<view class="fr">
+					<!-- <text class="buycardfont2" bindtap="goToAddressPage">请选择 ></text> -->
+					<text bindtap="chooseAddress" class="buycardfont2 iconfont icon-arrow">请选择</text>
+				</view>
+			</view>
+			<view class="showaddress">
+				<text wx:if="{{addressStatus}}">{{addressData.showText}}</text>
+			</view>
+			<view class="xieyi">
+				<view class="buycardfont2">
+					<checkbox bindtap="checkChange" checked="{{checkValue}}"></checkbox>
+					<label>
+						我已阅读并同意
+					</label>
+					<text class="xieyitext">《远特客户入网服务协议》</text>
+				</view>
+				<view class="buycardfont2 xieyishuoming">
+					<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《远特客户入网服务协议》</text>
+				</view>
+			</view>
+		</view>
+		<view class="buynext" bindtap="goToPay">
+			<text>立即购买</text>
+		</view>
+	</view>
+	<!-- 地址二联动 -->
+	<view wx:if="{{condition}}" class="citypicker">
+		<picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px; background-color: #fff;" value="{{value}}" bindchange="bindChange" class="citybody">
+			<view class="cityheader">
+				<view bindtap="open" class="city-cancel">取消</view>
+				<view bindtap="makeSure" class="city-true">确定</view>
+			</view>
+			<picker-view-column>
+				<view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+			</picker-view-column>
+			<picker-view-column>
+				<view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+			</picker-view-column>
+		</picker-view>
+	</view>
+	<template is="hn-model" data="{{...sellModelInfo}}"></template>
+	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
+</view>

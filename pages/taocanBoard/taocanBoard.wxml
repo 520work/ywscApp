@@ -1,0 +1,225 @@
+<import src="../templete/model/model.wxml" />
+<!--套餐选择页面-->
+<view class="tcb-container">
+	<view class="process">
+		<view class="line"></view>
+		<view class="process_con">
+			<view>
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">已选号码</text>
+				</view>
+				<view wx:if="{{llNumStatus}}" class="telwrap row">
+					<view class="left">
+						<text class="telnum">{{telNum}}</text>
+					</view>
+					<view class="middle">
+						<text class="from">{{whereFrom}}</text>
+					</view>
+					<view class="right">
+						<text class="np">￥{{occupyMoney}}</text>
+					</view>
+				</view>
+				<view wx:if="{{doubleNumStatus}}" class="telwrap row">
+					<view class="left">
+						<view><text>{{qlTelNum}}</text></view>
+						<view><text>{{qlTelNum1}}</text></view>
+					</view>
+					<view class="middle">
+						<text>{{whereFrom}}</text>
+					</view>
+					<view class="right">
+						<text class="np">￥{{occupyMoney}}</text>
+					</view>
+				</view>
+			</view>
+			<view>
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">语音资费</text>
+				</view>
+				<view class="btnWrap" wx:if="{{!fromYztc}}">
+					<block wx:for="{{yuyinData}}" wx:key="*this">
+						<view class="btn_group taocan">
+							<view bindtap='yuyinSelFun' data-id="{{index}}" class="{{index == yyid?'active':'default'}}">
+								<text class="name">{{item.name}}</text>
+								<text class="taocanprice">{{item.price}}</text>
+							</view>
+						</view>
+					</block>
+				</view>
+				<view class="btnWrap" wx:if="{{fromYztc}}">
+					<block wx:for="{{yuyinData}}" wx:key="*this">
+						<view class="btn_group btn_group1 taocan">
+							<view bindtap='yuyinSelFun' data-id="{{index}}" class="{{index == yyid?'active':'default'}}">
+								<text class="name">{{item.name}}</text>
+								<text class="taocanprice">{{item.price}}</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view wx:if="{{!fromYztc}}">
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">流量档位</text>
+				</view>
+
+				<view class="btnWrap">
+					<block wx:for="{{liuliangData}}" wx:key="*this">
+						<view class="btn_group taocan">
+							<view bindtap='liuliangSelFun' data-id="{{index}}" class="{{index == llid?'active':'default'}}">
+								<text class="{{item.price?'name lineH50':'name lineH100'}}">{{item.name}}</text>
+								<text wx:if="{{item.price}}" class="{{item.price?'taocanprice lineH50':'taocanprice lineH100'}}">{{item.price}}</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view>
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">资费说明</text>
+				</view>
+				<view class="textcon">
+					<view class="textlists">
+						<text class="left">套餐名称</text>
+						<text class="right">{{zifeiData.taocanname}}</text>
+					</view>
+					<view class="textlists">
+						<text class="left">套餐月租</text>
+						<text class="right">{{zifeiData.taocanyuezu}}</text>
+					</view>
+					<view class="textlists">
+						<text class="left">国内流量</text>
+						<text class="right">{{zifeiData.guoneiliuliang}}</text>
+					</view>
+					<view class="textlists">
+						<text class="left">国内语音</text>
+						<text class="right">{{zifeiData.guoneiyuyin}}</text>
+					</view>
+				</view>
+			</view>
+			<view>
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">选择增值业务</text>
+				</view>
+				<view class="btnWrap">
+					<block wx:for="{{zengzhiData}}" wx:key="*this">
+						<view class="btn_group zengzhi">
+							<view bindtap='zzywSelFun' data-id="{{index}}" data-reject="{{item.relevant_opt_package}}" class="{{item.isBiXuan?'active':'default'}}">
+								<text>{{item.package_name}}</text>
+								<text>{{item.standard}}</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view>
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">选择预存话费</text>
+				</view>
+				<view class="btnWrap">
+					<block wx:for="{{yucunData}}" wx:key="*this">
+						<view class="btn_group ychf">
+							<view bindtap='ychfSelFun' data-id="{{index}}" data-yucun="{{item/100}}" class="{{index == hfid?'active':'default'}}">
+								<text>{{item/100}}元</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view>
+				<view class="process_top">
+					<text class="circle"></text>
+					<text class="title">订单详情</text>
+				</view>
+				<view class="order_con">
+					<view class="textlists">
+						<text class="left">号码占用费</text>
+						<text class="right">{{occupyMoney}}</text>
+					</view>
+					<view class="textlists">
+						<text class="left">套餐预存费</text>
+						<text class="right">{{yucunjine}}</text>
+					</view>
+					<view class="textlists">
+						<text class="left">订单总计</text>
+						<text class="right">{{orderTotal}}</text>
+					</view>
+					<view class="textlists">
+						<text class="left">优惠金额</text>
+						<text bindtap="chooseCoupon" class="right iconfont icon-arrow">￥-{{yhje}}元</text>
+					</view>
+					<view class="textlists">
+						<text class="left">实付金额</text>
+						<text class="right">{{payMoney}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="address_con">
+		<view>
+			<view class="process_top">
+				<text class="circle"></text>
+				<text class="title">选择收货地址</text>
+				<text bindtap="chooseAddress" class="toChoose iconfont icon-arrow">已选择</text>
+			</view>
+			<view class="addressbody">
+				<text wx:if="{{addressStatus}}">{{addressData.showText}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="xieyi">
+		<view>
+			<checkbox id="xieyi" bindtap="checkChange" checked="{{checkValue}}"></checkbox>
+			<label>
+				我已阅读并同意
+			</label>
+			<text class="xieyitext">《远特客户入网服务协议》</text>
+		</view>
+		<view class="xieyishuoming">
+			<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《远特客户入网服务协议》</text>
+		</view>
+	</view>
+	<view class="pay" bindtap="goToPay">
+		<text>{{payText}}</text><text wx:if="{{showPrice}}">￥{{payMoney}}</text>
+	</view>
+	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
+	<template is="taocan-model" data="{{...tcModelInfo}}"></template>
+</view>
+<view class="coupon-box" animation="{{moveData}}">
+	<view class="mask1" catchtouchmove="move" bindtap='hide'>
+		<text>点击收起</text>
+	</view>
+	<view class="coupon-con" catchtouchmove="move">
+		<text class="nouse" bindtap="noUseCoupon">不使用优惠券</text>
+		<view class="couponlists">
+			<view class="nocoupon" wx:if="{{noCoupon}}">
+				<text>暂无可用优惠券~</text>
+			</view>
+			<view class="couponitems column">
+				<block wx:for="{{canUseCoupon}}">
+					<view bindtap="useCoupon" data-discount = "{{item.faceValue/1000}}" data-yhqcode = "{{item.ticketCode}}">
+						<image src="../../images/cou_y.png"></image>
+						<view class="row">
+							<view class="discount">
+								<text>{{item.faceValue/100}}折</text>
+							</view>
+							<view class="couponinfo column">
+								<text>{{item.activityName}}</text>
+								<text>{{item.ticketName}}</text>
+								<text>{{item.validityBegin}}</text>
+								<text>{{item.validityEnd}}</text>
+							</view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+	</view>
+</view>
+

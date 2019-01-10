@@ -1,0 +1,107 @@
+<!--高级搜索页面-->
+<view class="filter-box">
+	<view class="filterhead column">
+		<text class="filter-title">请选择筛选条件</text>
+		<view class="filter-search search row">
+			<view class="entry">
+				<input bindinput = "input" type="number" placeholder="{{placeHolderText}}" maxlength="11" value="{{inputVal}}" />
+			</view>
+		</view>
+	</view>
+	<view class="options">
+		<view>
+			<view class="option-family">
+				<text>搜索方式</text>
+			</view>
+			<view class="option-name">
+				<block wx:for="{{optionsData.modeOptions}}">
+					<text bindtap='modeSelFun' data-code="{{item.code}}" data-id="{{index}}" class="{{index == modeid?'selected':''}}">{{item.name}}</text>
+				</block>
+			</view>
+		</view>
+		<view>
+			<view class="option-family">
+				<text>号码类型</text>
+			</view>
+			<view class="option-name">
+				<block wx:for="{{optionsData.typeOptions}}">
+					<text bindtap='typeSelFun' data-code="{{item.code}}" data-index='{{index}}' class="{{item.isSelected?'selected':''}}">{{item.name}}</text>
+				</block>
+			</view>
+		</view>
+		<view>
+			<view class="option-family">
+				<text>号码等级</text>
+			</view>
+			<view class="option-name">
+				<block wx:for="{{optionsData.levelOptions}}">
+					<text bindtap='levelSelFun' data-code="{{item.code}}" data-index='{{index}}' class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+				</block>
+			</view>
+		</view>
+		<view wx:if="{{lianghaoShow}}">
+			<view>
+				<view class="option-family">
+					<text>特殊靓号</text>
+				</view>
+				<view class="option-name">
+					<block wx:for="{{optionsData.specialOptions}}">
+						<text bindtap='lianghaoSelFun' data-code="{{item.code}}" data-index="{{index}}|special" class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+					</block>
+				</view>
+			</view>
+			<view>
+				<view class="option-family">
+					<text>高级靓号</text>
+				</view>
+				<view class="option-name">
+					<block wx:for="{{optionsData.highOptions}}">
+						<text bindtap='lianghaoSelFun' data-code="{{item.code}}" data-index="{{index}}|high" class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+					</block>
+				</view>
+			</view>
+			<view>
+				<view class="option-family">
+					<text>普通靓号</text>
+				</view>
+				<view class="option-name">
+					<block wx:for="{{optionsData.normalOptions}}">
+						<text bindtap='lianghaoSelFun' data-code="{{item.code}}" data-index="{{index}}|normal" class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+					</block>
+				</view>
+			</view>
+		</view>
+		<view wx:if="{{optionsData.levelOptions[0].selectStatus}}">
+			<view class="option-family">
+				<text>价格区间</text>
+			</view>
+			<view class="option-name">
+				<block wx:for="{{optionsData.stepOptions}}">
+					<text bindtap='stepSelFun' data-code="{{item.code}}" data-index="{{index}}" class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+				</block>
+			</view>
+		</view>
+		<view>
+			<view class="option-family">
+				<text>较多数位</text>
+			</view>
+			<view class="option-name">
+				<block wx:for="{{optionsData.moreNumOptions}}">
+					<text bindtap='moreNumSelFun' data-code="{{item.code}}" data-index="{{index}}" class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+				</block>
+			</view>
+		</view>
+		<view>
+			<view class="option-family">
+				<text>不含数位</text>
+			</view>
+			<view class="option-name">
+				<text bindtap='withoutFour' data-code="200004" class="{{withoutFourStatus?'selected':''}}">不含4</text>
+			</view>
+		</view>
+	</view>
+	<view class="filterbtn">
+		<text class="reset" bindtap="resetBtn">重置</text>
+		<text class="confirm active" bindtap="confirmBtn">确定</text>
+	</view>
+</view>

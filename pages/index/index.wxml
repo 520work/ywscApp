@@ -1,0 +1,493 @@
+<!--首页-->
+<import src="../templete/model/model.wxml" />
+<view>
+	<!-- 首页——轮播 -->
+	<view class="focusWrap">
+		<swiper class="swiperCon" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+			<block wx:for="{{focusImgUrls}}">
+				<swiper-item>
+					<image src="{{item.activityImage1}}" />
+					<!-- <navigator url="{{ item.linkUrl }}">
+						<image src="{{item.imgUrl}}" />
+					</navigator> -->
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+	<!-- 首页——tab面板 -->
+	<view class="tabWrap">
+		<!-- 滑动导航区域 -->
+		<view class="scrollCon">
+			<scroll-view scroll-x scroll-into-view="NAV{{status}}" scroll-with-animation="true">
+				<view class="scroll-view-x">
+					<block wx:for="{{navList}}" wx:key="">
+						<view class="scrollpadding{{index}}"  bindtap="getStatus" id="NAV{{index}}" data-index="{{index}}">
+							<view class="{{index === status ? 'selected' : 'default'}}">
+								<text class="itemtitle">{{item.title}}</text>
+								<image src="{{item.imgSrc}}" class="{{index === status?'selectImg biger':'selectImg small'}}"></image>
+								<text class="itemsummary">{{item.summary}}</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</scroll-view>
+		</view>
+		<!-- 切换面板区域 -->
+		<view class="switchBoard">
+			<!-- 购卡面板 -->
+			<view class="{{selected?'show':'hidden'}}">
+				<view class="goukaboard">
+					<view bindtap="goToHmzx" class="goukason goukason3">
+						<text class="title">号码直选</text>
+						<text class="description">全国海量号码，随心购买</text>
+						<image src="../../images/wl_yjgk.png"></image>
+					</view>
+					<view bindtap="goToXysz" class="goukason goukason2">
+						<text class="title">心仪数字</text>
+						<text class="description">挑选远特e卡，抢先购买优质号段</text>
+						<image src="../../images/wl_xxsz.png"></image>
+					</view>
+					<view bindtap="goToYjgk" class="goukason goukason1">
+						<text class="title">远特i卡</text>
+						<text class="description">先买卡后选号，省时省力</text>
+						<image src="../../images/wl_hmzx.png"></image>
+					</view>
+					<view bindtap="goToYztc" class="goukason goukason4">
+						<text class="title">优质套餐</text>
+						<text class="description">超值流量套餐，不限使用</text>
+						<image src="../../images/wl_yztc.png"></image>
+					</view>
+				</view>
+				<view style="height: 1rpx;"></view>
+			</view>
+			<!-- 特卖面板 -->
+			<view class="{{selected1?'show':'hidden'}}">
+				<view class="temaiBoard">
+					<view class="temaiTab">
+						<view class="{{temaiSelect?'temaiselected':'temaidefault'}}" bindtap="temaiSelect">
+							<text class="title">靓号特卖</text>
+						</view>
+						<text class="line"></text>
+						<view class="{{temaiSelect1?'temaiselected':'temaidefault'}}" bindtap="temaiSelect1">
+							<text class="title">情侣号特卖</text>
+						</view>
+					</view>
+					<view class="{{temaiSelect?'show':'hidden'}}">
+						<view class="lianghaoboard">
+							<block wx:for="{{liangNumLists}}">
+								<view class="lianghaolists" bindtap="chooseTaocanLl" data-telNum="{{item.phoneNumber}}" data-whereFrom="{{item.city}}"
+								 data-occupyMoney="{{item.occupyMoney}}">
+									<view class="top row">
+										<text class="tel">{{item.phoneNumber}}</text>
+										<image class="numbertype" src="../../images/common_liang.png"></image>
+										<!-- <text wx:if="{{item.numberType == 0}}" class="iconfont icon-xinheart256"></text> -->
+									</view>
+									<view class="bottom row">
+										<text class="wherefrom">{{item.city}}</text>
+										<view>
+											<text class="op">￥{{item.orderMoney}}</text>
+											<text class="np">￥{{item.occupyMoney}}</text>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+						<view class="moretelnum">
+							<text bindtap="{{tmListsNoData ? '' : 'goToLhtm'}}">{{tmListsNoData ? '敬请期待...' : '显示全部特卖靓号'}}</text>
+						</view>
+					</view>
+					<view class="{{temaiSelect1?'show':'hidden'}}">
+						<view class="lovetelboard">
+							<block wx:for="{{qinglvNumLists}}">
+								<view class="lovetellists" bindtap="chooseTaocanQl" data-qlTelNum="{{item.phoneNumber}}" data-qlTelNum1="{{item.phoneNumber1}}"
+								 data-whereFrom="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
+									<view class="lovetll">
+										<!-- <view>170 7000 7<text class="lovenum">520</text></view>
+										<view>170 7000 6<text class="lovenum">520</text></view> -->
+										<view><text>{{item.phoneNumber}}</text></view>
+										<view><text>{{item.phoneNumber1}}</text></view>
+									</view>
+									<view class="lovetlm">
+										<text>{{item.city}}</text>
+									</view>
+									<view class="lovetlr">
+										<text class="op">￥{{item.orderMoney}}</text>
+										<text class="np">￥{{item.occupyMoney}}</text>
+									</view>
+								</view>
+							</block>
+						</view>
+						<view class="moretelnum">
+							<text bindtap="{{tmListsNoData ? '' : 'goToQlhtm'}}">{{tmListsNoData ? '敬请期待...' : '显示全部特卖情侣号'}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="mb"></view>
+			</view>
+			<!-- 卡盟面板 -->
+			<view class="{{selected2?'show':'hidden'}}">
+				<view class="kamengboard column">
+					<view class="kameng-head column">
+						<text>卡盟</text>
+						<image src="../../images/logokm.jpg"></image>
+					</view>
+					<view class="kameng1 column">
+						<text class="kmtitle">卡盟？</text>
+						<text>每天，都有<text class="purple">5000</text>个用户在使用卡盟。</text>
+						<text>每周，有<text class="purple">1000</text>张卡经由卡盟制出。</text>
+						<text>每月，每个用户最高能通过卡盟赚取<text class="purple">200000</text>元佣金。</text>
+						<text>至今，卡盟已经给用户带来累计超过<text class="purple">1000万</text>元的受益。</text>
+						<text>现在，卡盟正在刮起一股全民赚钱的热潮！</text>
+						<image src="../../images/kamengbao.png"></image>
+					</view>
+					<view class="kameng2">
+						<view class="kameng-title column">
+							<text class="kmtitle">赚钱神器</text>
+							<text class="kmh2">行走的营业厅</text>
+							<text class="line0"></text>
+							<text class="kmh4">MAKING MONEY EASY</text>
+						</view>
+						<image src="../../images/kameng3.jpg"></image>
+						<view class="km2-point">
+							<view class="row">
+								<view class="column">
+									<text>NO.1</text>
+									<text class="kmh3">工具包设计</text>
+									<text class="line1"></text>
+									<text class="greytext">随时携带</text>
+								</view>
+								<view class="column">
+									<text>NO.2</text>
+									<text class="kmh3">蓝牙连接</text>
+									<text class="line1"></text>
+									<text class="greytext">安全准确</text>
+								</view>
+								<view class="column">
+									<text>NO.3</text>
+									<text class="kmh3">APP选号</text>
+									<text class="line1"></text>
+									<text class="greytext">方便快捷</text>
+								</view>
+							</view>
+							<view class="row">
+								<view class="column">
+									<text>NO.4</text>
+									<text class="kmh3">实时返佣</text>
+									<text class="line1"></text>
+									<text class="greytext">赚到手软</text>
+								</view>
+								<view class="column">
+									<text>NO.5</text>
+									<text class="kmh3">百万号码</text>
+									<text class="line1"></text>
+									<text class="greytext">自由选择</text>
+								</view>
+								<view class="column">
+									<text>NO.6</text>
+									<text class="kmh3">超低资费</text>
+									<text class="line1"></text>
+									<text class="greytext">任意搭配</text>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="kameng3">
+						<view class="kameng-title column">
+							<text class="kmtitle">极速开卡</text>
+							<text class="kmh2">流程方便快捷</text>
+							<text class="line0"></text>
+							<text class="kmh4">MORE EFFICIENT</text>
+						</view>
+						<view class="km-kk row">
+							<view class="kkimg">
+								<image src="../../images/kameng4.jpg"></image>
+							</view>
+							<view>
+								<text class="kmh3">第一步</text>
+								<text>选择心仪号码</text>
+							</view>
+							<view>
+								<text class="kmh3">第二步</text>
+								<text>选择心仪套餐</text>
+							</view>
+							<view class="kkimg">
+								<image src="../../images/kameng5.jpg"></image>
+							</view>
+							<view class="kkimg">
+								<image style="width: 294rpx; height: 320rpx;" src="../../images/kameng6.png"></image>
+							</view>
+							<view>
+								<text class="kmh3">第三步</text>
+								<text>身份信息认证</text>
+							</view>
+							<view>
+								<text class="kmh3">第四步</text>
+								<text>开卡成功</text>
+							</view>
+							<view class="kkimg">
+								<image style="width: 160rpx; height: 380rpx;" src="../../images/kameng7.png"></image>
+							</view>
+						</view>
+					</view>
+					<view class="kameng4">
+						<view class="kameng-title column">
+							<text class="kmtitle">超值套餐</text>
+							<text class="kmh2">随心搭配选择</text>
+							<text class="line0"></text>
+							<text class="kmh4">REAL DISCOUNT</text>
+						</view>
+						<view class="tc-table">
+							<text class="line2"></text>
+							<view class="tc-name">
+								<text class="kmh2">尊享随心配</text>
+							</view>
+							<view class="zifei row">
+								<view class="column">
+									<text class="kmh4">月费</text>
+									<text class="line3 kmh3">6元/月</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">国内拨打</text>
+									<text class="line3 kmh3">0.099元/分钟</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">来电显示</text>
+									<text class="kmh3">免费赠送</text>
+								</view>
+							</view>
+							<view class="zftable column">
+								<view class="row th">
+									<text class="flex2">套餐包含</text>
+									<text>国内接听</text>
+									<text>国内短信</text>
+									<text>国内彩信</text>
+								</view>
+								<view class="row td">
+									<text class="flex2 purple">1元/日/300MB，自动叠加续订，不使用不扣费</text>
+									<text>免费</text>
+									<text>0.1元/条</text>
+									<text>0.3元/条</text>
+								</view>
+							</view>
+						</view>
+						<view class="tc-table">
+							<text class="line2"></text>
+							<view class="tc-name">
+								<text class="kmh2">优享随心配</text>
+							</view>
+							<view class="zifei row">
+								<view class="column">
+									<text class="kmh4">月费</text>
+									<text class="line3 kmh3">9元/月</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">国内接听</text>
+									<text class="line3 kmh3">免费</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">来电显示</text>
+									<text class="kmh3">免费赠送</text>
+								</view>
+							</view>
+							<view class="zftable column">
+								<view class="row th">
+									<text class="flex2">套餐包含</text>
+									<text>国内拨打</text>
+									<text>国内短信</text>
+									<text>国内彩信</text>
+								</view>
+								<view class="row td">
+									<text class="flex2 purple">1元/日/600MB，超出后3元/日不限量</text>
+									<text>0.12元/分钟</text>
+									<text>0.1元/条</text>
+									<text>0.3元/条</text>
+								</view>
+							</view>
+						</view>
+						<view class="tc-table">
+							<text class="line2"></text>
+							<view class="tc-name">
+								<text class="kmh2">无限时空19元档</text>
+							</view>
+							<view class="zifei row">
+								<view class="column">
+									<text class="kmh4">月费</text>
+									<text class="line3 kmh3">19元/月</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">国内接听</text>
+									<text class="line3 kmh3">免费</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">来电显示</text>
+									<text class="kmh3">免费赠送</text>
+								</view>
+							</view>
+							<view class="zftable column">
+								<view class="row th">
+									<text class="flex2">国内流量</text>
+									<text>国内拨打</text>
+									<text>国内短信</text>
+									<text>国内彩信</text>
+								</view>
+								<view class="row td">
+									<text class="flex2 purple">1元/日/不限量</text>
+									<text>0.12元/分钟</text>
+									<text>0.1元/条</text>
+									<text>0.3元/条</text>
+								</view>
+							</view>
+						</view>
+						<view class="tc-table">
+							<text class="line2"></text>
+							<view class="tc-name">
+								<text class="kmh2">无限时空其他档位</text>
+							</view>
+							<view class="zifei row">
+								<view class="column">
+									<text class="kmh4">来电显示</text>
+									<text class="line3 kmh3">免费赠送</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">月费</text>
+									<text class="line3 kmh3">多种价位可选择</text>
+								</view>
+								<view class="column">
+									<text class="kmh4">国内</text>
+									<text class="kmh3">接听免费</text>
+								</view>
+							</view>
+							<view class="zftable column">
+								<view class="row th">
+									<view class="flex1">
+										<text style="height: 100%;padding-top: 46rpx;">月费（元）</text>
+									</view>
+									<view class="column flex3">
+										<view>
+											<text>套餐包含</text>
+										</view>
+										<view class="row">
+											<text>国内流量</text>
+											<text>国内语音</text>
+										</view>
+									</view>
+									<view class="column flex4">
+										<view>
+											<text>套外资费</text>
+										</view>
+										<view class="row">
+											<text>语音</text>
+											<text>流量</text>
+											<text>短信</text>
+										</view>
+									</view>
+								</view>
+								<view class="row td">
+									<view class="flex1 column">
+										<text>39</text>
+										<text>49</text>
+										<text>69</text>
+										<text>99</text>
+										<text>139</text>
+									</view>
+									<view class="row flex3 row">
+										<view class="column flex1">
+											<text>10G</text>
+											<text>12G</text>
+											<text>16G</text>
+											<text>32G</text>
+											<text>48G</text>
+										</view>
+										<view class="column flex1">
+											<text>0</text>
+											<text>60</text>
+											<text>100</text>
+											<text>100</text>
+											<text>200</text>
+										</view>
+									</view>
+									<view class="row flex4">
+										<text style="padding-top:100rpx">0.12元每分钟</text>
+										<text style="padding-top:100rpx">3元/日不限量流量，每日自动续订</text>
+										<text style="padding-top:100rpx">0.1元每条</text>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="kameng5">
+						<view class="kameng-title column">
+							<text class="kmtitle">丰厚佣金</text>
+							<text class="kmh2">让你赚到手软</text>
+							<text class="line0"></text>
+							<text class="kmh4">MORE COMMISSION</text>
+						</view>
+						<view class="row">
+							<view>
+								<image src="../../images/kameng8.jpg"></image>
+							</view>
+							<view class="column">
+								<text>● 开卡佣金（特别号码占用费为首次预存的30%。普号根据面值不同佣金不同，20元面值的50%，50元面值的50%，100元面值的40%，200元面值的30%）</text>
+								<text>● 每激活100张奖励200元</text>
+								<text>● 每成功邀请一名好友您可获得100元奖励，好友继续邀请好友您可得50元奖励</text>
+							</view>
+						</view>
+						<view class="column product">
+							<text>产品包装及配件</text>
+							<image src="../../images/kameng9.jpg"></image>
+						</view>
+					</view>
+					<view class="kameng-foot" bindtap="kmBuy">抢先体验</view>
+				</view>
+				<view class="mb"></view>
+			</view>
+			<!-- 会员中心 -->
+			<view class="{{selected3?'show':'hidden'}}">
+				<view class="memberboard">
+					<view class="weallists">
+						<block wx:for="{{productLists}}">
+							<view class="row">
+								<view class="memimg column">
+									<image src="{{item.imgSrc}}"></image>
+								</view>
+								<view class="memdetails column">
+									<text class="memtitle">{{item.productTypeName}}</text>
+									<text>{{item.itemProductName}}</text>
+									<text class="memprice">{{item.productFee/100}}元</text>
+								</view>
+								<view class="membuy column">
+									<text data-itemId="{{item.productId}}" data-productType="{{item.productType}}" data-productName="{{item.productName}}"
+									 bindtap="showModal">购买</text>
+								</view>
+							</view>
+						</block>
+					</view>
+					<view class="moreweal">
+						<text>——— 更多会员福利，敬请期待 ———</text>
+					</view>
+				</view>
+				<view class="buyvipmodel">
+					<!--屏幕背景变暗的背景 -->
+					<view class="maskLayer" catchtouchmove="move" wx:if="{{showModalStatus}}"></view>
+					<!--底部抽屉弹出框 -->
+					<view animation="{{animationData}}" class="bottom_box" catchtouchmove="move" wx:if="{{showModalStatus}}">
+						<view class="bottom_box_con">
+							<view class="closevip">
+								<image src="../../images/vipclose.png" bindtap="hideModal"></image>
+							</view>
+							<text class="wenxintips">温馨提示</text>
+							<view class="vipinput">
+								<input type="number" maxlength="11" bindinput = "input" value="{{inputVal}}" placeholder="{{vipholder}}"/>
+							</view>
+						</view>
+						<view class="buyvip" bindtap="buyVip">
+							<text>立即支付</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<image src="../../images/totop.png" class='goTop' hidden='{{!floorstatus}}' bindtap="goTop"></image>
+	<template is="tip-model" data="{{...showModelInfo}}"></template>
+</view>

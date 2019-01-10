@@ -1,0 +1,67 @@
+<!--情侣号特卖特卖-->
+<view class="container lhtm-container">
+	<view class="lhtm-head">
+		<view class="search-wrap row">
+			<view class="cn-search search row">
+				<view class="select">
+					<text class="font12 iconfont icon-sanjiao1" bindtap="open">{{city}}</text>
+				</view>
+				<view class="entry">
+					<input type="number" bindinput="input" placeholder="至少输入两位数字" maxlength="11" value="{{inputVal}}" />
+				</view>
+				<!-- <view class="search-icon-wrap">
+					<text class="search-icon iconfont icon-ai219"></text>
+				</view> -->
+			</view>
+			<!-- <view class="search-high" bindtap='highSearchFun'>
+				<text class="font14">高级搜索</text>
+			</view> -->
+			<view class="searchBtn" bindtap='searchBtn'>
+				<text class="font14">搜索</text>
+			</view>
+		</view>
+	</view>
+	<view class="qlhtm-body column">
+		<block wx:for="{{qinglvListData}}">
+			<view class="lovetellists" bindtap="chooseTaocan" data-qlTelNum="{{item.phoneNumber}}" data-qlTelNum1="{{item.phoneNumber1}}" data-whereFrom ="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
+				<view class="lovetll">
+					<view>{{item.phoneNum1left}}<text class="lovenum">{{item.phoneNum1right}}</text></view>
+					<view>{{item.phoneNum2left}}<text class="lovenum">{{item.phoneNum2right}}</text></view>
+				</view>
+				<view class="lovetlm">
+					<text>{{item.city}}</text>
+				</view>
+				<view class="lovetlr">
+					<text class="op">￥{{item.orderMoney}}</text>
+					<text class="np">￥{{item.occupyMoney}}</text>
+				</view>
+			</view>
+		</block>
+		<view wx:if="{{noNum}}" class="nonum">
+			<image src="../../images/ooops2.gif"></image>
+			<text>呀！(⊙﹏⊙)</text>
+			<text>当前城市号码过于火热，</text>
+			<text>小薇正在迅速补给中 (￣ˇ￣)</text>
+			<text>先看看全国号码吧~</text>
+			<text>{{time}}s后将展示全国号码</text>
+		</view>
+		<view wx:if="{{moreNum}}" class="morenum">
+			<text>{{moreText}}</text>
+		</view>
+	</view>
+	<!-- 地址二联动 -->
+	<view wx:if="{{condition}}" class="citypicker">
+		<picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px; background-color: #fff;" value="{{value}}" bindchange="bindChange" class="citybody">
+			<view class="cityheader">
+				<view bindtap="open" class="city-cancel">取消</view>
+				<view bindtap="makeSure" class="city-true">确定</view>
+			</view>
+			<picker-view-column>
+				<view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+			</picker-view-column>
+			<picker-view-column>
+				<view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+			</picker-view-column>
+		</picker-view>
+	</view>
+</view>

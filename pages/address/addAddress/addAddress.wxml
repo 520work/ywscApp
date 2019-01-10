@@ -1,0 +1,44 @@
+<!--添加新地址页面-->
+<!-- 添加新地址窗体 -->
+<view class="addnewaddress">
+	<view class="middle">
+		<view class="name">
+			<text>收货人</text>
+			<input bindinput="getContacts" type="text" value="{{editData.contacts}}" />
+		</view>
+		<view class="telnum">
+			<text>联系电话</text>
+			<input bindinput="getPhoneNumber" type="number" maxlength="11" value="{{editData.phonenumber}}"/>
+		</view>
+		<view class="fromwhere">
+			<text class="title">所在地区</text>
+			<text class="shownewad">{{province}} {{city}} {{county}}</text>
+			<text class="iconfont icon-arrow" bindtap="open">请选择</text>
+		</view>
+		<view class="detailed">
+			<textarea bindinput="getStreet" value="{{editData.street}}" placeholder="请填写详细地址,无需重复填写省市区/县"></textarea>
+		</view>
+	</view>
+	<view class="bottom">
+		<text bindtap="saveNewAddress">保存地址</text>
+	</view>
+	<!-- 地址三联动 -->
+	<view wx:if="{{condition}}" class="citypicker">
+	  <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange" class="citybody">
+	    <view class="cityheader">
+	      <view bindtap="open" class="city-cancel">取消</view>
+	      <view bindtap="open" class="city-true">确定</view>
+	    </view>
+	    <picker-view-column>
+	      <view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+	    </picker-view-column>
+	    <picker-view-column>
+	      <view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+	    </picker-view-column>
+	    <picker-view-column>
+	      <view wx:for="{{countys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+	    </picker-view-column>
+	  </picker-view>
+	</view>
+</view>
+

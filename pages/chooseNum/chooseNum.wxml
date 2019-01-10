@@ -1,0 +1,66 @@
+<import src="../templete/model/model.wxml" />
+<!--号码直选页面-->
+<view class="container cn-container">
+	<!-- 搜索栏 -->
+	<view class="search-wrap row">
+		<view class="cn-search search row">
+			<view class="select">
+				<text class="font12 iconfont icon-sanjiao1" bindtap="open">{{city}}</text>
+			</view>
+			<view class="entry">
+				<input type="number" bindinput="input" placeholder="至少输入四位数字" maxlength="11" value="{{inputVal}}" />
+			</view>
+		</view>
+		<view class="search-high" bindtap="{{searchMode == 'highSearch'? 'highSearchFun':'searchBtn'}}">
+			<text class="font14">{{searchText}}</text>
+		</view>
+	</view>
+	<!-- 号板 -->
+	<view class="number-board">
+		<block wx:for="{{numListData}}">
+			<view class="num-lists" bindtap="chooseTaocan" data-cardType="{{item.cardType}}" data-telNum="{{item.phoneNumber}}"
+			 data-whereFrom="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
+				<view class="top">
+					<text class="tel">{{item.phoneNumber}}</text>
+					<image wx:if="{{item.cardType == 5}}" src="../../images/yushou.png" class="cardtype"></image>
+					<image wx:if="{{item.cardType == 2}}" src="../../images/yishou.png" class="cardtype"></image>
+					<image wx:if="{{item.cardType == 0 && item.numberType == 2}}" src="../../images/common_liang.png" class="numbertype"></image>
+					<image wx:if="{{item.cardType == 0 && item.numberType == 1}}" src="../../images/pu.png" class="numbertype"></image>
+					<image wx:if="{{item.cardType == 0 && item.numberType == 0}}" class="numbertype"></image>
+				</view>
+				<view class="bottom">
+					<text class="wherefrom">{{item.city}}</text>
+					<text wx:if="{{item.cardType != 5}}" class="np">{{item.cardType == 2 ? '￥0.00' : '￥'+ item.occupyMoney}}</text>
+				</view>
+			</view>
+		</block>
+		<view wx:if="{{noNum}}" class="nonum">
+			<image src="../../images/ooops2.gif"></image>
+			<text>呀！(⊙﹏⊙)</text>
+			<text>当前城市号码过于火热，</text>
+			<text>小薇正在迅速补给中 (￣ˇ￣)</text>
+			<text>先看看全国号码吧~</text>
+			<text>{{time}}s后将展示全国号码</text>
+		</view>
+		<view wx:if="{{moreNum}}" class="morenum">
+			<text>{{moreText}}</text>
+		</view>
+	</view>
+	<!-- 地址二联动 -->
+	<view wx:if="{{condition}}" class="citypicker">
+		<picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px; background-color: #fff;" value="{{value}}"
+		 bindchange="bindChange" class="citybody">
+			<view class="cityheader">
+				<view bindtap="open" class="city-cancel">取消</view>
+				<view bindtap="makeSure" class="city-true">确定</view>
+			</view>
+			<picker-view-column>
+				<view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+			</picker-view-column>
+			<picker-view-column>
+				<view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+			</picker-view-column>
+		</picker-view>
+	</view>
+	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
+</view>

@@ -1,0 +1,51 @@
+/* pages/pay/upto3000/upto3000.wxss */
+page{
+	width: 100%;
+	height: 100%;
+}
+.top-img{
+	padding-bottom: 40rpx;
+}
+/* 底部按钮 */
+.gotoindex{
+	background-color: #7661D1 ;
+}
+.telwrap.row {
+	align-items: center;
+	margin-top: 10rpx;
+}
+.telwrap text {
+	display: inline-block;
+	font-size: 32rpx;
+	color: #666;
+	font-weight: normal;
+}
+
+.telwrap .left {
+	flex: 2;
+}
+
+.telwrap .middle,
+.telwrap .right {
+	flex: 1;
+	align-items: center;
+}
+
+.telwrap .middle {
+	text-align: left;
+}
+
+.telwrap .right {
+	text-align: right;
+}
+
+.telwrap .np {
+	color: #7661D1;
+}
+.details-bottom view{
+	margin-bottom: 10rpx;
+}
+
+
+ 
+
