@@ -47,7 +47,7 @@ Page({
 			key: 'guishudi',
 			data: whereFrom
 		});
-		var occupyMoney = Number(options.occupyMoney).toFixed(2);
+		var occupyMoney = that.keepTwoFloor(options.occupyMoney);
 		if (doubleNumStatus == "true") {
 			var qlTelNum = options.qlTelNum.slice(0, 3) + ' ' + options.qlTelNum.slice(3, 7) + ' ' + options.qlTelNum.slice(7,
 				11);
@@ -184,11 +184,12 @@ Page({
 		var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
 		var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
-		var orderTotal = (Number(occupyMoney) + Number(yucunjine)).toFixed(2); //订单总计
-		var payMoney = (orderTotal - Number(this.data.yhje)).toFixed(2); //实付金额
+		var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)); //订单总计
+		var payMoney = this.keepTwoFloor(orderTotal - Number(this.data.yhje)); //实付金额
 		this.setData({
 			yyid: ids,
 			llid: 0,
+			hfid: 0,
 			liuliangData: liuliangData,
 			'orderQueryData.phone_package': liuliangData[0].package_name,
 			'orderQueryData.productId': liuliangData[0].code,
@@ -213,8 +214,8 @@ Page({
 		var yucunData = liuliangPackage.deposit_money;
 		var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
-		var orderTotal = (Number(occupyMoney) + Number(yucunjine)).toFixed(2);
-		var payMoney = (orderTotal - Number(this.data.yhje)).toFixed(2);
+		var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine));
+		var payMoney = this.keepTwoFloor(orderTotal - Number(this.data.yhje));
 		this.setData({
 			llid: ids,
 			'orderQueryData.phone_package': liuliangPackage.package_name,
@@ -292,8 +293,8 @@ Page({
 		var ids = e.currentTarget.dataset.id;
 		var yucunjine = Number(e.currentTarget.dataset.yucun).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
-		var orderTotal = (Number(occupyMoney) + Number(yucunjine)).toFixed(2);
-		var payMoney = (orderTotal - Number(this.data.yhje)).toFixed(2);
+		var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine));
+		var payMoney = this.keepTwoFloor(orderTotal - Number(this.data.yhje));
 		this.setData({
 			hfid: ids,
 			yucunjine: yucunjine,
@@ -345,8 +346,8 @@ Page({
 	useCoupon: function(e) {
 		var discount = e.currentTarget.dataset.discount;
 		var yhqCode = e.currentTarget.dataset.yhqcode;
-		var hmzyf = that.data.occupyMoney; //号码占用费
-		var yhje = Number(hmzyf * (1 - discount)).toFixed(2);
+		var hmzyf = this.data.occupyMoney; //号码占用费
+		var yhje = this.keepTwoFloor(hmzyf * (1 - discount));
 		this.setData({
 			yhje: yhje,
 			yhqCode: yhqCode
@@ -385,7 +386,7 @@ Page({
 					if (canUseCouArr.length > 0) {
 						var hmzyf = that.data.occupyMoney; //号码占用费
 						var discount = canUseCouArr[0].faceValue / 1000; //折扣
-						var yhje = Number(hmzyf * (1 - discount)).toFixed(2);
+						var yhje = that.keepTwoFloor(hmzyf * (1 - discount));
 						var yhqCode = canUseCouArr[0].ticketCode;
 					} else {
 						var yhje = '0.00';
@@ -502,7 +503,7 @@ Page({
 			zengzhiData = data[0].PackageList[0].Optional_package;
 			//默认 预存话费信息
 			yucunData = data[0].PackageList[0].deposit_money;
-			yucunjine = Number(yucunData[0] / 100).toFixed(2); //预存金额
+			yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		} else {
 			for (var i = 0; i < data.length; i++) {
 				var dataSon = data[i].PackageList;
@@ -520,18 +521,18 @@ Page({
 						zengzhiData = dataSon[k].Optional_package;
 						//默认 预存话费信息
 						yucunData = dataSon[k].deposit_money;
-						yucunjine = Number(yucunData[0] / 100).toFixed(2); //预存金额
+						yucunjine = Number(yucunData[0] / 100).toFixed(2);
 					};
 				};
 			};
 		};
-		var orderTotal = (Number(occupyMoney) + Number(yucunjine)).toFixed(2); //订单总计
-		var payMoney = (orderTotal - Number(that.data.yhje)).toFixed(2);
+		var orderTotal = that.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)); //订单总计
+		var payMoney = that.keepTwoFloor(orderTotal - Number(that.data.yhje));
 		//处理增值业务默认选项逻辑
 		for (var i = 0; i < zengzhiData.length; i++) {
 			if (zengzhiData[i].necessary == 2) {
 				zengzhiData[i].isBiXuan = true;
-			} else if(zengzhiData[i].necessary == 1){
+			} else if (zengzhiData[i].necessary == 1) {
 				zengzhiData[i].isBiXuan = true;
 			} else {
 				zengzhiData[i].isBiXuan = false;
@@ -759,5 +760,20 @@ Page({
 			zengzhiData: zengzhiDataNew,
 			'tcModelInfo.showModelStatus': false
 		})
+	},
+	//保留小数点后两位
+	keepTwoFloor: function(value) {
+		var num = Number(value), twoFloorNum;
+		if (Number.isInteger(num)) {
+			twoFloorNum = Number(num).toFixed(2);
+		} else {
+			var numArr = num.toString().split('.');
+			if(numArr[1].length>=2){
+				twoFloorNum = Math.floor(num * 100) / 100;
+			} else {
+				twoFloorNum = Number(num).toFixed(2);
+			};
+		};
+		return twoFloorNum;
 	}
 })

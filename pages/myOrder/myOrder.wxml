@@ -25,16 +25,16 @@
 						<image src="../../images/cart.jpg"></image>
 						<view class="column">
 							<text class="cardnum">远特信时空号卡：{{item.phoneNumber}}</text>
-							<text>号码占用费：{{item.occupyMoney}}</text>
-							<text>预存话费：{{item.pre_deposit}}</text>
+							<text>号码占用费：{{item.om}}</text>
+							<text>预存话费：{{item.pd}}</text>
 						</view>
 					</view>
 					<view class="fr">
-						<text>￥{{item.totalMoney}}</text>
+						<text>￥{{item.tm}}</text>
 					</view>
 				</view>
 				<view class="total">
-					<text>合计：￥{{item.totalMoney}}</text>
+					<text>合计：￥{{item.tm}}</text>
 				</view>
 				<view class="bottom">
 					<text data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-kdgs="{{item.kdgs}}"
@@ -69,7 +69,7 @@
 					</view>
 				</view>
 				<view class="total">
-					<text>合计：￥ {{item.totalMoney}}</text>
+					<text>合计：￥ {{item.tm}}</text>
 				</view>
 				<view class="bottom">
 					<text data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-kdgs="{{item.kdgs}}"
@@ -104,7 +104,7 @@
 					</view>
 				</view>
 				<view class="total">
-					<text>合计：￥{{item.totalMoney}}</text>
+					<text>合计：￥{{item.tm}}</text>
 				</view>
 				<view class="bottom">
 					<text data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-kdgs="{{item.kdgs}}"
@@ -135,11 +135,11 @@
 						</view>
 					</view>
 					<view class="fr">
-						<text>￥{{item.totalMoney}}</text>
+						<text>￥{{item.tm}}</text>
 					</view>
 				</view>
 				<view class="total">
-					<text>合计：￥{{item.totalMoney}}</text>
+					<text>合计：￥{{item.tm}}</text>
 				</view>
 			</view>
 		</block>

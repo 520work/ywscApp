@@ -36,12 +36,12 @@ Page({
 			},
 			success: res => {
 				console.log(res);
-				var occupyMoney = Number(res.data[0].occupyMoney).toFixed(2);
-				var preDeposit = Number(res.data[0].preDeposit).toFixed(2);
-				var yhMoney = Number(res.data[0].yhMoney).toFixed(2);
-				var totalMoney = Number(res.data[0].totalMoney).toFixed(2);
-				var paidMoney = Number(res.data[0].paidMoney).toFixed(2);
-				var discountMoney = Number(res.data[0].discountMoney).toFixed(2);
+				var occupyMoney = that.keepTwoFloor(res.data[0].occupyMoney);
+				var preDeposit = that.keepTwoFloor(res.data[0].preDeposit);
+				var yhMoney = that.keepTwoFloor(res.data[0].yhMoney);
+				var totalMoney = that.keepTwoFloor(res.data[0].totalMoney);
+				var paidMoney = that.keepTwoFloor(res.data[0].paidMoney);
+				var discountMoney = that.keepTwoFloor(res.data[0].discountMoney);
 				var orderTime = that.timestampToTime(res.data[0].inserttime.time);
 				var payTime;
 				if(res.data[0].dataTime == null){
@@ -111,5 +111,20 @@ Page({
 		var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
 		var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 		return Y + M + D + h + m + s;
+	},
+	//保留小数点后两位
+	keepTwoFloor: function(value) {
+		var num = Number(value), twoFloorNum;
+		if (Number.isInteger(num)) {
+			twoFloorNum = Number(num).toFixed(2);
+		} else {
+			var numArr = num.toString().split('.');
+			if(numArr[1].length>=2){
+				twoFloorNum = Math.floor(num * 100) / 100;
+			} else {
+				twoFloorNum = Number(num).toFixed(2);
+			};
+		};
+		return twoFloorNum;
 	}
 })

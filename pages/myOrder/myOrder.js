@@ -46,6 +46,9 @@ Page({
 						})
 					} else {
 						for (var i = 0; i < haokamall.length; i++) {
+							haokamall[i].om = that.keepTwoFloor(haokamall[i].occupyMoney);
+							haokamall[i].pd = that.keepTwoFloor(haokamall[i].pre_deposit);
+							haokamall[i].tm = that.keepTwoFloor(haokamall[i].totalMoney);
 							var send_state = haokamall[i].send_state;
 							var state = haokamall[i].orderState;
 							if (send_state == "1") {
@@ -102,7 +105,7 @@ Page({
 							ekaNoOrder: true
 						})
 					} else {
-						that.orderLists(ekamall);
+						that.orderLists(ekamall, that);
 					};
 					//i卡列表
 					if (ikamall.length == 0) {
@@ -110,7 +113,7 @@ Page({
 							ikaNoOrder: true
 						})
 					} else {
-						that.orderLists(ikamall);
+						that.orderLists(ikamall, that);
 					};
 					//会员中心
 					if (vipmall.length == 0) {
@@ -120,6 +123,7 @@ Page({
 					} else {
 						for (var i = 0; i < vipmall.length; i++) {
 							var state = vipmall[i].orderState;
+							vipmall[i].tm = that.keepTwoFloor(vipmall[i].totalMoney);
 							if (state == "4") {
 								vipmall[i].state = "交易失败";
 								vipmall[i].step = "删除订单";
@@ -157,10 +161,11 @@ Page({
 		});
 	},
 	//E卡和I卡的订单列表
-	orderLists: function(mallData) {
+	orderLists: function(mallData, that) {
 		for (var i = 0; i < mallData.length; i++) {
 			var send_state = mallData[i].send_state;
 			var state = mallData[i].orderState;
+			mallData[i].tm = that.keepTwoFloor(mallData[i].totalMoney);
 			if (send_state == "1") {
 				if (state == "8") {
 					mallData[i].state = "已发货";
@@ -394,5 +399,20 @@ Page({
 				}
 			});
 		}
+	},
+	//保留小数点后两位
+	keepTwoFloor: function(value) {
+		var num = Number(value), twoFloorNum;
+		if (Number.isInteger(num)) {
+			twoFloorNum = Number(num).toFixed(2);
+		} else {
+			var numArr = num.toString().split('.');
+			if(numArr[1].length>=2){
+				twoFloorNum = Math.floor(num * 100) / 100;
+			} else {
+				twoFloorNum = Number(num).toFixed(2);
+			};
+		};
+		return twoFloorNum;
 	}
 })

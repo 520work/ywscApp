@@ -61,7 +61,7 @@ Page({
 						expressCompany: expressCompany,
 						expressNumbers: expressNumbers,
 						orderTitle: res.data.phoneNumber,
-						paidMoney: Number(res.data.paidMoney).toFixed(2),
+						paidMoney: that.keepTwoFloor(res.data.paidMoney),
 						iccidStatus: false,
 						orderId: orderId,
 						orderTime: orderTime,
@@ -169,11 +169,11 @@ Page({
 					userAddress: res.data[0].userAddress,
 					expressCompany: expressCompany,
 					expressNumbers: expressNumbers,
-					paidMoney: Number(res.data[0].paidMoney).toFixed(2),
-					occupyMoney: Number(res.data[0].occupyMoney).toFixed(2),
-					preDeposit: Number(res.data[0].preDeposit).toFixed(2),
-					yhMoney: Number(res.data[0].yhMoney).toFixed(2),
-					totalMoney: Number(res.data[0].totalMoney).toFixed(2),
+					paidMoney: that.keepTwoFloor(res.data[0].paidMoney),
+					occupyMoney: that.keepTwoFloor(res.data[0].occupyMoney),
+					preDeposit: that.keepTwoFloor(res.data[0].preDeposit),
+					yhMoney: that.keepTwoFloor(res.data[0].yhMoney),
+					totalMoney: that.keepTwoFloor(res.data[0].totalMoney),
 					iccidStatus: iccidStatus,
 					iccidArr: iccidArr,
 					orderId: res.data[0].outTradeNo,
@@ -235,5 +235,20 @@ Page({
 		var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
 		var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 		return Y + M + D + h + m + s;
+	},
+	//保留小数点后两位
+	keepTwoFloor: function(value) {
+		var num = Number(value), twoFloorNum;
+		if (Number.isInteger(num)) {
+			twoFloorNum = Number(num).toFixed(2);
+		} else {
+			var numArr = num.toString().split('.');
+			if(numArr[1].length>=2){
+				twoFloorNum = Math.floor(num * 100) / 100;
+			} else {
+				twoFloorNum = Number(num).toFixed(2);
+			};
+		};
+		return twoFloorNum;
 	}
 })
