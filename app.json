@@ -1,7 +1,8 @@
 {
   "pages": [
+		
     "pages/index/index",
-    "pages/lhtm/lhtm",
+		"pages/lhtm/lhtm",
     "pages/qlhtm/qlhtm",
     "pages/chooseNum/chooseNum",
     "pages/highSearch/options",
@@ -26,7 +27,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#f7f7f7",
-    "navigationBarTitleText": "远微商城",
+    "navigationBarTitleText": "号卡商城",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -47,5 +48,10 @@
         "text": "我的订单"
       }
     ]
+  },
+	"permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序获取号码归属地区"
+    }
   }
 }

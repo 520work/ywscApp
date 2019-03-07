@@ -392,11 +392,20 @@ page {
 .temaiBoard .wholelove {
 	padding-bottom: 44rpx;
 }
-
-.numbertype {
+.numbertype{
 	width: 26rpx;
 	height: 26rpx;
 }
+/* .telScore {
+	flex: 2;
+	text-align: center;
+	align-items: center;
+	font-size: 22rpx;
+	color: #633D1B;
+	background: #ffdc66;
+	border-radius: 12rpx;
+	line-height: 38rpx;
+} */
 
 /* 卡盟板块 */
 .kamengboard {

@@ -149,10 +149,10 @@
 						<text class="left">订单总计</text>
 						<text class="right">{{orderTotal}}</text>
 					</view>
-					<view class="textlists">
+					<!-- <view class="textlists">
 						<text class="left">优惠金额</text>
 						<text bindtap="chooseCoupon" class="right iconfont icon-arrow">￥-{{yhje}}元</text>
-					</view>
+					</view> -->
 					<view class="textlists">
 						<text class="left">实付金额</text>
 						<text class="right">{{payMoney}}</text>

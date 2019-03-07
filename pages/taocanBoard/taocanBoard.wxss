@@ -161,16 +161,17 @@ page {
 }
 
 .textlists text {
-	flex: 1;
 	font-size: 28rpx;
 	color: #666;
 }
 
 .textlists .left {
+	flex: 1;
 	text-align: left;
 }
 
 .textlists .right {
+	flex: 2;
 	text-align: right;
 }
 

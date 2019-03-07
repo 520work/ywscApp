@@ -21,7 +21,8 @@ Page({
 			showModelStatus: false
 		},
 		searchMode: "highSearch",
-		searchText: "高级搜索"
+		searchText: "高级搜索",
+		reachBottomStatus: true
 	},
 	onLoad: function(options) {
 		var that = this;
@@ -164,7 +165,7 @@ Page({
 				wx.hideLoading();
 				var numData = res.data;
 				var pageIndex = that.data.pageIndex;
-				if (numData == 0) {
+				if (numData.length == 0) {
 					//初始化进入没数据
 					if (searchType == 'pageIn') {
 						that.setData({
@@ -204,9 +205,18 @@ Page({
 						that.setData({
 							moreNum: true,
 							noNum: false,
+							reachBottomStatus: false,
 							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 						});
 					};
+				} else if (numData.length > 0 && numData.length < 30){
+					that.setData({
+						moreNum: true,
+						noNum: false,
+						reachBottomStatus: false,
+						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+					});
+					that.handleData(numData, pageIndex, that);
 				} else {
 					that.handleData(numData, pageIndex, that);
 				};
@@ -271,11 +281,16 @@ Page({
 		that.setData({
 			moreNum: true,
 			noNum: false,
+			reachBottomStatus: true,
 			moreText: '上拉加载更多'
 		});
 		pageIndex++;
 		var numListData = that.data.numListData;
-
+		for (var i = 0; i < numData.length; i++) {
+			var originalOccupyMoney = numData[i].occupyMoney;
+			var formatOccupyMoney = that.keepTwoFloor(originalOccupyMoney);
+			numData[i].occupyMoney = formatOccupyMoney;
+		};
 		if (numListData == undefined) {
 			that.setData({
 				numListData: numData,
@@ -328,17 +343,20 @@ Page({
 	//底部刷新
 	onReachBottom: function(options) {
 		var that = this;
-		that.setData({
-			moreText: '加载中...'
-		});
-		var hsQueryData = wx.getStorageSync('hsQueryData');
-		if (hsQueryData) {
-			hsQueryData.pageIndex = that.data.pageIndex;
-			that.screenCardFun(hsQueryData);
-		} else {
-			var newPage = this.data.pageIndex;
-			this.searchFun(newPage);
-		};
+		var reachBottomStatus = that.data.reachBottomStatus;
+		if(reachBottomStatus){
+			that.setData({
+				moreText: '加载中...'
+			});
+			var hsQueryData = wx.getStorageSync('hsQueryData');
+			if (hsQueryData) {
+				hsQueryData.pageIndex = that.data.pageIndex;
+				that.screenCardFun(hsQueryData);
+			} else {
+				var newPage = this.data.pageIndex;
+				this.searchFun(newPage);
+			};
+		}
 	},
 	highSearchFun: function(e) {
 		var city = this.data.city;
@@ -377,5 +395,20 @@ Page({
 		this.setData({
 			'tipsModelInfo.showModelStatus': false
 		});
+	},
+	//保留小数点后两位
+	keepTwoFloor: function(value) {
+		var num = Number(value), twoFloorNum;
+		if (Number.isInteger(num)) {
+			twoFloorNum = Number(num).toFixed(2);
+		} else {
+			var numArr = num.toString().split('.');
+			if(numArr[1].length>=2){
+				twoFloorNum = Math.floor(num * 100) / 100;
+			} else {
+				twoFloorNum = Number(num).toFixed(2);
+			};
+		};
+		return twoFloorNum;
 	}
 })

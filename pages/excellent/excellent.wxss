@@ -63,7 +63,7 @@
 	color: #666;
 }
 .zfsm{
-	padding: 0 40rpx;
+	padding: 0 40rpx 30rpx;
 	font-size: 20rpx;
 	color: #666666;
 }

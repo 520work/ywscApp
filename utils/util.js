@@ -147,11 +147,11 @@ var initAddress = function(that, tcity, source) {
 	}
 };
 //去套餐页面
-var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, dataCode, sale) {
+var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, dataCode, sale, tmType) {
 	wx.navigateTo({
 		url: '../taocanBoard/taocanBoard?telNum=' + telNum + '&whereFrom=' + whereFrom + '&occupyMoney=' + occupyMoney +
 			'&qlTelNum=' + qlTelNum + '&qlTelNum1=' + qlTelNum1 + '&doubleNumStatus=' + doubleNumStatus + '&dataCode=' +
-			dataCode + '&sale=' + sale
+			dataCode + '&sale=' + sale + '&tmType=' + tmType
 	});
 };
 
@@ -178,19 +178,17 @@ var getUserLocation = function(that) {
 					});
 				},
 				fail: err => {
-					wx.showToast({
-						title: '获取用户位置失败',
-						icon: 'none',
-						duration: 2000
+					wx.setStorage({
+						key: "city",
+						data: '全国'
 					});
 				}
 			});
 		},
 		fail: err => {
-			wx.showToast({
-				title: '获取用户位置失败',
-				icon: 'none',
-				duration: 2000
+			wx.setStorage({
+				key: "city",
+				data: '全国'
 			});
 		}
 	});
@@ -217,52 +215,61 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that) {
 			"Content-Type": "application/x-www-form-urlencoded"
 		},
 		success: res => {
-			wx.requestPayment({
-				timeStamp: res.data.timeStamp,
-				nonceStr: res.data.nonceStr,
-				package: res.data.packageStr,
-				signType: res.data.signType,
-				paySign: res.data.paySign,
-				success(res) {
-					wx.hideLoading();
-					wx.showLoading({
-						mask: true,
-						title: '支付结果确认中'
-					});
-					wx.redirectTo({
-						url: '../pay/paySuccess/paySuccess'
-					});
-				},
-				fail(res) {
-					console.log(res);
-					wx.hideLoading();
-					wx.showLoading({
-						mask: true,
-						title: '支付结果确认中'
-					});
-					var orderId = wx.getStorageSync('orderId');
-					wx.request({
-						url: ajaxUrl + 'orderCardServiceController.do?updateOrder',
-						method: 'POST',
-						data: {
-							id: orderId
-						},
-						header: {
-							"Content-Type": "application/x-www-form-urlencoded"
-						},
-						success: res => {
-							wx.redirectTo({
-								url: '../pay/payFail/payFail'
-							})
-						}
-					});
-				}
-			})
+			console.log(res);
+			if(res.data.code == 200){
+				wx.requestPayment({
+					timeStamp: res.data.timeStamp,
+					nonceStr: res.data.nonceStr,
+					package: res.data.packageStr,
+					signType: res.data.signType,
+					paySign: res.data.paySign,
+					success(res) {
+						wx.hideLoading();
+						wx.showLoading({
+							mask: true,
+							title: '支付结果确认中'
+						});
+						wx.redirectTo({
+							url: '../pay/paySuccess/paySuccess'
+						});
+					},
+					fail(res) {
+						console.log(res);
+						wx.hideLoading();
+						wx.showLoading({
+							mask: true,
+							title: '支付结果确认中'
+						});
+						var orderId = wx.getStorageSync('orderId');
+						wx.request({
+							url: ajaxUrl + 'orderCardServiceController.do?updateOrder',
+							method: 'POST',
+							data: {
+								id: orderId
+							},
+							header: {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							success: res => {
+								wx.redirectTo({
+									url: '../pay/payFail/payFail'
+								})
+							}
+						});
+					}
+				})
+			} else {
+				wx.hideLoading();
+				that.setData({
+					'tipsModelInfo.title': '微信支付异常,请稍后再试',
+					'tipsModelInfo.showModelStatus': true
+				});
+			};
 		},
 		fail: err => {
 			wx.hideLoading();
 			that.setData({
-				'tipsModelInfo.title': '支付异常',
+				'tipsModelInfo.title': '支付异常,请稍后再试',
 				'tipsModelInfo.showModelStatus': true
 			});
 		}

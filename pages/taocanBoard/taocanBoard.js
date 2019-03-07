@@ -9,6 +9,7 @@ Page({
 		zzid: 0,
 		hfid: 0,
 		checkValue: true,
+		yhqCode: '',
 		tipsModelInfo: {
 			title: '',
 			btn: '确定',
@@ -35,6 +36,16 @@ Page({
 			that.setData({
 				showPrice: false,
 				payText: '下一步'
+			});
+		};
+		//判断是否是从靓号特卖过来的用户
+		if(options.tmType == 'lhtm'){
+			that.setData({
+				fromLhtm: true
+			});
+		} else {
+			that.setData({
+				fromLhtm: false
 			});
 		};
 		//获取URL传递过来的参数 并显示在套餐页面顶部
@@ -81,10 +92,10 @@ Page({
 		//优惠券获取
 		var saleType = options.sale;
 		if (saleType != 'tm') {
-			wx.showLoading({
-				mask: true,
-				title: '优惠券加载中'
-			});
+			// 			wx.showLoading({
+			// 				mask: true,
+			// 				title: '优惠券加载中'
+			// 			});
 			var phoneNum = that.data.telNum.replace(/\s+/g, "");
 			that.yhqInfo(that, phoneNum, openId, doubleNumStatus, options, whereFrom, occupyMoney);
 		} else {
@@ -181,7 +192,11 @@ Page({
 		//切换增值业务信息
 		var zengzhiData = basicPackageLists[ids].PackageList[0].Optional_package;
 		//切换预存话费信息
-		var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
+		if(this.data.fromLhtm == true){
+			var yucunData = [30000];
+		} else {
+			var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
+		};
 		var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
 		var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)); //订单总计
@@ -211,7 +226,11 @@ Page({
 		//切换增值业务信息
 		var zengzhiData = liuliangPackage.Optional_package;
 		//切换预存话费信息
-		var yucunData = liuliangPackage.deposit_money;
+		if(this.data.fromLhtm == true){
+			var yucunData = [30000];
+		} else {
+			var yucunData = liuliangPackage.deposit_money;
+		};
 		var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
 		var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine));
@@ -354,62 +373,71 @@ Page({
 		});
 		this.hide();
 	},
-	//优惠券接口
+	//禁用优惠券
 	yhqInfo: function(that, phoneNum, openId, doubleNumStatus, options, whereFrom, occupyMoney) {
-		wx.request({
-			url: ajaxUrl + 'xborderCardServiceController.do?xbyhqInfo',
-			method: 'POST',
-			data: {
-				phone_number: phoneNum,
-				openid: openId
-			},
-			header: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			success: function(res) {
-				wx.hideLoading();
-				var canUseCouArr = [];
-				if (res.data.length == 0) {
-					that.setData({
-						noCoupon: true,
-						yhqCode: '',
-						yhje: '0.00'
-					});
-				} else {
-					var couData = res.data;
-					for (var i = 0; i < couData.length; i++) {
-						if (couData[i].usingState == '0') {
-							canUseCouArr.push(couData[i]);
-						};
-					};
-					//默认优惠券
-					if (canUseCouArr.length > 0) {
-						var hmzyf = that.data.occupyMoney; //号码占用费
-						var discount = canUseCouArr[0].faceValue / 1000; //折扣
-						var yhje = that.keepTwoFloor(hmzyf * (1 - discount));
-						var yhqCode = canUseCouArr[0].ticketCode;
-					} else {
-						var yhje = '0.00';
-						var yhqCode = '';
-					};
-					that.setData({
-						canUseCoupon: canUseCouArr,
-						yhje: yhje,
-						yhqCode: yhqCode
-					});
-				};
-				that.getTaocanInfo(that, doubleNumStatus, options, whereFrom, occupyMoney);
-			},
-			fail: function(err) {
-				console.log(err);
-				wx.showToast({
-					title: '优惠券获取失败，请稍后再试。',
-					icon: 'none',
-					duration: 2000
-				});
-			}
+		that.setData({
+			noCoupon: true,
+			yhqCode: '',
+			yhje: '0.00'
 		});
+		that.getTaocanInfo(that, doubleNumStatus, options, whereFrom, occupyMoney);
 	},
+	//优惠券接口
+	// 	yhqInfo: function(that, phoneNum, openId, doubleNumStatus, options, whereFrom, occupyMoney) {
+	// 		wx.request({
+	// 			url: ajaxUrl + 'xborderCardServiceController.do?xbyhqInfo',
+	// 			method: 'POST',
+	// 			data: {
+	// 				phone_number: phoneNum,
+	// 				openid: openId
+	// 			},
+	// 			header: {
+	// 				"Content-Type": "application/x-www-form-urlencoded"
+	// 			},
+	// 			success: function(res) {
+	// 				wx.hideLoading();
+	// 				var canUseCouArr = [];
+	// 				if (res.data.length == 0) {
+	// 					that.setData({
+	// 						noCoupon: true,
+	// 						yhqCode: '',
+	// 						yhje: '0.00'
+	// 					});
+	// 				} else {
+	// 					var couData = res.data;
+	// 					for (var i = 0; i < couData.length; i++) {
+	// 						if (couData[i].usingState == '0') {
+	// 							canUseCouArr.push(couData[i]);
+	// 						};
+	// 					};
+	// 					//默认优惠券
+	// 					if (canUseCouArr.length > 0) {
+	// 						var hmzyf = that.data.occupyMoney; //号码占用费
+	// 						var discount = canUseCouArr[0].faceValue / 1000; //折扣
+	// 						var yhje = that.keepTwoFloor(hmzyf * (1 - discount));
+	// 						var yhqCode = canUseCouArr[0].ticketCode;
+	// 					} else {
+	// 						var yhje = '0.00';
+	// 						var yhqCode = '';
+	// 					};
+	// 					that.setData({
+	// 						canUseCoupon: canUseCouArr,
+	// 						yhje: yhje,
+	// 						yhqCode: yhqCode
+	// 					});
+	// 				};
+	// 				that.getTaocanInfo(that, doubleNumStatus, options, whereFrom, occupyMoney);
+	// 			},
+	// 			fail: function(err) {
+	// 				console.log(err);
+	// 				wx.showToast({
+	// 					title: '优惠券获取失败，请稍后再试。',
+	// 					icon: 'none',
+	// 					duration: 2000
+	// 				});
+	// 			}
+	// 		});
+	// 	},
 	//请求套餐数据
 	getTaocanInfo: function(that, doubleNumStatus, options, whereFrom, occupyMoney) {
 		if (doubleNumStatus == "true") {
@@ -431,7 +459,6 @@ Page({
 					"Content-Type": "application/x-www-form-urlencoded"
 				},
 				success: function(res) {
-					console.log("456");
 					wx.hideLoading();
 					if (res.data.code == 201) {
 						console.log("未查询到该号码信息");
@@ -454,7 +481,7 @@ Page({
 		var zengzhiData;
 		var yucunData;
 		var yucunjine;
-		//如果是优质套餐过来的用户
+		//判断用户进入号板来源 如果是优质套餐dataCode会有值 如果是号码直选则为undefined
 		if (that.data.dataCode == undefined) {
 			//语音资费信息
 			for (var i = 0; i < data.length; i++) {
@@ -502,7 +529,11 @@ Page({
 			//默认 增值业务信息
 			zengzhiData = data[0].PackageList[0].Optional_package;
 			//默认 预存话费信息
-			yucunData = data[0].PackageList[0].deposit_money;
+			if(this.data.fromLhtm == true){
+				yucunData = [30000];
+			} else {
+				yucunData = data[0].PackageList[0].deposit_money;
+			};
 			yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		} else {
 			for (var i = 0; i < data.length; i++) {
@@ -513,14 +544,23 @@ Page({
 						var packageInfo = dataSon[k].package_name;
 						var npinfo = packageInfo.split("<br/>");
 						packageTitle[0] = {};
-						packageTitle[0].name = npinfo[0];
+						if(npinfo[0] == '流量不限用'){
+							packageTitle[0].name = '流量不限量';
+						} else {
+							packageTitle[0].name = npinfo[0];
+						};
 						packageTitle[0].price = npinfo[1];
 						//默认 资费说明信息
 						zifeiData = dataSon[k].standard;
 						//默认 增值业务信息
 						zengzhiData = dataSon[k].Optional_package;
 						//默认 预存话费信息
-						yucunData = dataSon[k].deposit_money;
+						
+						if(this.data.fromLhtm == true){
+							yucunData = [30000];
+						} else {
+							yucunData = dataSon[k].deposit_money;
+						};
 						yucunjine = Number(yucunData[0] / 100).toFixed(2);
 					};
 				};
@@ -638,9 +678,9 @@ Page({
 						"increment": increment, //增值业务名
 						"incrementId": incrementId, //增值业务id
 						"pre_deposit": this.data.yucunData[this.data.hfid] / 100, //预存
-						"yhqCode": '',
+						"yhqCode": this.data.yhqCode,
 						"total_money": this.data.orderTotal, //总计
-						"paid_money": this.data.payMoney, //实付
+						"paid_money": this.data.orderTotal, //实付
 						"user_name": this.data.addressData.contacts, //收货人姓名
 						"phone": this.data.addressData.phonenumber, //收货人电话
 						"user_address": this.data.addressData.userAddress //收货人地址   
@@ -671,30 +711,37 @@ Page({
 									key: 'orderId',
 									data: res.data[0].id
 								});
-								if (res.data[0].discountMoney == '0') {
-									wx.setStorage({
-										key: 'yufu',
-										data: false
+								if(res.data[0].preDeposit == '-1'){
+									this.setData({
+										'tipsModelInfo.title': '您的预存与实际不符，请重新选择',
+										'tipsModelInfo.showModelStatus': true
 									});
-									//调用付款接口
-									var payOpenId = wx.getStorageSync('payOpenId'),
-										paidMoney = res.data[0].paidMoney,
-										orderNo = res.data[0].outTradeNo;
-									var that = this;
-									util.wxPay(payOpenId, paidMoney, orderNo, that);
 								} else {
-									//支付金额大于3000 付定金
-									wx.setStorage({
-										key: 'yufu',
-										data: true
-									});
-									wx.navigateTo({
-										url: '../pay/payAbovePause/pap?payOpenId=' + wx.getStorageSync('payOpenId') + '&orderNo=' + res.data[
-												0].outTradeNo + '&phoneNumber=' + res.data[0].phoneNumber + '&phoneNumber1=' + res.data[0].phoneNumber1 +
-											'&city=' + res.data[0].city + '&occupyMoney=' + res.data[0].occupyMoney + '&preDeposit=' + res.data[
-												0].preDeposit + '&yhMoney=' + res.data[0].yhMoney + '&discountMoney=' + res.data[0].discountMoney +
-											'&paidMoney=' + res.data[0].paidMoney
-									})
+									if (res.data[0].discountMoney == '0') {
+										wx.setStorage({
+											key: 'yufu',
+											data: false
+										});
+										//调用付款接口
+										var payOpenId = wx.getStorageSync('payOpenId'),
+											paidMoney = res.data[0].paidMoney,
+											orderNo = res.data[0].outTradeNo;
+										var that = this;
+										util.wxPay(payOpenId, paidMoney, orderNo, that);
+									} else {
+										//支付金额大于3000 付定金
+										wx.setStorage({
+											key: 'yufu',
+											data: true
+										});
+										wx.navigateTo({
+											url: '../pay/payAbovePause/pap?payOpenId=' + wx.getStorageSync('payOpenId') + '&orderNo=' + res.data[
+													0].outTradeNo + '&phoneNumber=' + res.data[0].phoneNumber + '&phoneNumber1=' + res.data[0].phoneNumber1 +
+												'&city=' + res.data[0].city + '&occupyMoney=' + res.data[0].occupyMoney + '&preDeposit=' + res.data[
+													0].preDeposit + '&yhMoney=' + res.data[0].yhMoney + '&discountMoney=' + res.data[0].discountMoney +
+												'&paidMoney=' + res.data[0].paidMoney
+										})
+									};
 								};
 							},
 							fail: err => {
@@ -763,12 +810,13 @@ Page({
 	},
 	//保留小数点后两位
 	keepTwoFloor: function(value) {
-		var num = Number(value), twoFloorNum;
+		var num = Number(value),
+			twoFloorNum;
 		if (Number.isInteger(num)) {
 			twoFloorNum = Number(num).toFixed(2);
 		} else {
 			var numArr = num.toString().split('.');
-			if(numArr[1].length>=2){
+			if (numArr[1].length >= 2) {
 				twoFloorNum = Math.floor(num * 100) / 100;
 			} else {
 				twoFloorNum = Number(num).toFixed(2);

@@ -3,17 +3,7 @@ App({
 	globalData: {
 		userInfo: null,
 		idSwitch: 0,
-		showModalStatus: false,
-		addressData: [{
-			name: '收货人',
-			tel: '17011112222',
-			address: '北京市朝阳区恒通商务园B23A座二楼'
-		}, {
-			name: '收货人2',
-			tel: '18011112222',
-			address: '北京市xxxxxxxxxxxxxxx',
-			defaultAddress: true
-		}]
+		showModalStatus: false
 	},
 	/**
 	 * 当小程序从前台进入后台，会触发 onHide
@@ -60,6 +50,7 @@ App({
 		} else {
 			wx.login({
 				success: function(res) {
+					console.log(res);
 					if (res.code) {
 						wx.request({
 							url: 'https://www.m10027.com/WeChatServices/xiaochengxu.ashx?',
@@ -74,52 +65,44 @@ App({
 									key: 'payOpenId',
 									data: openIdRes.data.info.openid
 								});
-								wx.request({
-									url: 'https://www.m10027.com/WeChatServices/xiaochengxu.ashx?',
-									data: {
-										requestType: 'GetOpenIdForUnionId',
-										unionId: openIdRes.data.info.unionid,
-										mp: 1
-									},
-									header: {
-										'content-type': 'application/x-www-form-urlencoded' // 默认值
-									},
-									success: function(res) {
-										if (res.data.Status == true) {
-											wx.setStorage({
-												key: "openId",
-												data: res.data.Value
-											});
-										} else {
-											wx.showToast({
-												title: '请先关注远微商城公众号',
-												icon: 'none',
-												duration: 2000
-											});
+								console.log(openIdRes);
+								if (openIdRes.data.info.unionid == null) {
+									wx.showToast({
+										title: '获取用户信息失败，请稍后再试。',
+										icon: 'none',
+										duration: 2000
+									});
+								} else {
+									wx.request({
+										url: 'https://www.m10027.com/WeChatServices/xiaochengxu.ashx?',
+										data: {
+											requestType: 'GetOpenIdForUnionId',
+											unionId: openIdRes.data.info.unionid,
+											mp: 1
+										},
+										header: {
+											'content-type': 'application/x-www-form-urlencoded' // 默认值
+										},
+										success: function(res) {
+											console.log(res);
+											if (res.data.Status == true) {
+												wx.setStorage({
+													key: "openId",
+													data: res.data.Value
+												});
+											} else {
+												//提示用户去关注远微商城公众号
+												wx.setStorage({
+													key: "isSubscribe",
+													data: true
+												});
+											}
+										},
+										fail: function(err) {
+											console.log(err);
 										}
-									},
-									fail: function(err) {
-										console.log(err);
-									}
-								});
-
-								// 								// 判断openId是否获取成功
-								// 								if (openIdRes.data.openid != null & openIdRes.data.openid != undefined) {
-								// 									// 询问用户 是否授权
-								// 									wx.getUserInfo({
-								// 										success: function(data) {
-								// 											wx.setStorage({
-								// 												key: "openId",
-								// 												data: openIdRes.data.openid
-								// 											});
-								// 										},
-								// 										fail: function(failData) {
-								// 											console.info("用户拒绝授权");
-								// 										}
-								// 									});
-								// 								} else {
-								// 									console.log("获取用户openId失败");
-								// 								}
+									});
+								};
 							},
 							fail: function(error) {
 								wx.showToast({
@@ -176,6 +159,7 @@ App({
 						'content-type': 'application/json'
 					},
 					success: function(res) {
+						console.log(res);
 						var location = res.data.info.city.replace('市', '');
 						wx.setStorage({
 							key: "city",
@@ -183,19 +167,17 @@ App({
 						});
 					},
 					fail: err => {
-						wx.showToast({
-							title: '获取用户位置失败',
-							icon: 'none',
-							duration: 2000
+						wx.setStorage({
+							key: "city",
+							data: '全国'
 						});
 					}
 				});
 			},
 			fail: err => {
-				wx.showToast({
-					title: '获取用户位置失败',
-					icon: 'none',
-					duration: 2000
+				wx.setStorage({
+					key: "city",
+					data: '全国'
 				});
 			}
 		});

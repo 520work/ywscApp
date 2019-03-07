@@ -15,14 +15,30 @@
 			</view>
 		</view>
 	</view>
-	<view class="lhtm-body column">
-		<block wx:for="{{lianghaoListData}}">
+	<view class="lhtm-body">
+		<!-- <block wx:for="{{lianghaoListData}}">
 			<view class="row" bindtap="chooseTaocan" data-telNum="{{item.phoneNumber}}" data-whereFrom ="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
 				<text class="telnum font18">{{item.phoneNumber}}</text>
 				<image class="numbertype" src="../../images/common_liang.png"></image>
 				<text class="wherefrom font14">{{item.city}}</text>
 				<text class="op font12">￥{{item.orderMoney}}</text>
 				<text class="np font14">￥{{item.occupyMoney}}</text>
+			</view>
+		</block> -->
+		<block wx:for="{{lianghaoListData}}">
+			<view class="lianghaolists" bindtap="chooseTaocan" data-telNum="{{item.phoneNumber}}" data-whereFrom ="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
+				<view class="top row">
+					<text class="tel">{{item.phoneNumber}}</text>
+					<!-- <text class="telScore">{{item.description}}</text> -->
+					<image class="numbertype" src="../../images/common_liang.png"></image>
+				</view>
+				<view class="bottom row">
+					<text class="wherefrom">{{item.city}}</text>
+					<view>
+						<text class="op">￥{{item.orderMoney}}</text>
+						<text class="np">￥{{item.occupyMoney}}</text>
+					</view>
+				</view>
 			</view>
 		</block>
 		<view wx:if="{{noNum}}" class="nonum">

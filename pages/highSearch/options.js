@@ -34,6 +34,10 @@ Page({
 			that.setData({
 				hsQueryData: dataBase.hsQueryData,
 			});
+			that.setData({
+				'hsQueryData.city': city,
+				'hsQueryData.code': code
+			});
 		} else {
 			var optionsDataArr = this.data.optionsData;
 			//搜索方式
@@ -99,6 +103,7 @@ Page({
 			//不含数位
 			var bhswValue = hsQueryDataStorage.bhsw;
 			if(bhswValue == ""){
+				var withoutFourStatusValue = false;
 			} else {
 				var withoutFourStatusValue = true;
 			};

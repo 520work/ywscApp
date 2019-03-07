@@ -79,8 +79,8 @@
 								 data-occupyMoney="{{item.occupyMoney}}">
 									<view class="top row">
 										<text class="tel">{{item.phoneNumber}}</text>
+										<!-- <text class="telScore">{{item.description}}</text> -->
 										<image class="numbertype" src="../../images/common_liang.png"></image>
-										<!-- <text wx:if="{{item.numberType == 0}}" class="iconfont icon-xinheart256"></text> -->
 									</view>
 									<view class="bottom row">
 										<text class="wherefrom">{{item.city}}</text>
@@ -491,3 +491,4 @@
 	<image src="../../images/totop.png" class='goTop' hidden='{{!floorstatus}}' bindtap="goTop"></image>
 	<template is="tip-model" data="{{...showModelInfo}}"></template>
 </view>
+<web-view wx:if="{{isSubscribe}}" src="https://www.m10027.com/wxlhhd/kmbsaoma/gz_page.html"></web-view>

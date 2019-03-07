@@ -5,6 +5,7 @@ var ajaxUrl = util.ajaxUrl;
 
 Page({
 	data: {
+		isSubscribe: false,
 		//首页轮播
 		focusImgUrls: [{
 				linkUrl: '#',
@@ -54,7 +55,7 @@ Page({
 		temaiSelect1: false,
 		inputVal: '',
 		vipholder: '请输入您登陆或绑定酷我音乐的手机号',
-		showModelInfo:{
+		showModelInfo: {
 			btn: '确定'
 		}
 	},
@@ -145,9 +146,17 @@ Page({
 		wx.navigateTo({
 			url: '../chooseNum/chooseNum'
 		})
+		// 		this.setData({
+		// 			'showModelInfo.showModelStatus': true,
+		// 			'showModelInfo.title': '正在维护中'
+		// 		});
 	},
 	//优质套餐跳转页面
 	goToYztc: function() {
+		// 		this.setData({
+		// 			'showModelInfo.showModelStatus': true,
+		// 			'showModelInfo.title': '正在维护中'
+		// 		});
 		wx.navigateTo({
 			url: '../excellent/excellent?code=yztc'
 		})
@@ -179,7 +188,7 @@ Page({
 		var telNum = e.currentTarget.dataset.telnum;
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
-		util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', '', 'tm');
+		util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', '', 'tm', 'lhtm');
 	},
 	//去套餐页
 	chooseTaocanQl: function(e) {
@@ -192,7 +201,7 @@ Page({
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
 		var doubleNumStatus = true;
-		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm');
+		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm', '');
 	},
 	//获取滚动条当前位置 
 	onPageScroll: function(e) {
@@ -225,6 +234,11 @@ Page({
 	 */
 	onLoad: function() {
 		var that = this;
+		if (wx.getStorageSync('isSubscribe')) {
+			that.setData({
+				isSubscribe: true
+			});
+		};
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
@@ -234,9 +248,16 @@ Page({
 			url: ajaxUrl + 'cardServiceController.do?bannerIndex&mp=1',
 			method: 'POST',
 			success: function(res) {
-				that.setData({
-					focusImgUrls: res.data
-				});
+				if (res) {
+					that.setData({
+						focusImgUrls: res.data
+					});
+				} else {
+					that.setData({
+						'showModelInfo.showModelStatus': true,
+						'showModelInfo.title': '正在维护中'
+					});
+				};
 			},
 			fail: function(err) {
 				wx.showToast({
@@ -278,6 +299,9 @@ Page({
 			},
 			fail: function(err) {
 				console.log(err);
+			},
+			complete: function(res){
+				wx.hideLoading();
 			}
 		});
 		//会员中心
@@ -288,7 +312,6 @@ Page({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: res => {
-				wx.hideLoading();
 				if (res.data.Status == true) {
 					var productListsArr = res.data.list;
 					for (var i = 0; i < productListsArr.length; i++) {
@@ -434,12 +457,12 @@ Page({
 									});
 								},
 								fail(res) {
-									if(res.errMsg == 'requestPayment:fail cancel'){
+									if (res.errMsg == 'requestPayment:fail cancel') {
 										that.setData({
 											'showModelInfo.showModelStatus': true,
 											'showModelInfo.title': '取消支付'
 										});
-									} else if(res.errMsg == 'requestPayment:fail'){
+									} else if (res.errMsg == 'requestPayment:fail') {
 										that.setData({
 											'showModelInfo.showModelStatus': true,
 											'showModelInfo.title': '支付失败'
@@ -470,9 +493,9 @@ Page({
 		};
 	},
 	//关闭提示框
-	goBackBtn: function(e){
+	goBackBtn: function(e) {
 		this.setData({
 			'showModelInfo.showModelStatus': false,
-		})	
+		})
 	}
 });

@@ -8,11 +8,12 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.3.0",
-	"appid": "wxff5265d0d79bbe1b",
+	"appid": "wxee6388a3b1c5ff55",
 	"projectname": "ywscApp",
 	"debugOptions": {
 		"hidedInDevtools": []

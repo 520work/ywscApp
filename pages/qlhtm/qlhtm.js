@@ -18,7 +18,8 @@ Page({
 		values: [0, 0, 0],
 		condition: false,
 		pageIndex: 0,
-		moreText: '上拉加载更多'
+		moreText: '上拉加载更多',
+		reachBottomStatus: true
 	},
 
 	/**
@@ -144,11 +145,14 @@ Page({
 	//底部刷新
 	onReachBottom: function(options) {
 		var that = this;
-		that.setData({
-			moreText: '加载中...'
-		});
-		var newPage = this.data.pageIndex;
-		this.searchFun(newPage);
+		var reachBottomStatus = that.data.reachBottomStatus;
+		if(reachBottomStatus){
+			that.setData({
+				moreText: '加载中...'
+			});
+			var newPage = this.data.pageIndex;
+			this.searchFun(newPage);
+		}
 	},
 	getTmCardList: function(searchData, searchType) {
 		var that = this;
@@ -202,10 +206,38 @@ Page({
 						that.setData({
 							moreNum: true,
 							noNum: false,
+							reachBottomStatus: false,
 							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 						});
 					};
+				} else if (qinglvData.length > 0 && qinglvData.length < 30) {
+					that.setData({
+						moreNum: true,
+						noNum: false,
+						reachBottomStatus: false,
+						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+					});
+					var qinglvListData = that.data.qinglvListData;
+					if (qinglvListData == undefined) {
+						that.formatTelNum(qinglvData);
+						that.setData({
+							qinglvListData: qinglvData
+						});
+					} else {
+						that.formatTelNum(qinglvData);
+						var newLhArray = qinglvListData.concat(qinglvData);
+
+						that.setData({
+							qinglvListData: newLhArray
+						});
+					}
 				} else {
+					that.setData({
+						moreNum: true,
+						noNum: false,
+						reachBottomStatus: true,
+						moreText: '上拉加载更多'
+					});
 					pageIndex++;
 					var qinglvListData = that.data.qinglvListData;
 					if (qinglvListData == undefined) {
@@ -253,7 +285,7 @@ Page({
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
 		var doubleNumStatus = true;
-		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm');
+		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm', '');
 	},
 	//格式化情侣号码
 	formatTelNum: function(numData) {

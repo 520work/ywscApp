@@ -17,9 +17,9 @@ Page({
 		values: [0, 0, 0],
 		condition: false,
 		pageIndex: 0,
-		moreText: '上拉加载更多'
+		moreText: '上拉加载更多',
+		reachBottomStatus: true
 	},
-
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -42,7 +42,6 @@ Page({
 				var cityDataArr = res.data;
 				for (var i = 0; i < cityDataArr.length; i++) {
 					var cityDataArrSon = cityDataArr[i].sub;
-					console.log(i);
 					for (var k = 0; k < cityDataArrSon.length; k++) {
 						var cityArr = [];
 						if (cityDataArrSon[k].name == localCity) {
@@ -152,13 +151,33 @@ Page({
 						that.setData({
 							moreNum: true,
 							noNum: false,
+							reachBottomStatus: false,
 							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 						});
 					};
+				} else if (lianghaoData.length > 0 && lianghaoData.length < 30) {
+					that.setData({
+						moreNum: true,
+						noNum: false,
+						reachBottomStatus: false,
+						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+					});
+					var lianghaoListData = that.data.lianghaoListData;
+					if (lianghaoListData == undefined) {
+						that.setData({
+							lianghaoListData: lianghaoData,
+						});
+					} else {
+						var newLhArray = lianghaoListData.concat(lianghaoData);
+						that.setData({
+							lianghaoListData: newLhArray,
+						});
+					}
 				} else {
 					that.setData({
 						moreNum: true,
 						noNum: false,
+						reachBottomStatus: true,
 						moreText: '上拉加载更多'
 					});
 					pageIndex++;
@@ -234,16 +253,18 @@ Page({
 			moreNum: false,
 		});
 		this.searchFun(0);
-
 	},
 	//底部刷新
 	onReachBottom: function(options) {
 		var that = this;
-		that.setData({
-			moreText: '加载中...'
-		});
-		var newPage = this.data.pageIndex;
-		this.searchFun(newPage);
+		var reachBottomStatus = that.data.reachBottomStatus;
+		if(reachBottomStatus){
+			that.setData({
+				moreText: '加载中...'
+			});
+			var newPage = this.data.pageIndex;
+			this.searchFun(newPage);
+		}
 	},
 	//去套餐页
 	chooseTaocan: function(e) {
@@ -254,6 +275,6 @@ Page({
 		var telNum = e.currentTarget.dataset.telnum;
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
-		util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', '', 'tm');
+		util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', '', 'tm', 'lhtm');
 	}
 })
