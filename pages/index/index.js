@@ -1,4 +1,3 @@
-//index.js
 const app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
@@ -175,16 +174,13 @@ Page({
 	},
 	//卡盟 抢先体验
 	kmBuy: function() {
-		wx.navigateTo({
-			url: '../kmBuy/kmBuy'
-		})
+// 		wx.navigateTo({
+// 			url: '../kmBuy/kmBuy'
+// 		})
 	},
 	//去套餐页
 	chooseTaocanLl: function(e) {
-		wx.setStorage({
-			key: 'ywscOrderType',
-			data: '1'
-		});
+		getApp().globalData.ywscOrderType = '1';
 		var telNum = e.currentTarget.dataset.telnum;
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
@@ -192,10 +188,7 @@ Page({
 	},
 	//去套餐页
 	chooseTaocanQl: function(e) {
-		wx.setStorage({
-			key: 'ywscOrderType',
-			data: '1'
-		});
+		getApp().globalData.ywscOrderType = '1';
 		var qlTelNum = e.currentTarget.dataset.qltelnum;
 		var qlTelNum1 = e.currentTarget.dataset.qltelnum1;
 		var whereFrom = e.currentTarget.dataset.wherefrom;
@@ -234,10 +227,8 @@ Page({
 	 */
 	onLoad: function() {
 		var that = this;
-		if (wx.getStorageSync('isSubscribe')) {
-			that.setData({
-				isSubscribe: true
-			});
+		if (app.globalData.isSubscribe) {
+			getApp().globalData.isSubscribe = true;
 		};
 		wx.showLoading({
 			title: '加载中...',
@@ -337,7 +328,8 @@ Page({
 	},
 	onShow: function() {
 		//移除高级筛选参数数据
-		wx.removeStorageSync('hsQueryData');
+		// wx.removeStorageSync('hsQueryData');
+		getApp().globalData.hsQueryData = '';
 	},
 	//显示底部抽屉
 	showModal: function(e) {
@@ -423,7 +415,7 @@ Page({
 					mask: true,
 					title: '加载中'
 				});
-				var openId = wx.getStorageSync('openId'),
+				var openId = app.globalData.openId,
 					itemId = that.data.itemId,
 					productType = that.data.productType,
 					productName = that.data.productName;

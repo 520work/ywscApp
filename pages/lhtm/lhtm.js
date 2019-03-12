@@ -1,4 +1,4 @@
-// pages/lhtm/lhtm.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -26,7 +26,7 @@ Page({
 	onLoad: function(options) {
 		var that = this;
 		//获取用户所在城市
-		var localCity = wx.getStorageSync('city');
+		var localCity = app.globalData.city;
 		//查询城市信息 并初始化地址选择器
 		wx.request({
 			url: ajaxUrl + 'eCardServiceController.do?selectCity',
@@ -61,7 +61,7 @@ Page({
 				console.log(err);
 			}
 		});
-		util.getUserLocation(that);
+		// util.getUserLocation(that);
 		var lhSearchData = {
 			city: localCity,
 			number: '',
@@ -213,11 +213,6 @@ Page({
 			}
 		});
 	},
-	// 	highSearchFun: function(e) {
-	// 		wx.navigateTo({
-	// 			url: '../highSearch/options/options'
-	// 		})
-	// 	}
 	//搜索
 	searchFun: function(pageIndex) {
 		var newCity = this.data.city;
@@ -268,10 +263,7 @@ Page({
 	},
 	//去套餐页
 	chooseTaocan: function(e) {
-		wx.setStorage({
-			key: 'ywscOrderType',
-			data: '1'
-		});
+		getApp().globalData.ywscOrderType = '1';
 		var telNum = e.currentTarget.dataset.telnum;
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;

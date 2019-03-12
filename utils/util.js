@@ -1,18 +1,4 @@
-const formatTime = date => {
-	const year = date.getFullYear()
-	const month = date.getMonth() + 1
-	const day = date.getDate()
-	const hour = date.getHours()
-	const minute = date.getMinutes()
-	const second = date.getSeconds()
-
-	return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-}
-
-const formatNumber = n => {
-	n = n.toString()
-	return n[1] ? n : '0' + n
-}
+var app = getApp();
 var ajaxUrl = 'https://www.m10027.com/jeewx/';
 
 //省市区三联动 piker选项操作
@@ -147,7 +133,8 @@ var initAddress = function(that, tcity, source) {
 	}
 };
 //去套餐页面
-var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, dataCode, sale, tmType) {
+var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, dataCode, sale,
+	tmType) {
 	wx.navigateTo({
 		url: '../taocanBoard/taocanBoard?telNum=' + telNum + '&whereFrom=' + whereFrom + '&occupyMoney=' + occupyMoney +
 			'&qlTelNum=' + qlTelNum + '&qlTelNum1=' + qlTelNum1 + '&doubleNumStatus=' + doubleNumStatus + '&dataCode=' +
@@ -156,43 +143,44 @@ var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlT
 };
 
 //获取用户当前位置（市）
-var getUserLocation = function(that) {
-	wx.getLocation({
-		type: 'wgs84',
-		success: function(res) {
-			var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-			var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-			wx.request({
-				url: 'https://www.m10027.com/WeChatServices/ServicesForCommon.ashx?requestType=Geocoder',
-				data: {
-					lat: latitude,
-					lng: longitude
-				},
-				header: {
-					'content-type': 'application/json'
-				},
-				success: function(res) {
-					var location = res.data.info.city.replace('市', '');
-					that.setData({
-						'city': location,
-					});
-				},
-				fail: err => {
-					wx.setStorage({
-						key: "city",
-						data: '全国'
-					});
-				}
-			});
-		},
-		fail: err => {
-			wx.setStorage({
-				key: "city",
-				data: '全国'
-			});
-		}
-	});
-};
+// var getUserLocation = function(that) {
+// 	wx.getLocation({
+// 		type: 'wgs84',
+// 		success: function(res) {
+// 			var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+// 			var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+// 			wx.request({
+// 				url: 'https://www.m10027.com/WeChatServices/ServicesForCommon.ashx?requestType=getcoder',
+// 				data: {
+// 					lat: latitude,
+// 					lng: longitude
+// 				},
+// 				header: {
+// 					'content-type': 'application/json'
+// 				},
+// 				success: function(res) {
+// 					console.log(res);
+// 					var location = res.data.info.city.replace('市', '');
+// 					that.setData({
+// 						'city': location,
+// 					});
+// 				},
+// 				fail: err => {
+// 					wx.setStorage({
+// 						key: "city",
+// 						data: '全国'
+// 					});
+// 				}
+// 			});
+// 		},
+// 		fail: err => {
+// 			wx.setStorage({
+// 				key: "city",
+// 				data: '全国'
+// 			});
+// 		}
+// 	});
+// };
 
 //付款接口
 var wxPay = function(payOpenId, paidMoney, orderNo, that) {
@@ -209,14 +197,14 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that) {
 			ruleType: '2',
 			paywx: '6',
 			orderno: orderNo,
-			spname: '远微商城微信小程序'
+			spname: '号卡商城微信小程序'
 		},
 		header: {
 			"Content-Type": "application/x-www-form-urlencoded"
 		},
 		success: res => {
 			console.log(res);
-			if(res.data.code == 200){
+			if (res.statusCode == 200) {
 				wx.requestPayment({
 					timeStamp: res.data.timeStamp,
 					nonceStr: res.data.nonceStr,
@@ -229,6 +217,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that) {
 							mask: true,
 							title: '支付结果确认中'
 						});
+						
 						wx.redirectTo({
 							url: '../pay/paySuccess/paySuccess'
 						});
@@ -240,7 +229,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that) {
 							mask: true,
 							title: '支付结果确认中'
 						});
-						var orderId = wx.getStorageSync('orderId');
+						var orderId = app.globalData.orderId;
 						wx.request({
 							url: ajaxUrl + 'orderCardServiceController.do?updateOrder',
 							method: 'POST',
@@ -276,12 +265,11 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that) {
 	});
 };
 module.exports = {
-	formatTime: formatTime,
 	openAddressModel: openAddressModel,
 	bindChange: bindChange,
 	initAddress: initAddress,
 	ajaxUrl: ajaxUrl,
 	chooseTaocan: chooseTaocan,
-	getUserLocation: getUserLocation,
+	// getUserLocation: getUserLocation,
 	wxPay: wxPay
 }

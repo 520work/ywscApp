@@ -29,6 +29,6 @@ Page({
 	  var payOpenId = that.data.payOpenId;
 	  var paidMoney = that.data.discountMoney;
 	  var orderNo = that.data.orderNo;
-	  util.wxPay(payOpenId, paidMoney, orderNo, that);
+		util.wxPay(payOpenId, paidMoney, orderNo, that);
   }
 })

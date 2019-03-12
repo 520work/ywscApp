@@ -1,4 +1,4 @@
-// pages/myOrder/myOrder.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -12,7 +12,7 @@ Page({
 			mask: true,
 			title: '订单加载中'
 		});
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		that.getOrderLists(openId, that);
 	},
 	//获取订单列表信息
@@ -244,18 +244,9 @@ Page({
 	containuePay: function(e) {
 		var orderId = e.currentTarget.dataset.orderid;
 		var orderType = e.currentTarget.dataset.ordertype;
-		wx.setStorage({
-			key: 'ywscOrderType',
-			data: orderType
-		});
-		wx.setStorage({
-			key: 'orderId',
-			data: orderId
-		});
-		wx.setStorage({
-			key: 'yufu',
-			data: true
-		});
+		getApp().globalData.ywscOrderType = orderType;
+		getApp().globalData.orderId = orderId;
+		getApp().globalData.yufu = true;
 		wx.redirectTo({
 			url: '../pay/paySuccess/paySuccess'
 		});
@@ -300,7 +291,7 @@ Page({
 					icon: 'success',
 					duration: 2000
 				});
-				var openId = wx.getStorageSync('openId');
+				var openId = app.globalData.openId;
 				var that = this;
 				var navid = that.data.navid;
 				that.getOrderLists(openId, that);
@@ -350,7 +341,7 @@ Page({
 						icon: 'success',
 						duration: 2000
 					});
-					var openId = wx.getStorageSync('openId');
+					var openId = app.globalData.openId;
 					var navid = that.data.navid;
 					that.getOrderLists(openId, that);
 					that.setData({
@@ -380,7 +371,7 @@ Page({
 						icon: 'success',
 						duration: 2000
 					});
-					var openId = wx.getStorageSync('openId');
+					var openId = app.globalData.openId;
 					var navid = that.data.navid;
 					that.getOrderLists(openId, that);
 					that.setData({

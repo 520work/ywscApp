@@ -1,4 +1,4 @@
-// pages/icard/icard.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -13,7 +13,7 @@ Page({
 	onLoad: function(options) {
 		var that = this;
 		//地址显示
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		wx.request({
 			url: ajaxUrl + 'userAddressController.do?addressList' + '&openid=' + openId,
 			success: function(res) {
@@ -50,7 +50,7 @@ Page({
 	},
 	onShow: function() {
 		var that = this;
-		var addressData = wx.getStorageSync("addressData");
+		var addressData = app.globalData.addressData;
 		if (addressData !== undefined) {
 			that.setData({
 				addressStatus: true,
@@ -176,10 +176,7 @@ Page({
 	 */
 	//去购买
 	goToBuy: function() {
-		wx.setStorage({
-			key: 'ywscOrderType',
-			data: '3'
-		});
+		getApp().globalData.ywscOrderType = '3';
 		//验证是否有收货地址
 		var addressStatus = this.data.addressStatus;
 		if (addressStatus == false) {
@@ -205,7 +202,7 @@ Page({
 		});
 		//验证购买数量
 		var buyNum = this.data.num;
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		wx.request({
 			url: ajaxUrl + 'iCardServiceController.do?selectTime',
 			method: 'POST',
@@ -240,17 +237,11 @@ Page({
 						user_address: this.data.addressData.userAddress,
 					};
 					//验证身份信息
-					var upadateKg = wx.getStorageSync("upadateKg");
+					var upadateKg = app.globalData.upadateKg;
 					//关闭 0 打开 1
 					if (upadateKg == 1) {
-						wx.setStorage({
-							key: 'iCardData',
-							data: iCardData
-						});
-						wx.setStorage({
-							key: 'idcardbuynum',
-							data: buyNum
-						});
+						getApp().globalData.iCardData = iCardData;
+						getApp().globalData.idcardbuynum = buyNum;
 						wx.navigateTo({
 							url: '../identifyId/identifyId'
 						})
@@ -269,13 +260,11 @@ Page({
 								console.log(res);
 								wx.hideLoading();
 								//成功后 发起付款请求
-								wx.setStorage({
-									key: 'orderId',
-									data: res.data[0].id
-								});
-								var payOpenId = wx.getStorageSync('payOpenId');
+								getApp().globalData.orderId = res.data[0].id;
+								var payOpenId = app.globalData.payOpenId;
 								var paidMoney = res.data[0].paidMoney;
 								var orderNo = res.data[0].outTradeNo;
+								
 								util.wxPay(payOpenId, paidMoney, orderNo, that);
 							},
 							fail: err => {
@@ -311,8 +300,8 @@ Page({
 		});
 	},
 	toKkznFun: function(e) {
-		wx.navigateTo({
-			url: 'kkzn/kkzn'
-		});
+// 		wx.navigateTo({
+// 			url: 'kkzn/kkzn'
+// 		});
 	}
 })

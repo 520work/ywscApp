@@ -1,4 +1,4 @@
-// pages/taocanboard/taocanboard.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var dataBase = require('../../utils/database.js');
 var ajaxUrl = util.ajaxUrl;
@@ -19,14 +19,14 @@ Page({
 	//生命周期函数--监听页面加载
 	onLoad: function(options) {
 		var that = this;
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		if (options.dataCode != '') {
 			that.setData({
 				dataCode: options.dataCode,
 				fromYztc: true
 			});
 		};
-		var upadateKg = wx.getStorageSync("upadateKg");
+		var upadateKg = app.globalData.upadateKg;
 		if (upadateKg == 0) {
 			that.setData({
 				showPrice: true,
@@ -54,10 +54,7 @@ Page({
 			doubleNumStatus: doubleNumStatus
 		});
 		var whereFrom = options.whereFrom;
-		wx.setStorage({
-			key: 'guishudi',
-			data: whereFrom
-		});
+		getApp().globalData.guishudi = whereFrom;
 		var occupyMoney = that.keepTwoFloor(options.occupyMoney);
 		if (doubleNumStatus == "true") {
 			var qlTelNum = options.qlTelNum.slice(0, 3) + ' ' + options.qlTelNum.slice(3, 7) + ' ' + options.qlTelNum.slice(7,
@@ -71,10 +68,7 @@ Page({
 				whereFrom: whereFrom,
 				occupyMoney: occupyMoney
 			});
-			wx.setStorage({
-				key: 'idcardbuynum',
-				data: '2'
-			});
+			getApp().globalData.idcardbuynum = '2';
 		} else {
 			var telNum = options.telNum.slice(0, 3) + ' ' + options.telNum.slice(3, 7) + ' ' + options.telNum.slice(7,
 				11);
@@ -84,10 +78,7 @@ Page({
 				whereFrom: whereFrom,
 				occupyMoney: occupyMoney
 			});
-			wx.setStorage({
-				key: 'idcardbuynum',
-				data: '1'
-			});
+			getApp().globalData.idcardbuynum = '1';
 		};
 		//优惠券获取
 		var saleType = options.sale;
@@ -141,7 +132,7 @@ Page({
 	 */
 	onShow: function() {
 		var that = this;
-		var addressData = wx.getStorageSync("addressData");
+		var addressData = app.globalData.addressData;
 		if (addressData !== undefined) {
 			that.setData({
 				addressStatus: true,
@@ -668,7 +659,7 @@ Page({
 						"faceImage": "",
 						"backImage": "",
 						"handImage": "",
-						"openid": wx.getStorageSync('openId'),
+						"openid": app.globalData.openId,
 						"numberType": numberType, //号码类型
 						"occupyMoney": Number(this.data.occupyMoney), //占用费
 						"phone_number": num, //卡号
@@ -686,14 +677,11 @@ Page({
 						"user_address": this.data.addressData.userAddress //收货人地址   
 					};
 					//开关判断
-					var upadateKg = wx.getStorageSync("upadateKg");
+					var upadateKg = app.globalData.upadateKg;
 					//关闭 0 打开 1
 					if (upadateKg == 1) {
 						//传递参数
-						wx.setStorage({
-							key: 'orderQueryData',
-							data: orderQueryData
-						});
+						getApp().globalData.orderQueryData = orderQueryData;
 						wx.navigateTo({
 							url: '../identifyId/identifyId'
 						});
@@ -707,10 +695,7 @@ Page({
 								"Content-Type": "application/x-www-form-urlencoded"
 							},
 							success: res => {
-								wx.setStorage({
-									key: 'orderId',
-									data: res.data[0].id
-								});
+								getApp().globalData.orderId = res.data[0].id;
 								if(res.data[0].preDeposit == '-1'){
 									this.setData({
 										'tipsModelInfo.title': '您的预存与实际不符，请重新选择',
@@ -718,24 +703,18 @@ Page({
 									});
 								} else {
 									if (res.data[0].discountMoney == '0') {
-										wx.setStorage({
-											key: 'yufu',
-											data: false
-										});
+										getApp().globalData.yufu = false;
 										//调用付款接口
-										var payOpenId = wx.getStorageSync('payOpenId'),
+										var payOpenId = app.globalData.payOpenId,
 											paidMoney = res.data[0].paidMoney,
 											orderNo = res.data[0].outTradeNo;
 										var that = this;
 										util.wxPay(payOpenId, paidMoney, orderNo, that);
 									} else {
 										//支付金额大于3000 付定金
-										wx.setStorage({
-											key: 'yufu',
-											data: true
-										});
+										getApp().globalData.yufu = true;
 										wx.navigateTo({
-											url: '../pay/payAbovePause/pap?payOpenId=' + wx.getStorageSync('payOpenId') + '&orderNo=' + res.data[
+											url: '../pay/payAbovePause/pap?payOpenId=' + app.globalData.payOpenId + '&orderNo=' + res.data[
 													0].outTradeNo + '&phoneNumber=' + res.data[0].phoneNumber + '&phoneNumber1=' + res.data[0].phoneNumber1 +
 												'&city=' + res.data[0].city + '&occupyMoney=' + res.data[0].occupyMoney + '&preDeposit=' + res.data[
 													0].preDeposit + '&yhMoney=' + res.data[0].yhMoney + '&discountMoney=' + res.data[0].discountMoney +

@@ -1,7 +1,8 @@
+var app = getApp();
 var tcity = require('../../../utils/city.js');
 var util = require('../../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
-var app = getApp();
+
 Page({
 	//数据
 	data: {
@@ -87,8 +88,7 @@ Page({
 			});
 			return false;
 		};
-		var openId = wx.getStorageSync('openId');
-		console.log(this.editDataStatus);
+		var openId = app.globalData.openId;
 		if (this.data.editDataStatus) {
 			var id = this.data.editData.id
 		} else {
@@ -124,7 +124,7 @@ Page({
 	},
 	onLoad: function(options) {
 		if (options.editStatus) {
-			var editData = wx.getStorageSync("editData");
+			var editData = app.globalData.editData;
 			var addressArr = editData.address.split(" ");
 			console.log(addressArr);
 			this.setData({

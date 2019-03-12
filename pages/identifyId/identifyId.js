@@ -1,4 +1,4 @@
-// pages/identifyId/identifyId.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -285,8 +285,7 @@ Page({
 	goToPay: function(e) {
 		var that = this;
 		if (that.data.idFaceSuccess == true && that.data.idBackSuccess == true && that.data.headSuccess == true) {
-			console.log("ok");
-			var idCardBuyNum = wx.getStorageSync('idcardbuynum');
+			var idCardBuyNum = app.globalData.idcardbuynum;
 			var identityCode = that.data.idCard;
 			wx.showLoading({
 				mask: true,
@@ -330,10 +329,10 @@ Page({
 								mask: true,
 								title: '正在提交订单信息'
 							});
-							var ywscOrderType = wx.getStorageSync('ywscOrderType');
+							var ywscOrderType = app.globalData.ywscOrderType;
 							if (ywscOrderType == 1) {
 								//号卡直选
-								var orderQueryData = wx.getStorageSync('orderQueryData');
+								var orderQueryData = app.globalData.orderQueryData;
 								orderQueryData.identityName = that.data.idName;
 								orderQueryData.identityCard = identityCode;
 								orderQueryData.faceImage = that.data.idFaceImgPath;
@@ -348,28 +347,19 @@ Page({
 										"Content-Type": "application/x-www-form-urlencoded"
 									},
 									success: res => {
-										wx.setStorage({
-											key: 'orderId',
-											data: res.data[0].id
-										});
+										getApp().globalData.orderId = res.data[0].id;
 										if (res.data[0].discountMoney == '0') {
-											wx.setStorage({
-												key: 'yufu',
-												data: false
-											});
+											getApp().globalData.yufu = false;
 											//调用付款接口
-											var payOpenId = wx.getStorageSync('payOpenId'),
+											var payOpenId = app.globalData.payOpenId,
 												paidMoney = res.data[0].paidMoney,
 												orderNo = res.data[0].outTradeNo;
 											util.wxPay(payOpenId, paidMoney, orderNo, that);
 										} else {
 											//支付金额大于3000 付定金
-											wx.setStorage({
-												key: 'yufu',
-												data: true
-											});
+											getApp().globalData.yufu = true;
 											wx.navigateTo({
-												url: '../pay/payAbovePause/pap?payOpenId=' + wx.getStorageSync('payOpenId') + '&orderNo=' + res.data[
+												url: '../pay/payAbovePause/pap?payOpenId=' + app.globalData.payOpenId + '&orderNo=' + res.data[
 														0]
 													.outTradeNo + '&phoneNumber=' + res.data[0].phoneNumber + '&phoneNumber1=' + res.data[0].phoneNumber1 +
 													'&city=' + res.data[0].city + '&occupyMoney=' + res.data[0].occupyMoney + '&preDeposit=' + res.data[
@@ -391,7 +381,7 @@ Page({
 								//视频会员
 							} else if (ywscOrderType == 3) {
 								//i卡
-								var iCardData = wx.getStorageSync('iCardData');
+								var iCardData = app.globalData.iCardData;
 								iCardData.identityName = that.data.idName;
 								iCardData.identityCard = identityCode;
 								iCardData.faceImage = that.data.idFaceImgPath;
@@ -411,11 +401,8 @@ Page({
 										console.log(res);
 										wx.hideLoading();
 										//成功后 发起付款请求
-										wx.setStorage({
-											key: 'orderId',
-											data: res.data[0].id
-										});
-										var payOpenId = wx.getStorageSync('payOpenId');
+										getApp().globalData.orderId = res.data[0].id;
+										var payOpenId = app.globalData.payOpenId;
 										var paidMoney = res.data[0].paidMoney;
 										var orderNo = res.data[0].outTradeNo;
 										util.wxPay(payOpenId, paidMoney, orderNo, that);
@@ -430,7 +417,7 @@ Page({
 								});
 							} else if (ywscOrderType == 4) {
 								//心仪数字 e卡
-								var eCardData = wx.getStorageSync('eCardData');
+								var eCardData = app.globalData.eCardData;
 								eCardData.identityName = this.data.idName;
 								eCardData.identityCard = identityCode;
 								eCardData.faceImage = this.data.idFaceImgPath;
@@ -450,11 +437,8 @@ Page({
 										console.log(res);
 										wx.hideLoading();
 										//成功后 发起付款请求
-										wx.setStorage({
-											key: 'orderId',
-											data: res.data[0].id
-										});
-										var payOpenId = wx.getStorageSync('payOpenId');
+										getApp().globalData.orderId = res.data[0].id;
+										var payOpenId = app.globalData.payOpenId;
 										var paidMoney = res.data[0].paidMoney;
 										var orderNo = res.data[0].outTradeNo;
 										util.wxPay(payOpenId, paidMoney, orderNo, that);

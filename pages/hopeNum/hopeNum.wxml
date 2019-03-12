@@ -63,9 +63,9 @@
 					<text class="buycardfont2">{{totalPrice}}</text>
 				</view>
 			</view>
-			<view class="jihuo">
+			<!-- <view class="jihuo">
 				<text>激活成功后，购卡费用将返还到激活号码的花费账户中</text>
-			</view>
+			</view> -->
 			<view class="row">
 				<view>
 					<text class="buycardfont1">添加收货地址</text>

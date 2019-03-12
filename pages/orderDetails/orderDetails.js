@@ -1,4 +1,5 @@
 // 订单详情页面
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -8,7 +9,7 @@ Page({
 	},
 	onLoad: function(options) {
 		var that = this,
-			openId = wx.getStorageSync('openId'),
+			openId = app.globalData.openId,
 			orderType = options.orderType,
 			orderId = options.orderId;
 		that.setData({

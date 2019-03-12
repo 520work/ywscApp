@@ -1,4 +1,4 @@
-// pages/chooseNum/chooseNum.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -40,7 +40,7 @@ Page({
 			code: code,
 			datacode: datacode
 		});
-		var localCity = wx.getStorageSync('city');
+		var localCity = app.globalData.city;
 		//查询城市信息 并初始化地址选择器
 		wx.request({
 			url: ajaxUrl + 'eCardServiceController.do?selectCity',
@@ -76,7 +76,7 @@ Page({
 			}
 		});
 		//获取用户所在地区
-		util.getUserLocation(that);
+		// util.getUserLocation(that);
 		var searchData = {
 			city: localCity,
 			number: '',
@@ -91,7 +91,7 @@ Page({
 	},
 	onShow: function() {
 		var that = this;
-		var hsQueryData = wx.getStorageSync('hsQueryData');
+		var hsQueryData = app.globalData.hsQueryData;
 		if (hsQueryData) {
 			console.log(hsQueryData);
 			this.setData({
@@ -107,10 +107,6 @@ Page({
 			that.screenCardFun(hsQueryData);
 		};
 	},
-	// 	onHide: function() {
-	// 		//移除高级筛选参数数据
-	// 		wx.removeStorageSync('hsQueryData');
-	// 	},
 	bindChange: util.bindChange,
 	open: util.openAddressModel,
 	input: function(e) {
@@ -348,7 +344,7 @@ Page({
 			that.setData({
 				moreText: '加载中...'
 			});
-			var hsQueryData = wx.getStorageSync('hsQueryData');
+			var hsQueryData = app.globalData.hsQueryData;
 			if (hsQueryData) {
 				hsQueryData.pageIndex = that.data.pageIndex;
 				that.screenCardFun(hsQueryData);
@@ -379,10 +375,7 @@ Page({
 				'tipsModelInfo.showModelStatus': true
 			});
 		} else {
-			wx.setStorage({
-				key: 'ywscOrderType',
-				data: '1'
-			});
+			getApp().globalData.ywscOrderType = '1';
 			var telNum = e.currentTarget.dataset.telnum;
 			var whereFrom = e.currentTarget.dataset.wherefrom;
 			var occupyMoney = e.currentTarget.dataset.occupymoney;

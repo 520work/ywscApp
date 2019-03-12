@@ -20,7 +20,7 @@ Page({
 			code = '';
 		};
 		var that = this;
-		var hsQueryDataStorage = wx.getStorageSync("hsQueryData");
+		var hsQueryDataStorage = app.globalData.hsQueryData;
 		console.log(hsQueryDataStorage == "");
 		//初始化选项数据
 		that.setData({
@@ -374,10 +374,7 @@ Page({
 				});
 			}
 		};
-		wx.setStorage({
-			key: "hsQueryData",
-			data: this.data.hsQueryData
-		});
+		getApp().globalData.hsQueryData = this.data.hsQueryData;
 		wx.navigateBack({
 			delta: 1
 		});

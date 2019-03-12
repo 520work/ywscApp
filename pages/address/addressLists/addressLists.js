@@ -1,3 +1,4 @@
+var app = getApp();
 var util = require('../../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -44,13 +45,13 @@ Page({
 			title: '加载中'
 		});
 		//获取用户地址列表
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		that.getAddressLists(that, openId);
 	},
 	onShow: function(options) {
 		//获取用户地址列表
 		var that = this;
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		that.getAddressLists(that, openId);
 	},
 	//获取用户地址列表
@@ -109,7 +110,7 @@ Page({
 				changeAddressData = addressLists[i];
 			};
 		};
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		var contacts = changeAddressData.contacts;
 		var phonenumber = changeAddressData.phonenumber;
 		var address = changeAddressData.address;
@@ -153,10 +154,7 @@ Page({
 				editAddressData = addressLists[i];
 			};
 		};
-		wx.setStorage({
-			key: "editData",
-			data: editAddressData
-		});
+		getApp().globalData.editData = editAddressData;
 		wx.navigateTo({
 			url: '../addAddress/addAddress?editStatus=true'
 		});
@@ -203,7 +201,7 @@ Page({
 						"delModelInfo.showModelStatus": false,
 						"delSuccessModel.showModelStatus": true
 					});
-					var openId = wx.getStorageSync('openId');
+					var openId = app.globalData.openId;
 					that.getAddressLists(that, openId);
 				};
 			},
@@ -220,10 +218,7 @@ Page({
 			phonenumber: e.currentTarget.dataset.phonenumber,
 			userAddress: e.currentTarget.dataset.address + " " + e.currentTarget.dataset.street
 		};
-		wx.setStorage({
-			key: "addressData",
-			data: addressData
-		});
+		getApp().globalData.addressData = addressData;
 		wx.navigateBack({
 			delta: 1
 		})

@@ -1,4 +1,4 @@
-// pages/paysuccess/paysuccess.js
+var app = getApp();
 var util = require('../../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -9,7 +9,7 @@ Page({
 		})
 	},
 	continueBuy: function() {
-		var ywscOrderType = wx.getStorageSync('ywscOrderType');
+		var ywscOrderType = app.globalData.ywscOrderType;
 		if (ywscOrderType == 1) {
 			wx.navigateTo({
 				url: '../../chooseNum/chooseNum'
@@ -31,11 +31,11 @@ Page({
 			mask: true,
 			title: '加载中'
 		});
-		var ywscOrderType = wx.getStorageSync('ywscOrderType'),
-			id = wx.getStorageSync('orderId'),
-			yufuStatus = wx.getStorageSync('yufu'),
+		var ywscOrderType = app.globalData.ywscOrderType,
+			id = app.globalData.orderId,
+			yufuStatus = app.globalData.yufu,
 			that = this,
-			guishudi = wx.getStorageSync('guishudi');
+			guishudi = app.globalData.guishudi;
 		that.setData({
 			ywscOrderType: ywscOrderType,
 			guishudi: guishudi
@@ -88,10 +88,10 @@ Page({
 		});
 	},
 	onHide: function() {
-		wx.removeStorageSync('ywscOrderType');
-		wx.removeStorageSync('orderId');
-		wx.removeStorageSync('yufu');
-		wx.removeStorageSync('guishudi');
+		getApp().globalData.ywscOrderType = '';
+		getApp().globalData.orderId = '';
+		getApp().globalData.yufu = '';
+		getApp().globalData.guishudi = '';
 	},
 	timestampToTime: function(timestamp) {
 		var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000

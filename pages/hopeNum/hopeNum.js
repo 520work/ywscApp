@@ -1,4 +1,4 @@
-// pages/hopeNum/hopeNum.js
+var app = getApp();
 var util = require('../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
@@ -21,7 +21,7 @@ Page({
 	},
 	onLoad: function(options) {
 		var that = this;
-		var localCity = wx.getStorageSync('city');
+		var localCity = app.globalData.city;
 		//查询城市信息 并初始化地址选择器
 		wx.request({
 			url: ajaxUrl + 'eCardServiceController.do?selectCity',
@@ -56,7 +56,7 @@ Page({
 				console.log(err);
 			}
 		});
-		util.getUserLocation(that);
+		// util.getUserLocation(that);
 		var searchData = {
 			cityId: localCity,
 			findnum: ''
@@ -67,7 +67,7 @@ Page({
 		});
 		that.getEcardList(searchData, 'onloadType');
 		//地址显示
-		var openId = wx.getStorageSync('openId');
+		var openId = app.globalData.openId;
 		wx.request({
 			url: ajaxUrl + 'userAddressController.do?addressList' + '&openid=' + openId,
 			success: function(res) {
@@ -104,7 +104,7 @@ Page({
 	},
 	onShow: function() {
 		var that = this;
-		var addressData = wx.getStorageSync("addressData");
+		var addressData = app.globalData.addressData;
 		if (addressData !== undefined) {
 			that.setData({
 				addressStatus: true,
@@ -376,10 +376,7 @@ Page({
 	//去购买
 	goToPay: function(e) {
 		var that = this;
-		wx.setStorage({
-			key: 'ywscOrderType',
-			data: '4'
-		});
+		getApp().globalData.ywscOrderType = '4';
 		//验证是否有收货地址
 		var addressStatus = that.data.addressStatus;
 		if (addressStatus == false) {
@@ -429,7 +426,7 @@ Page({
 				} else {
 					//余量不足
 					var buyNum = that.data.num;
-					var openId = wx.getStorageSync('openId');
+					var openId = app.globalData.openId;
 					if (buyNum > res.data[0].num) {
 						wx.hideLoading();
 						that.setData({
@@ -476,17 +473,11 @@ Page({
 										paid_money: that.data.totalPrice
 									};
 									//验证身份信息
-									var upadateKg = wx.getStorageSync("upadateKg");
+									var upadateKg = app.globalData.upadateKg;
 									//关闭 0 打开 1
 									if (upadateKg == 1) {
-										wx.setStorage({
-											key: 'idcardbuynum',
-											data: buyNum
-										});
-										wx.setStorage({
-											key: 'eCardData',
-											data: eCardData
-										});
+										getApp().globalData.idcardbuynum = buyNum;
+										getApp().globalData.eCardData = eCardData;
 										wx.navigateTo({
 											url: '../identifyId/identifyId'
 										})
@@ -503,14 +494,12 @@ Page({
 												console.log('接收E卡订单信息成功');
 												console.log(res);
 												wx.hideLoading();
-												wx.setStorage({
-													key: 'orderId',
-													data: res.data[0].id
-												});
+												getApp().globalData.orderId = res.data[0].id;
 												//成功后 发起付款请求
-												var payOpenId = wx.getStorageSync('payOpenId');
+												var payOpenId = app.globalData.payOpenId;
 												var paidMoney = res.data[0].paidMoney;
 												var orderNo = res.data[0].outTradeNo;
+												
 												util.wxPay(payOpenId, paidMoney, orderNo, that);
 											},
 											fail: err => {
