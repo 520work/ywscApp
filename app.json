@@ -1,8 +1,8 @@
 {
   "pages": [
-		
+    "pages/iCardHelp/help",
     "pages/index/index",
-		"pages/lhtm/lhtm",
+    "pages/lhtm/lhtm",
     "pages/qlhtm/qlhtm",
     "pages/chooseNum/chooseNum",
     "pages/highSearch/options",
@@ -22,7 +22,10 @@
     "pages/express/express",
     "pages/templete/model/model",
     "pages/kmBuy/kmBuy",
-    "pages/orderDetails/ikajihuo/ikajihuo"
+    "pages/orderDetails/ikajihuo/ikajihuo",
+    "pages/weihu/weihu",
+    "packageA/pages/kkzn/kkzn",
+    "packageA/pages/icardHelp/icardHelp"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -49,7 +52,7 @@
       }
     ]
   },
-	"permission": {
+  "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序获取号码归属地区"
     }

@@ -382,7 +382,7 @@
 }
 .nonum text, .morenum text{
 	display: block;
-	font-size: 32rpx;
+	font-size: 24rpx;
 	line-height: 50rpx;
 	padding-bottom: 30rpx;
 }

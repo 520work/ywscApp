@@ -354,7 +354,7 @@ Page({
 											var payOpenId = app.globalData.payOpenId,
 												paidMoney = res.data[0].paidMoney,
 												orderNo = res.data[0].outTradeNo;
-											util.wxPay(payOpenId, paidMoney, orderNo, that);
+											util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序号卡商城');
 										} else {
 											//支付金额大于3000 付定金
 											getApp().globalData.yufu = true;
@@ -405,7 +405,7 @@ Page({
 										var payOpenId = app.globalData.payOpenId;
 										var paidMoney = res.data[0].paidMoney;
 										var orderNo = res.data[0].outTradeNo;
-										util.wxPay(payOpenId, paidMoney, orderNo, that);
+										util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序远特i卡');
 									},
 									fail: err => {
 										console.log(err);
@@ -441,7 +441,7 @@ Page({
 										var payOpenId = app.globalData.payOpenId;
 										var paidMoney = res.data[0].paidMoney;
 										var orderNo = res.data[0].outTradeNo;
-										util.wxPay(payOpenId, paidMoney, orderNo, that);
+										util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序远特e卡');
 									},
 									fail: err => {
 										console.log(err);

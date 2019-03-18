@@ -256,8 +256,6 @@ Page({
 								"Content-Type": "application/x-www-form-urlencoded"
 							},
 							success: res => {
-								console.log('接收E卡订单信息成功');
-								console.log(res);
 								wx.hideLoading();
 								//成功后 发起付款请求
 								getApp().globalData.orderId = res.data[0].id;
@@ -265,7 +263,7 @@ Page({
 								var paidMoney = res.data[0].paidMoney;
 								var orderNo = res.data[0].outTradeNo;
 								
-								util.wxPay(payOpenId, paidMoney, orderNo, that);
+								util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序远特i卡');
 							},
 							fail: err => {
 								console.log(err);

@@ -541,6 +541,10 @@ Page({
 							packageTitle[0].name = npinfo[0];
 						};
 						packageTitle[0].price = npinfo[1];
+						//重置liuliangData
+						liuliangData[0] = {};
+						liuliangData[0].package_name = packageInfo;
+						liuliangData[0].code = that.data.dataCode;
 						//默认 资费说明信息
 						zifeiData = dataSon[k].standard;
 						//默认 增值业务信息
@@ -709,7 +713,7 @@ Page({
 											paidMoney = res.data[0].paidMoney,
 											orderNo = res.data[0].outTradeNo;
 										var that = this;
-										util.wxPay(payOpenId, paidMoney, orderNo, that);
+										util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序号卡商城');
 									} else {
 										//支付金额大于3000 付定金
 										getApp().globalData.yufu = true;

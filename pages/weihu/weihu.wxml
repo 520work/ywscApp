@@ -1,0 +1,4 @@
+ <view class='wh'>
+  <image src='../../images/wh_img.png' mode='widthFix'></image>
+  <view class='text'>{{weihuMsg}}</view>
+</view> 

@@ -256,7 +256,7 @@ Page({
 		var orderId = e.currentTarget.dataset.orderid;
 		this.setData({
 			'delModelInfo.showModelStatus': true,
-			'delModelInfo.content': '取消订单',
+			'delModelInfo.title': '取消订单',
 			'delModelInfo.content': '确认取消吗？',
 			'delModelInfo.cancelBtn': '取消',
 			'delModelInfo.confirmBtn': '确认',
@@ -317,7 +317,7 @@ Page({
 		var orderType = e.currentTarget.dataset.ordertype;
 		this.setData({
 			'delModelInfo1.showModelStatus': true,
-			'delModelInfo1.content': '删除订单',
+			'delModelInfo1.title': '删除订单',
 			'delModelInfo1.content': '确认删除吗？',
 			'delModelInfo1.cancelBtn': '取消',
 			'delModelInfo1.confirmBtn': '确认',

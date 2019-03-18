@@ -1,0 +1,17 @@
+.wh{
+  width: 100%;
+  height:90%;
+  text-align: center;
+  padding-top: 10%;
+  background-color: white;
+  }
+.wh image{
+  width: 100;
+  height: auto;
+}
+.wh .text{
+  width: 80%;
+  text-align: left;
+  padding:0 10%;
+  font-size: 40rpx;
+}

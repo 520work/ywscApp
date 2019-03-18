@@ -183,7 +183,7 @@ var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlT
 // };
 
 //付款接口
-var wxPay = function(payOpenId, paidMoney, orderNo, that) {
+var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 	wx.request({
 		url: 'https://www.m10027.com/wxlhhd/wxPay.ashx?',
 		method: 'POST',
@@ -197,7 +197,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that) {
 			ruleType: '2',
 			paywx: '6',
 			orderno: orderNo,
-			spname: '号卡商城微信小程序'
+      spname: spName
 		},
 		header: {
 			"Content-Type": "application/x-www-form-urlencoded"

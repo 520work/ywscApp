@@ -206,13 +206,13 @@ Page({
 						});
 					};
 				} else if (numData.length > 0 && numData.length < 30){
+					that.handleData(numData, pageIndex, that);
 					that.setData({
 						moreNum: true,
 						noNum: false,
 						reachBottomStatus: false,
 						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 					});
-					that.handleData(numData, pageIndex, that);
 				} else {
 					that.handleData(numData, pageIndex, that);
 				};

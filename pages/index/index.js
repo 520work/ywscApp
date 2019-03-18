@@ -174,9 +174,9 @@ Page({
 	},
 	//卡盟 抢先体验
 	kmBuy: function() {
-// 		wx.navigateTo({
-// 			url: '../kmBuy/kmBuy'
-// 		})
+		// 		wx.navigateTo({
+		// 			url: '../kmBuy/kmBuy'
+		// 		})
 	},
 	//去套餐页
 	chooseTaocanLl: function(e) {
@@ -227,6 +227,9 @@ Page({
 	 */
 	onLoad: function() {
 		var that = this;
+		//获取服务状态
+		that.getServiceStatus();
+		//判断是否关注远微商城公众号
 		if (app.globalData.isSubscribe) {
 			getApp().globalData.isSubscribe = true;
 		};
@@ -291,7 +294,7 @@ Page({
 			fail: function(err) {
 				console.log(err);
 			},
-			complete: function(res){
+			complete: function(res) {
 				wx.hideLoading();
 			}
 		});
@@ -488,6 +491,51 @@ Page({
 	goBackBtn: function(e) {
 		this.setData({
 			'showModelInfo.showModelStatus': false,
+		})
+	},
+	/**获取服务状态 */
+	getServiceStatus: function() {
+		wx.showLoading({
+			title: '获取服务状态..',
+			mask: true
+		})
+		wx.request({
+			url: 'https://www.m10027.com/WeChatServices/ServicesForCommon.ashx?',
+			data: {
+				requestType: 'GetServiceStatus',
+				serviceName: '号卡商城小程序'
+			},
+			dataType: JSON,
+			success: function(resData) {
+				wx.hideLoading();
+				var resJson = JSON.parse(resData.data); //Json 转 字符串
+				if (resJson.Status) {
+					wx.setStorageSync('ServiceStatus', resJson.Value);
+					if (resJson.Value === '1') {
+						wx.setStorageSync('weihumsg', resJson.Msg);
+						wx.redirectTo({
+							url: '../weihu/weihu',
+						})
+					}
+				} else {
+					wx.hideLoading();
+					wx.showModal({
+						title: '提示',
+						content: '抱歉，获取服务状态异常，请退出重试',
+						showCancel: false,
+						success: function(res) {}
+					})
+				}
+			},
+			fail: function(resData) {
+				wx.hideLoading();
+				wx.showModal({
+					title: '提示',
+					content: resData.errMsg,
+					showCancel: false,
+					success: function(res) {}
+				})
+			}
 		})
 	}
 });

@@ -36,7 +36,7 @@
 			<view>
 				<view class="process_top">
 					<text class="circle"></text>
-					<text class="title">语音资费</text>
+					<text class="title">{{fromYztc?'已选套餐':'语音资费'}}</text>
 				</view>
 				<view class="btnWrap" wx:if="{{!fromYztc}}">
 					<block wx:for="{{yuyinData}}" wx:key="*this">
