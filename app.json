@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/iCardHelp/help",
     "pages/index/index",
     "pages/lhtm/lhtm",
     "pages/qlhtm/qlhtm",
@@ -8,7 +7,6 @@
     "pages/highSearch/options",
     "pages/hopeNum/hopeNum",
     "pages/iCard/iCard",
-    "pages/iCard/kkzn/kkzn",
     "pages/excellent/excellent",
     "pages/taocanBoard/taocanBoard",
     "pages/address/addressLists/addressLists",
@@ -23,10 +21,15 @@
     "pages/templete/model/model",
     "pages/kmBuy/kmBuy",
     "pages/orderDetails/ikajihuo/ikajihuo",
-    "pages/weihu/weihu",
-    "packageA/pages/kkzn/kkzn",
-    "packageA/pages/icardHelp/icardHelp"
+    "pages/weihu/weihu"
   ],
+	"subPackages": [{
+		"root": "packageA",
+		"pages": [
+			"pages/icardHelp/icardHelp",
+			"pages/kkzn/kkzn"
+		]
+	}],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#f7f7f7",

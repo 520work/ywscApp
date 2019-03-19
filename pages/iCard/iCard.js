@@ -298,8 +298,8 @@ Page({
 		});
 	},
 	toKkznFun: function(e) {
-// 		wx.navigateTo({
-// 			url: 'kkzn/kkzn'
-// 		});
+		wx.navigateTo({
+			url: '../../packageA/pages/kkzn/kkzn'
+		});
 	}
 })

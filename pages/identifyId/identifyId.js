@@ -70,6 +70,7 @@ Page({
 								"Content-Type": "application/x-www-form-urlencoded"
 							},
 							success: res => {
+								console.log(res);
 								//成功上传照片
 								if (!res.data[0].imagePath == "") {
 									//保存参数变量信息
@@ -86,7 +87,7 @@ Page({
 											title: '读取身份信息中'
 										});
 										wx.request({
-											url: 'http://faceidservices.yuantel.net/ServicesForFaceID.ashx?',
+											url: 'https://www.m10027.com/faceidServices/ServicesForFaceID.ashx?',
 											data: {
 												requestType: "IDCardOCR",
 												source: "3",
@@ -293,7 +294,7 @@ Page({
 			});
 			//调一证五卡接口
 			wx.request({
-				url: 'http://ywmall.yuantel.com/ecard/manageController/getOpenCardCount',
+				url: 'https://www.m10027.com/ecard/manageController/getOpenCardCount',
 				method: 'POST',
 				data: {
 					idcard: identityCode,
