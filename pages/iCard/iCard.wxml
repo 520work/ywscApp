@@ -87,4 +87,5 @@
 		<text>最终解释权归远特（北京）通信技术有限公司</text>
 	</view>	
 	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
+	<template is="down-model" data="{{...downModelInfo}}"></template>
 </view>

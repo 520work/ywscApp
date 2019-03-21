@@ -1,28 +1,27 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/lhtm/lhtm",
-    "pages/qlhtm/qlhtm",
-    "pages/chooseNum/chooseNum",
-    "pages/highSearch/options",
-    "pages/hopeNum/hopeNum",
-    "pages/iCard/iCard",
-    "pages/excellent/excellent",
-    "pages/taocanBoard/taocanBoard",
-    "pages/address/addressLists/addressLists",
-    "pages/address/addAddress/addAddress",
-    "pages/pay/paySuccess/paySuccess",
-    "pages/pay/payAbovePause/pap",
-    "pages/pay/payFail/payFail",
-    "pages/identifyId/identifyId",
-    "pages/myOrder/myOrder",
-    "pages/orderDetails/orderDetails",
-    "pages/express/express",
-    "pages/templete/model/model",
-    "pages/kmBuy/kmBuy",
-    "pages/orderDetails/ikajihuo/ikajihuo",
-    "pages/weihu/weihu"
-  ],
+	"pages": [
+		"pages/index/index",
+		"pages/lhtm/lhtm",
+		"pages/qlhtm/qlhtm",
+		"pages/chooseNum/chooseNum",
+		"pages/highSearch/options",
+		"pages/hopeNum/hopeNum",
+		"pages/iCard/iCard",
+		"pages/excellent/excellent",
+		"pages/taocanBoard/taocanBoard",
+		"pages/address/addressLists/addressLists",
+		"pages/address/addAddress/addAddress",
+		"pages/pay/paySuccess/paySuccess",
+		"pages/pay/payAbovePause/pap",
+		"pages/pay/payFail/payFail",
+		"pages/identifyId/identifyId",
+		"pages/myOrder/myOrder",
+		"pages/orderDetails/orderDetails",
+		"pages/express/express",
+		"pages/templete/model/model",
+		"pages/weihu/weihu",
+		"pages/index/weblink/weblink"
+	],
 	"subPackages": [{
 		"root": "packageA",
 		"pages": [
@@ -30,34 +29,37 @@
 			"pages/kkzn/kkzn"
 		]
 	}],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#f7f7f7",
-    "navigationBarTitleText": "号卡商城",
-    "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "color": "#a9b7b7",
-    "selectedColor": "#7661D1",
-    "borderStyle": "black",
-    "list": [
-      {
-        "selectedIconPath": "images/scsy.png",
-        "iconPath": "images/scsyno.png",
-        "pagePath": "pages/index/index",
-        "text": "商城首页"
-      },
-      {
-        "selectedIconPath": "images/wddd.png",
-        "iconPath": "images/wdddno.png",
-        "pagePath": "pages/myOrder/myOrder",
-        "text": "我的订单"
-      }
-    ]
-  },
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序获取号码归属地区"
-    }
-  }
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#f7f7f7",
+		"navigationBarTitleText": "号卡商城",
+		"navigationBarTextStyle": "black"
+	},
+	"tabBar": {
+		"color": "#a9b7b7",
+		"selectedColor": "#7661D1",
+		"borderStyle": "black",
+		"list": [{
+				"selectedIconPath": "images/scsy.png",
+				"iconPath": "images/scsyno.png",
+				"pagePath": "pages/index/index",
+				"text": "商城首页"
+			},
+			{
+				"selectedIconPath": "images/wddd.png",
+				"iconPath": "images/wdddno.png",
+				"pagePath": "pages/myOrder/myOrder",
+				"text": "我的订单"
+			}
+		]
+	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于小程序获取号码归属地区"
+		}
+	},
+	"navigateToMiniProgramAppIdList": [
+		"wxff5265d0d79bbe1b",
+		"wx0a632502026a1075"
+	]
 }

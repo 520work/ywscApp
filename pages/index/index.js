@@ -5,20 +5,6 @@ var ajaxUrl = util.ajaxUrl;
 Page({
 	data: {
 		isSubscribe: false,
-		//首页轮播
-		focusImgUrls: [{
-				linkUrl: '#',
-				imgUrl: '../../images/01.jpg'
-			},
-			{
-				linkUrl: '#',
-				imgUrl: '../../images/02.jpg'
-			},
-			{
-				linkUrl: '#',
-				imgUrl: '../../images/03.jpg'
-			}
-		],
 		navList: [{
 				title: '购卡',
 				imgSrc: '../../images/sim1.png',
@@ -56,6 +42,10 @@ Page({
 		vipholder: '请输入您登陆或绑定酷我音乐的手机号',
 		showModelInfo: {
 			btn: '确定'
+		},
+		downModelInfo: {
+			showModelStatus: false,
+			appImgSrc: 'https://www.m10027.com/xiaochengxubanner/kmQRCode.png'
 		}
 	},
 	getStatus(e) {
@@ -174,9 +164,9 @@ Page({
 	},
 	//卡盟 抢先体验
 	kmBuy: function() {
-		// 		wx.navigateTo({
-		// 			url: '../kmBuy/kmBuy'
-		// 		})
+		this.setData({
+			'downModelInfo.showModelStatus': true
+		})
 	},
 	//去套餐页
 	chooseTaocanLl: function(e) {
@@ -238,29 +228,7 @@ Page({
 			mask: true
 		});
 		//首页banner
-		wx.request({
-			url: ajaxUrl + 'cardServiceController.do?bannerIndex&mp=1',
-			method: 'POST',
-			success: function(res) {
-				if (res) {
-					that.setData({
-						focusImgUrls: res.data
-					});
-				} else {
-					that.setData({
-						'showModelInfo.showModelStatus': true,
-						'showModelInfo.title': '正在维护中'
-					});
-				};
-			},
-			fail: function(err) {
-				wx.showToast({
-					title: '加载超时，请重新加载',
-					icon: 'none',
-					duration: 2000
-				});
-			}
-		});
+		that.getBanners();
 		//本月特卖首页号码展示
 		var that = this;
 		var liangNum = [];
@@ -333,6 +301,76 @@ Page({
 		//移除高级筛选参数数据
 		// wx.removeStorageSync('hsQueryData');
 		getApp().globalData.hsQueryData = '';
+	},
+	//获取banner
+	getBanners: function() {
+		var that = this;
+		wx.showLoading({
+			title: '加载banners..',
+			mask: true
+		})
+		wx.request({
+			url: 'https://www.m10027.com/WeChatServices/xiaochengxu.ashx?',
+			data: {
+				requestType: 'GetBannerList',
+				source: '号卡商城小程序'
+			},
+			dataType: JSON,
+			success: function(resData) {
+				wx.hideLoading();
+				var resJson = JSON.parse(resData.data); //Json 转 字符串
+				if (resJson.Status) {
+					that.setData({
+						banners: resJson.ls
+					});
+				}
+			},
+			fail: function(res) {
+				wx.hideLoading();
+				console.log(res)
+				wx.showModal({
+					title: '提示',
+					content: res.errMsg,
+					showCancel: false,
+					success: function(res) {}
+				})
+			}
+		})
+	},
+	/**banner点击事件 */
+	gotolink: function(e) {
+		var linkpath = e.currentTarget.dataset.link;
+		console.log("banner链接地址：" + linkpath);
+		var linktype = e.currentTarget.dataset.linktype;
+		console.log("banner链接类型：" + linktype);
+		if (linktype === '0') {
+			wx.navigateToMiniProgram({
+				appId: linkpath,
+				path: '',
+				success(res) {
+					console.log('banner超链接跳转小程序成功')
+				}
+			})
+		} else if (linktype === '1') {
+			if (linkpath) {
+				wx.navigateTo({
+					url: linkpath,
+					success(res) {
+						console.log('banner超链接跳转链接路径成功')
+					}
+				})
+			} else {
+				console.log("无链接路径");
+			}
+		} else if (linktype === '2') {
+			wx.setStorageSync('linkurl', linkpath)
+			wx.navigateTo({
+				url: 'weblink/weblink?linkPath='+linkpath,
+				success(res) {
+					console.log('banner超链接跳转链接URL成功')
+				}
+			})
+		}
 	},
 	//显示底部抽屉
 	showModal: function(e) {
@@ -491,7 +529,13 @@ Page({
 	goBackBtn: function(e) {
 		this.setData({
 			'showModelInfo.showModelStatus': false,
+			'downModelInfo.showModelStatus': false
 		})
+	},
+	//保存图片到手机
+	saveImg: function() {
+		var that = this, imgSrc = this.data.downModelInfo.appImgSrc;
+		util.saveImgToPhotosAlbumTap(that, imgSrc);
 	},
 	/**获取服务状态 */
 	getServiceStatus: function() {

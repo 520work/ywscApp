@@ -99,4 +99,5 @@
 			<text>{{buyTime}}</text>
 		</view>
 	</view>
+	<template is="down-model" data="{{...downModelInfo}}"></template>
 </view>

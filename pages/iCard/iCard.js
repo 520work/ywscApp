@@ -8,7 +8,11 @@ Page({
 		plusStatus: 'normal',
 		totalPrice: '20',
 		showModalStatus: false,
-		checkValue: true
+		checkValue: true,
+		downModelInfo: {
+			showModelStatus: false,
+			appImgSrc: 'https://www.m10027.com/xiaochengxubanner/ikQRCode.png'
+		}
 	},
 	onLoad: function(options) {
 		var that = this;
@@ -262,14 +266,14 @@ Page({
 								var payOpenId = app.globalData.payOpenId;
 								var paidMoney = res.data[0].paidMoney;
 								var orderNo = res.data[0].outTradeNo;
-								
+
 								util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序远特i卡');
 							},
 							fail: err => {
 								console.log(err);
 								that.setData({
-									'tipsModelInfo.showModelStatus': '出错啦，请稍后再试~',
-									'tipsModelInfo.title': true,
+									'tipsModelInfo.showModelStatus': true,
+									'tipsModelInfo.title': '出错啦，请稍后再试~',
 								});
 							}
 						});
@@ -279,16 +283,17 @@ Page({
 			fail: err => {
 				console.log(err);
 				this.setData({
-					'tipsModelInfo.showModelStatus': '出错啦，请稍后再试~',
-					'tipsModelInfo.title': true,
+					'tipsModelInfo.showModelStatus': true,
+					'tipsModelInfo.title': '出错啦，请稍后再试~',
 				});
 			}
 		});
 	},
-	//隐藏提示信息弹窗
+	//隐藏提示信息和开卡指南弹窗
 	goBackBtn: function(e) {
 		this.setData({
-			'tipsModelInfo.showModelStatus': false
+			'tipsModelInfo.showModelStatus': false,
+			'downModelInfo.showModelStatus': false
 		});
 	},
 	/* 去地址操作页面 */
@@ -297,9 +302,15 @@ Page({
 			url: '../address/addressLists/addressLists'
 		});
 	},
+	//开卡指南弹窗
 	toKkznFun: function(e) {
-		wx.navigateTo({
-			url: '../../packageA/pages/kkzn/kkzn'
-		});
+		this.setData({
+			'downModelInfo.showModelStatus': true
+		})
+	},
+	//保存图片到手机
+	saveImg: function() {
+		var that = this, imgSrc = this.data.downModelInfo.appImgSrc;
+		util.saveImgToPhotosAlbumTap(that, imgSrc);
 	}
 })

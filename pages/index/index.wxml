@@ -4,9 +4,9 @@
 	<!-- 首页——轮播 -->
 	<view class="focusWrap">
 		<swiper class="swiperCon" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-			<block wx:for="{{focusImgUrls}}">
+			<block wx:for="{{banners}}">
 				<swiper-item>
-					<image src="{{item.activityImage1}}" />
+					<image bindtap="gotolink" src="{{item.imgurl}}"  data-link="{{item.linkpath}}" data-linktype="{{item.linktype}}"/>
 					<!-- <navigator url="{{ item.linkUrl }}">
 						<image src="{{item.imgUrl}}" />
 					</navigator> -->
@@ -490,5 +490,6 @@
 	</view>
 	<image src="../../images/totop.png" class='goTop' hidden='{{!floorstatus}}' bindtap="goTop"></image>
 	<template is="tip-model" data="{{...showModelInfo}}"></template>
+	<template is="down-model" data="{{...downModelInfo}}"></template>
 </view>
 <web-view wx:if="{{isSubscribe}}" src="https://www.m10027.com/wxlhhd/kmbsaoma/gz_page.html"></web-view>

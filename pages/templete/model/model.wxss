@@ -27,13 +27,11 @@
 	left: 50%;
 	padding-bottom: 136rpx;
 	margin-left: -303rpx;
-	background-color: #fff;
 	border-radius: 32rpx;
 	display: flex;
 	flex-direction: column;
 	background-color: #fff;
 }
-
 .model .title {
 	height: 80rpx;
 	line-height: 80rpx;
@@ -163,4 +161,37 @@
 }
 .del-model .btn-wrap text{
 	color: #fff;
+}
+/* 下载模态框 */
+.down-con{
+	width: 590rpx;
+	position: fixed;
+	top: 18%;
+	z-index: 9999;
+	left: 50%;
+	padding-bottom: 136rpx;
+	margin-left: -295rpx;
+	display: flex;
+	flex-direction: column;
+}
+.down-con .appimg{
+	width: 590rpx;
+	height: 590rpx;
+}
+.down-con .closeimg{
+	width: 50rpx;
+	height: 50rpx;
+	position: absolute;
+	top: -50rpx;
+	right: -50rpx;
+	z-index: 10000;
+}
+.down-con text{
+	width: 372rpx;
+	padding: 32rpx;
+	color: #fff;
+	margin: 56rpx auto 0;
+	text-align: center;
+	border: 1px solid #fff;
+	border-radius: 80rpx;
 }

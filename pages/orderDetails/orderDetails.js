@@ -5,7 +5,11 @@ var ajaxUrl = util.ajaxUrl;
 Page({
 	data: {
 		moreOrLess: true,
-		toggleStatus: false
+		toggleStatus: false,
+		downModelInfo: {
+			showModelStatus: false,
+			appImgSrc: 'https://www.m10027.com/xiaochengxubanner/ikQRCode.png'
+		}
 	},
 	onLoad: function(options) {
 		var that = this,
@@ -213,18 +217,28 @@ Page({
 	goact: function(e) {
 		var ikaOreka = e.currentTarget.dataset.ikaoreka;
 		if (ikaOreka == 3) {
-			//跳转ika激活
-			wx.navigateTo({
-				url: 'ikajihuo/ikajihuo'
-			});
+			//ika激活弹窗
+			this.setData({
+				'downModelInfo.showModelStatus': true
+			})
 		} else if (ikaOreka == 4) {
 			//跳转eka激活
 			wx.navigateToMiniProgram({
 				appId: 'wx0a632502026a1075',
-				path: 'pages\index\index',
-				envVersion: 'release'
+				path: ''
 			});
 		};
+	},
+	//隐藏开卡指南弹窗
+	goBackBtn: function(e) {
+		this.setData({
+			'downModelInfo.showModelStatus': false
+		});
+	},
+	//保存图片到手机
+	saveImg: function() {
+		var that = this, imgSrc = this.data.downModelInfo.appImgSrc;
+		util.saveImgToPhotosAlbumTap(that, imgSrc);
 	},
 	//处理时间格式
 	timestampToTime: function(timestamp) {

@@ -197,7 +197,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 			ruleType: '2',
 			paywx: '6',
 			orderno: orderNo,
-      spname: spName
+			spname: spName
 		},
 		header: {
 			"Content-Type": "application/x-www-form-urlencoded"
@@ -217,7 +217,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 							mask: true,
 							title: '支付结果确认中'
 						});
-						
+
 						wx.redirectTo({
 							url: '../pay/paySuccess/paySuccess'
 						});
@@ -264,6 +264,39 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 		}
 	});
 };
+var saveImgToPhotosAlbumTap = function(that, imgSrc) {
+	wx.downloadFile({
+		url: imgSrc,
+		success: function(res) {
+			wx.saveImageToPhotosAlbum({
+				filePath: res.tempFilePath,
+				success: function(res) {
+					that.setData({
+						'downModelInfo.showModelStatus': false
+					});
+					wx.showToast({
+						title: '图片已保存至相册',
+						duration: 2000
+					});
+				},
+				fail: function(res) {
+					wx.showToast({
+						icon: 'none',
+						title: '图片保存失败',
+						duration: 2000
+					});
+				}
+			})
+		},
+		fail: function() {
+			wx.showToast({
+				icon: 'none',
+				title: '图片保存失败',
+				duration: 2000
+			});
+		}
+	})
+};
 module.exports = {
 	openAddressModel: openAddressModel,
 	bindChange: bindChange,
@@ -271,5 +304,6 @@ module.exports = {
 	ajaxUrl: ajaxUrl,
 	chooseTaocan: chooseTaocan,
 	// getUserLocation: getUserLocation,
-	wxPay: wxPay
+	wxPay: wxPay,
+	saveImgToPhotosAlbumTap: saveImgToPhotosAlbumTap
 }
