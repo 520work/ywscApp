@@ -6,18 +6,18 @@ Page({
 	data: {
 		isSubscribe: false,
 		navList: [{
-				title: '购卡',
+				title: '预约购卡',
 				imgSrc: '../../images/sim1.png',
 				summary: '选号买卡不分先后\n灵活选择'
 			},
 			{
 				title: '本月特卖',
-				imgSrc: '../../images/bag.png',
+				imgSrc: '../../images/excellent.png',
 				summary: '每月28号更新特价号码\n超值套餐随心配'
 			},
 			{
 				title: '卡盟',
-				imgSrc: '../../images/excellent.png',
+				imgSrc: '../../images/bag.png',
 				summary: '卖卡赚钱，佣金丰厚\n您的随身营业厅'
 			},
 			{
@@ -27,10 +27,6 @@ Page({
 			}
 		],
 		status: 0,
-		indicatorDots: true, //是否显示面板指示点
-		autoplay: true, //是否自动切换
-		interval: 3000, //自动切换时间间隔
-		duration: 500, //滑动动画时长
 		//切换面板flag
 		selected: true,
 		selected1: false,
@@ -39,7 +35,7 @@ Page({
 		temaiSelect: true,
 		temaiSelect1: false,
 		inputVal: '',
-		vipholder: '请输入您登陆或绑定酷我音乐的手机号',
+		holderText: '',
 		showModelInfo: {
 			btn: '确定'
 		},
@@ -53,8 +49,8 @@ Page({
 		var navListData = this.data.navList;
 		if (navStatus == 0) {
 			navListData[0].imgSrc = '../../images/sim1.png';
-			navListData[1].imgSrc = '../../images/bag.png';
-			navListData[2].imgSrc = '../../images/excellent.png';
+			navListData[1].imgSrc = '../../images/excellent.png';
+			navListData[2].imgSrc = '../../images/bag.png';
 			navListData[3].imgSrc = '../../images/member.png';
 			this.setData({
 				selected: true,
@@ -64,8 +60,8 @@ Page({
 			});
 		} else if (navStatus == 1) {
 			navListData[0].imgSrc = '../../images/sim.png';
-			navListData[1].imgSrc = '../../images/bag1.png';
-			navListData[2].imgSrc = '../../images/excellent.png';
+			navListData[1].imgSrc = '../../images/excellent1.png';
+			navListData[2].imgSrc = '../../images/bag.png';
 			navListData[3].imgSrc = '../../images/member.png';
 			this.setData({
 				selected: false,
@@ -75,8 +71,8 @@ Page({
 			});
 		} else if (navStatus == 2) {
 			navListData[0].imgSrc = '../../images/sim.png';
-			navListData[1].imgSrc = '../../images/bag.png';
-			navListData[2].imgSrc = '../../images/excellent1.png';
+			navListData[1].imgSrc = '../../images/excellent.png';
+			navListData[2].imgSrc = '../../images/bag1.png';
 			navListData[3].imgSrc = '../../images/member.png';
 			this.setData({
 				selected: false,
@@ -86,8 +82,8 @@ Page({
 			});
 		} else if (navStatus == 3) {
 			navListData[0].imgSrc = '../../images/sim.png';
-			navListData[1].imgSrc = '../../images/bag.png';
-			navListData[2].imgSrc = '../../images/excellent.png';
+			navListData[1].imgSrc = '../../images/excellent.png';
+			navListData[2].imgSrc = '../../images/bag.png';
 			navListData[3].imgSrc = '../../images/member1.png';
 			this.setData({
 				selected: false,
@@ -170,21 +166,23 @@ Page({
 	},
 	//去套餐页
 	chooseTaocanLl: function(e) {
-		getApp().globalData.ywscOrderType = '1';
+		//先判断号码是否可买 如果为0则可买去套餐页
 		var telNum = e.currentTarget.dataset.telnum;
+		getApp().globalData.ywscOrderType = '1';
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
 		util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', '', 'tm', 'lhtm');
 	},
 	//去套餐页
 	chooseTaocanQl: function(e) {
-		getApp().globalData.ywscOrderType = '1';
 		var qlTelNum = e.currentTarget.dataset.qltelnum;
 		var qlTelNum1 = e.currentTarget.dataset.qltelnum1;
+		var qlNum = qlTelNum + ',' + qlTelNum1;
+		getApp().globalData.ywscOrderType = '1';
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
 		var doubleNumStatus = true;
-		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm', '');
+		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm', 'qlhtm');
 	},
 	//获取滚动条当前位置 
 	onPageScroll: function(e) {
@@ -226,6 +224,45 @@ Page({
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
+		});
+		//首页广告
+		wx.request({
+			url: ajaxUrl + 'cardServiceController.do?bannerIndex&mp=1',
+			method: 'POST',
+			success: function(res) {
+				var bannerArr = res.data;
+				var bannerListLength = bannerArr.length;
+				for (var i = 0; i < bannerListLength; i++) {
+					if(bannerArr[i].classify == 2){
+						that.setData({
+							showBanner: true,
+							seconds: 3,
+							bannerSrc: bannerArr[i].activityImage1
+						});
+						var setTime;
+						var seconds = that.data.seconds;
+						setTime = setInterval(function() {
+							if (seconds <= 0) {
+								clearInterval(setTime);
+								that.setData({
+									showBanner: false
+								})
+							}
+							seconds--;
+							that.setData({
+								seconds: seconds
+							});
+						}, 1000);
+					}
+				}
+			},
+			fail: function(err) {
+				wx.showToast({
+					title: '广告加载失败',
+					icon: 'none',
+					duration: 2000
+				});
+			}
 		});
 		//首页banner
 		that.getBanners();
@@ -279,10 +316,13 @@ Page({
 					for (var i = 0; i < productListsArr.length; i++) {
 						if (productListsArr[i].productType == 1) {
 							productListsArr[i].imgSrc = '../../images/kuwo.png';
+							productListsArr[i].holderText = '酷我音乐';
 						} else if (productListsArr[i].productType == 2) {
 							productListsArr[i].imgSrc = '../../images/souhu.png';
+							productListsArr[i].holderText = '搜狐视频';
 						} else {
 							productListsArr[i].imgSrc = '../../images/mobike.png';
+							productListsArr[i].holderText = '摩拜单车';
 						};
 						var itemProductName = productListsArr[i].productName.split(' ')[0];
 						productListsArr[i].itemProductName = itemProductName;
@@ -340,9 +380,7 @@ Page({
 	/**banner点击事件 */
 	gotolink: function(e) {
 		var linkpath = e.currentTarget.dataset.link;
-		console.log("banner链接地址：" + linkpath);
 		var linktype = e.currentTarget.dataset.linktype;
-		console.log("banner链接类型：" + linktype);
 		if (linktype === '0') {
 			wx.navigateToMiniProgram({
 				appId: linkpath,
@@ -365,7 +403,7 @@ Page({
 		} else if (linktype === '2') {
 			wx.setStorageSync('linkurl', linkpath)
 			wx.navigateTo({
-				url: 'weblink/weblink?linkPath='+linkpath,
+				url: 'weblink/weblink?linkPath=' + linkpath,
 				success(res) {
 					console.log('banner超链接跳转链接URL成功')
 				}
@@ -395,7 +433,8 @@ Page({
 		this.setData({
 			itemId: e.currentTarget.dataset.itemid,
 			productType: e.currentTarget.dataset.producttype,
-			productName: e.currentTarget.dataset.productname
+			productName: e.currentTarget.dataset.productname,
+			holderText: e.currentTarget.dataset.holdertext
 		});
 	},
 	//隐藏底部抽屉
@@ -534,7 +573,8 @@ Page({
 	},
 	//保存图片到手机
 	saveImg: function() {
-		var that = this, imgSrc = this.data.downModelInfo.appImgSrc;
+		var that = this,
+			imgSrc = this.data.downModelInfo.appImgSrc;
 		util.saveImgToPhotosAlbumTap(that, imgSrc);
 	},
 	/**获取服务状态 */
@@ -580,6 +620,12 @@ Page({
 					success: function(res) {}
 				})
 			}
+		})
+	},
+	//跳过广告banner
+	skipBanner: function(e) {
+		this.setData({
+			showBanner: false
 		})
 	}
 });

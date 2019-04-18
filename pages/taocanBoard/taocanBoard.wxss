@@ -51,6 +51,12 @@ page {
 	font-weight: bold;
 	padding-left: 30rpx;
 }
+.zfxq{
+	float: right;
+	font-size: 28rpx;
+	color: #7661D1;
+	margin-right: 50rpx;
+}
 
 /* 已选号码 */
 .telwrap.row {
@@ -190,10 +196,14 @@ page {
 .taocan .lineH100 {
 	line-height: 100rpx;
 }
-
+.btnWrap .zengzhi view{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
 .zengzhi text {
 	font-size: 28rpx;
-	line-height: 50rpx;
 }
 
 .ychf text {

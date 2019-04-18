@@ -205,7 +205,7 @@ Page({
 							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 						});
 					};
-				} else if (numData.length > 0 && numData.length < 30){
+				} else if (numData.length > 0 && numData.length < 30) {
 					that.handleData(numData, pageIndex, that);
 					that.setData({
 						moreNum: true,
@@ -340,7 +340,7 @@ Page({
 	onReachBottom: function(options) {
 		var that = this;
 		var reachBottomStatus = that.data.reachBottomStatus;
-		if(reachBottomStatus){
+		if (reachBottomStatus) {
 			that.setData({
 				moreText: '加载中...'
 			});
@@ -375,12 +375,44 @@ Page({
 				'tipsModelInfo.showModelStatus': true
 			});
 		} else {
-			getApp().globalData.ywscOrderType = '1';
+			wx.showLoading({
+				mask: true,
+				title: '加载中'
+			});
 			var telNum = e.currentTarget.dataset.telnum;
-			var whereFrom = e.currentTarget.dataset.wherefrom;
-			var occupyMoney = e.currentTarget.dataset.occupymoney;
-			var dataCode = this.data.datacode;
-			util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', dataCode);
+			wx.request({
+				url: ajaxUrl + 'zbCardServiceController.do?cardType',
+				method: 'POST',
+				data: {
+					phone_number: telNum
+				},
+				header: {
+					"Content-Type": "application/x-www-form-urlencoded"
+				},
+				success: res => {
+					wx.hideLoading();
+					if (res.data[0].sell_state == '0') {
+						getApp().globalData.ywscOrderType = '1';
+						var whereFrom = e.currentTarget.dataset.wherefrom;
+						var occupyMoney = e.currentTarget.dataset.occupymoney;
+						var dataCode = this.data.datacode;
+						util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', dataCode);
+					} else {
+						this.setData({
+							'tipsModelInfo.title': '手慢了一步，被别人抢先了，再去看看别的吧~',
+							'tipsModelInfo.showModelStatus': true
+						});
+					};
+				},
+				fail: err => {
+					console.log(err);
+					wx.hideLoading();
+					this.setData({
+						'tipsModelInfo.title': '出错啦，请稍后再试~',
+						'tipsModelInfo.showModelStatus': true
+					});
+				}
+			});
 		};
 	},
 	//隐藏号码售卖状态弹窗
@@ -391,12 +423,13 @@ Page({
 	},
 	//保留小数点后两位
 	keepTwoFloor: function(value) {
-		var num = Number(value), twoFloorNum;
+		var num = Number(value),
+			twoFloorNum;
 		if (Number.isInteger(num)) {
 			twoFloorNum = Number(num).toFixed(2);
 		} else {
 			var numArr = num.toString().split('.');
-			if(numArr[1].length>=2){
+			if (numArr[1].length >= 2) {
 				twoFloorNum = Math.floor(num * 100) / 100;
 			} else {
 				twoFloorNum = Number(num).toFixed(2);

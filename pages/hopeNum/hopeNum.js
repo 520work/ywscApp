@@ -21,6 +21,17 @@ Page({
 	},
 	onLoad: function(options) {
 		var that = this;
+		//获取开关信息
+		var upadateEkgs = app.globalData.upadateEkgs;
+		var maxBuyCardNum;
+		if(upadateEkgs == 0){
+			maxBuyCardNum = 150;
+		} else {
+			maxBuyCardNum = 5;
+		};
+		that.setData({
+			maxBuyCardNum: maxBuyCardNum
+		});
 		var localCity = app.globalData.city;
 		//查询城市信息 并初始化地址选择器
 		wx.request({
@@ -182,11 +193,12 @@ Page({
 	/* 点击减号 */
 	bindMinus: function() {
 		var num = this.data.num;
+		var maxBuyCardNum = this.data.maxBuyCardNum;
 		if (num > 1) {
 			num--;
 		};
 		var minusStatus = num <= 1 ? 'disabled' : 'normal'
-		var plusStatus = num < 150 ? 'normal' : 'disabled';
+		var plusStatus = num < maxBuyCardNum ? 'normal' : 'disabled';
 		// 将数值与状态写回
 		this.setData({
 			num: num,
@@ -198,11 +210,13 @@ Page({
 	/* 点击加号 */
 	bindPlus: function() {
 		var num = this.data.num;
-		if (num < 150) {
+		var maxBuyCardNum = this.data.maxBuyCardNum;
+		if (num < maxBuyCardNum) {
 			num++;
-		}
+		};
+		var maxBuyCardNumMinusOne = maxBuyCardNum-1;
 		var minusStatus = num < 1 ? 'disabled' : 'normal';
-		var plusStatus = num > 149 ? 'disabled' : 'normal';
+		var plusStatus = num > maxBuyCardNumMinusOne ? 'disabled' : 'normal';
 
 		this.setData({
 			num: num,
@@ -214,6 +228,7 @@ Page({
 	/* 输入框事件 */
 	bindManual: function(e) {
 		var num = e.detail.value;
+		var maxBuyCardNum = this.data.maxBuyCardNum;
 		if (num < 1) {
 			num = 1;
 			wx.showToast({
@@ -221,10 +236,10 @@ Page({
 				icon: 'none',
 				duration: 2000
 			});
-		} else if (num > 150) {
-			num = 150;
+		} else if (num > maxBuyCardNum) {
+			num = maxBuyCardNum;
 			wx.showToast({
-				title: '商品数量不能大于150',
+				title: '商品数量不能大于' + maxBuyCardNum,
 				icon: 'none',
 				duration: 2000
 			});
@@ -473,9 +488,10 @@ Page({
 										paid_money: that.data.totalPrice
 									};
 									//验证身份信息
-									var upadateKg = app.globalData.upadateKg;
+									var upadateEkgs = app.globalData.upadateEkgs;
 									//关闭 0 打开 1
-									if (upadateKg == 1) {
+									if (upadateEkgs == 1) {
+										wx.hideLoading();
 										getApp().globalData.idcardbuynum = buyNum;
 										getApp().globalData.eCardData = eCardData;
 										wx.navigateTo({
@@ -502,6 +518,7 @@ Page({
 											},
 											fail: err => {
 												console.log(err);
+												wx.hideLoading();
 												that.setData({
 													'tipsModelInfo.showModelStatus': '出错啦，请稍后再试~',
 													'tipsModelInfo.title': true,
@@ -513,6 +530,7 @@ Page({
 							},
 							fail: err => {
 								console.log(err);
+								wx.hideLoading();
 								that.setData({
 									'tipsModelInfo.showModelStatus': '出错啦，请稍后再试~',
 									'tipsModelInfo.title': true,
@@ -524,6 +542,7 @@ Page({
 			},
 			fail: err => {
 				console.log(err);
+				wx.hideLoading();
 				that.setData({
 					'tipsModelInfo.showModelStatus': '出错啦，请稍后再试~',
 					'tipsModelInfo.title': true,

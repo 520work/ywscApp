@@ -144,6 +144,15 @@ Page({
 								vipmall[i].state = "已付款";
 								vipmall[i].step = "查看详情";
 								vipmall[i].stepuse = "lookinfo";
+							};
+							//判断会员商品类型 添加图标地址属性
+							var imgSourceType = vipmall[i].productType;
+							if (imgSourceType == 1) {
+								vipmall[i].imgSourceSrc = "../../images/kuwo.png";
+							} else if (imgSourceType == 2) {
+								vipmall[i].imgSourceSrc = "../../images/souhu.png";
+							} else if (imgSourceType == 3) {
+								vipmall[i].imgSourceSrc = "../../images/mobike.png";
 							}
 						}
 					};
@@ -220,8 +229,9 @@ Page({
 	orderDetails: function(e) {
 		var orderId = e.currentTarget.dataset.orderid;
 		var orderType = e.currentTarget.dataset.ordertype;
+		var imgSource = e.currentTarget.dataset.imgsource;
 		wx.navigateTo({
-			url: '../orderDetails/orderDetails?orderId=' + orderId + '&orderType=' + orderType
+			url: '../orderDetails/orderDetails?orderId=' + orderId + '&orderType=' + orderType + '&imgSource=' + imgSource
 		});
 	},
 	//点击查看详情按钮 查看订单详情
@@ -393,12 +403,13 @@ Page({
 	},
 	//保留小数点后两位
 	keepTwoFloor: function(value) {
-		var num = Number(value), twoFloorNum;
+		var num = Number(value),
+			twoFloorNum;
 		if (Number.isInteger(num)) {
 			twoFloorNum = Number(num).toFixed(2);
 		} else {
 			var numArr = num.toString().split('.');
-			if(numArr[1].length>=2){
+			if (numArr[1].length >= 2) {
 				twoFloorNum = Math.floor(num * 100) / 100;
 			} else {
 				twoFloorNum = Number(num).toFixed(2);

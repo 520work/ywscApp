@@ -12,12 +12,22 @@ Page({
 		}
 	},
 	onLoad: function(options) {
+		console.log(options);
 		var that = this,
 			openId = app.globalData.openId,
 			orderType = options.orderType,
-			orderId = options.orderId;
+			orderId = options.orderId,
+			imgSource = options.imgSource,
+			vipDetails;
+		console.log(imgSource != undefined);
+		if(imgSource == "undefined"){
+			vipDetails = true;
+		} else {
+			vipDetails = false;
+		}
 		that.setData({
-			openId: openId
+			openId: openId,
+			vipDetails: vipDetails
 		});
 		wx.showLoading({
 			mask: true,
@@ -31,7 +41,7 @@ Page({
 			that.orderCardDatil(that, orderId, orderType);
 		} else if (orderType == 2) {
 			that.setData({
-				orderImg: '../../images/cartbig.png'
+				orderImg: imgSource
 			});
 			//vip订单详情
 			wx.request({

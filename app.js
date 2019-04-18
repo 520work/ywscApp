@@ -31,7 +31,7 @@ App({
 							},
 							method: 'GET',
 							success: function(openIdRes) {
-								
+
 								that.globalData.payOpenId = openIdRes.data.info.openid
 
 								if (openIdRes.data.info.unionid == null) {
@@ -94,11 +94,44 @@ App({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: function(res) {
-				//kg----0，关闭，1开启
+				if(res.statusCode == 500 || res.statusCode == 404){
+					wx.showModal({
+						title: '提示',
+						content: '系统维护中',
+						showCancel: false,
+						success(res) {
+							if (res.confirm) {
+								console.log('用户点击确定')
+							} else if (res.cancel) {
+								console.log('用户点击取消')
+							}
+						}
+					})
+				};
+				//kg号码直选优质套餐本月特卖 eKgs iKgs 上传身份证开关----0，关闭，1开启
 				that.globalData.upadateKg = res.data[0].kg;
+				that.globalData.upadateEkgs = res.data[0].ekgs;
+				that.globalData.upadateIkgs = res.data[0].ikgs;
+				//打开相册选项开关 xckg号码直选优质套餐本月特卖 iKg eKg ----1为开启 只能拍照 0为关闭 可拍可选
+				that.globalData.xckg = res.data[0].xckg;
+				that.globalData.iKg = res.data[0].iKg;
+				that.globalData.eKg = res.data[0].eKg;
+				
 			},
 			fail: function(err) {
 				console.log(err);
+				wx.showModal({
+					title: '提示',
+					content: '系统维护中',
+					showCancel: false,
+					success(res) {
+						if (res.confirm) {
+							console.log('用户点击确定')
+						} else if (res.cancel) {
+							console.log('用户点击取消')
+						}
+					}
+				})
 			}
 		});
 		//获取用户当前位置（市）

@@ -195,3 +195,31 @@
 	border: 1px solid #fff;
 	border-radius: 80rpx;
 }
+/* 资费弹窗 */
+.zifei-con{
+	width: 640rpx;
+	position: fixed;
+	top: 7%;
+	z-index: 9999;
+	left: 50%;
+	padding-bottom: 36rpx;
+	margin-left: -320rpx;
+	border-radius: 32rpx;
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+}
+.zftitle{
+	font-size: 28rpx;
+	color: #7661D1;
+	text-align: center;
+	padding: 40rpx;
+}
+.zfdes{
+	height: 700rpx;
+	overflow: scroll;
+	font-size: 28rpx;
+	color: #999999;
+	padding: 0 40rpx;
+	padding-bottom: 100rpx;
+}

@@ -84,7 +84,6 @@
 				<text class="content">{{text2}}</text>
 				<text class="content">{{text3}}</text>
 			</view>
-
 			<text class="btnback" bindtap="goBackBtn">返回</text>
 		</view>
 	</view>
@@ -116,3 +115,14 @@
 		</view>
 	</view>
 </template>
+<template name="zifei-model">
+	<view class="zifei-model model" wx:if="{{showModelStatus}}">
+		<view class="mask"></view>
+		<view class="zifei-con">
+			<text class="zftitle">{{title}}</text>
+			<text class="zfdes">{{zishuoming}}</text>
+			<text class="btnback" bindtap="goBackBtn">确定</text>
+		</view>
+	</view>
+</template>
+

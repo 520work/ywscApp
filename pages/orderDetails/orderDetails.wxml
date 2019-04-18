@@ -1,6 +1,6 @@
 <!--订单详情页面-->
 <view class="orderdetails-con column">
-	<view class="orderadd row">
+	<view class="orderadd row" wx:if="{{vipDetails}}">
 		<view class="left">
 			<image src="../../images/locate.png"></image>
 		</view>
@@ -14,7 +14,7 @@
 			</view>
 		</view>
 	</view>
-	<view class="express row">
+	<view class="express row" wx:if="{{vipDetails}}">
 		<view class="left">
 			<image src="../../images/car.png"></image>
 		</view>

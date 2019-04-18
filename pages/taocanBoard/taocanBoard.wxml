@@ -80,6 +80,7 @@
 				<view class="process_top">
 					<text class="circle"></text>
 					<text class="title">资费说明</text>
+					<text class="zfxq" bindtap="openZfxqWindow">资费详情</text>
 				</view>
 				<view class="textcon">
 					<view class="textlists">
@@ -108,9 +109,9 @@
 				<view class="btnWrap">
 					<block wx:for="{{zengzhiData}}" wx:key="*this">
 						<view class="btn_group zengzhi">
-							<view bindtap='zzywSelFun' data-id="{{index}}" data-reject="{{item.relevant_opt_package}}" class="{{item.isBiXuan?'active':'default'}}">
+							<view bindtap='zzywSelFun' data-id="{{index}}" data-reject="{{item.relevant_opt_package}}" class="{{item.isDefault?'active':'default'}}">
 								<text>{{item.package_name}}</text>
-								<text>{{item.standard}}</text>
+								<!-- <text>{{item.standard}}</text> -->
 							</view>
 						</view>
 					</block>
@@ -143,7 +144,8 @@
 					</view>
 					<view class="textlists">
 						<text class="left">套餐预存费</text>
-						<text class="right">{{yucunjine}}</text>
+						<text class="right" wx:if="{{doubleNumStatus}}">{{yucunjine}}×2</text>
+						<text class="right" wx:if="{{!doubleNumStatus}}">{{yucunjine}}</text>
 					</view>
 					<view class="textlists">
 						<text class="left">订单总计</text>
@@ -190,6 +192,7 @@
 	</view>
 	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
 	<template is="taocan-model" data="{{...tcModelInfo}}"></template>
+	<template is="zifei-model" data="{{...zfModelInfo}}"></template>
 </view>
 <view class="coupon-box" animation="{{moveData}}">
 	<view class="mask1" catchtouchmove="move" bindtap='hide'>

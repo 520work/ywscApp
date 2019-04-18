@@ -21,6 +21,16 @@
 		</view>
 		<view>
 			<view class="option-family">
+				<text>号段搜索</text>
+			</view>
+			<view class="option-name">
+				<block wx:for="{{optionsData.haoduanOptions}}">
+					<text bindtap='haoduanSelFun' data-code="{{item.code}}" data-index="{{index}}" class="{{item.selectStatus?'selected':''}}">{{item.name}}</text>
+				</block>
+			</view>
+		</view>
+		<view>
+			<view class="option-family">
 				<text>号码类型</text>
 			</view>
 			<view class="option-name">

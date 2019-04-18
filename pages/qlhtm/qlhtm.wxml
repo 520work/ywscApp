@@ -51,6 +51,7 @@
 	</view>
 	<!-- 地址二联动 -->
 	<view wx:if="{{condition}}" class="citypicker">
+		<view class="cityMask" catchtouchmove="move"></view>
 		<picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px; background-color: #fff;" value="{{value}}" bindchange="bindChange" class="citybody">
 			<view class="cityheader">
 				<view bindtap="open" class="city-cancel">取消</view>
@@ -64,4 +65,5 @@
 			</picker-view-column>
 		</picker-view>
 	</view>
+	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
 </view>

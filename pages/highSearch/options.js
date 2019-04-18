@@ -5,12 +5,11 @@ Page({
 	data: {
 		modeid: 0,
 		withoutFourStatus: false,
-		placeHolderText: "请至少输入4位数字",
+		placeHolderText: "请输入4位数字",
 		lianghaoShow: true,
 		inputVal: ""
 	},
 	onLoad: function(options) {
-		console.log(options);
 		var city = options.city;
 		var code = options.code;
 		if (!city) {
@@ -21,7 +20,6 @@ Page({
 		};
 		var that = this;
 		var hsQueryDataStorage = app.globalData.hsQueryData;
-		console.log(hsQueryDataStorage == "");
 		//初始化选项数据
 		that.setData({
 			optionsData: dataBase.selectOptionData,
@@ -40,8 +38,40 @@ Page({
 			});
 		} else {
 			var optionsDataArr = this.data.optionsData;
+			//先清除默认选项
+			for(var i=0;i<optionsDataArr.haoduanOptions.length;i++){
+				optionsDataArr.haoduanOptions[i].selectStatus = false;
+			};
+			for(var i=0;i<optionsDataArr.typeOptions.length;i++){
+				optionsDataArr.typeOptions[i].isSelected = false;
+			};
+			for(var i=0;i<optionsDataArr.levelOptions.length;i++){
+				optionsDataArr.levelOptions[i].selectStatus = false;
+			};
+			that.setData({
+				optionsData: optionsDataArr
+			});
 			//搜索方式
-			var ssfsValue = hsQueryDataStorage.number;
+			var ssfsValue = hsQueryDataStorage.ssfs;
+			var modeId, placeHolderText;
+			if(ssfsValue == 2){
+				modeId= 0;
+				placeHolderText = "请输入4位数字";
+			} else {
+				modeId= 1;
+				placeHolderText = "请输入4-11位数字";
+			};
+			//号段搜索
+			var hdssArr = hsQueryDataStorage.hdss.split(',');
+			for(var i=0;i<hdssArr.length;i++){
+				if(hdssArr[i] == 1){
+					optionsDataArr.haoduanOptions[0].selectStatus = true;
+				} else if(hdssArr[i] == 2){
+					optionsDataArr.haoduanOptions[1].selectStatus = true;
+				} else if(hdssArr[i] == 3){
+					optionsDataArr.haoduanOptions[2].selectStatus = true;
+				}
+			};
 			//号码类型
 			var hmlxArr = hsQueryDataStorage.hmlx.split(',');
 			for(var i=0;i<hmlxArr.length;i++){
@@ -64,7 +94,6 @@ Page({
 			};
 			//靓号选择
 			var specialType = hsQueryDataStorage.special_type;
-			console.log(specialType.length);
 			if(specialType.length == 0){
 			} else {
 				//特殊靓号
@@ -110,9 +139,10 @@ Page({
 			that.setData({
 				hsQueryData: hsQueryDataStorage,
 				inputVal: hsQueryDataStorage.number,
-				modeid: ssfsValue,
+				modeid: modeId,
 				withoutFourStatus: withoutFourStatusValue,
-				optionsData: optionsDataArr
+				optionsData: optionsDataArr,
+				placeHolderText: placeHolderText
 			});
 		};
 	},
@@ -137,15 +167,48 @@ Page({
 		var ids = e.currentTarget.dataset.id;
 		var ssfsCode = e.currentTarget.dataset.code;
 		var placeHolderText;
-		if (ids == 0 || ids == 1) {
-			placeHolderText = "请至少输入4位数字";
+		if (ids == 0) {
+			placeHolderText = "请输入4位数字";
 		} else {
-			placeHolderText = "请至少输入7位数字";
+			placeHolderText = "请输入4-11位数字";
 		}
 		this.setData({
 			modeid: ids,
 			'hsQueryData.ssfs': ssfsCode,
+			inputVal: '',
 			placeHolderText: placeHolderText
+		});
+	},
+	//号段搜索选择
+	haoduanSelFun: function(e) {
+		var index = e.currentTarget.dataset.index; //获取当前点击的index
+		var item = this.data.optionsData.haoduanOptions[index]; //根据index值取到对应的子项
+		item.selectStatus = !item.selectStatus; //给当前点击的项目变更状态
+		var haoduanOptionsData = this.data.optionsData.haoduanOptions; //拿到变更后新的数据
+		var haoduan167 = haoduanOptionsData[0].selectStatus; //获取号段167状态
+		var haoduan170 = haoduanOptionsData[1].selectStatus; //获取号段170状态
+		var haoduan171 = haoduanOptionsData[2].selectStatus; //获取号段170状态
+		//如果普号和靓号都未选中 则强制选择靓号
+		if (!haoduan170 && !haoduan171 && !haoduan167) {
+			haoduanOptionsData[0].selectStatus = true;
+		};
+		//更新数据
+		this.setData({
+			optionsData: this.data.optionsData
+		});
+
+		//获取code值
+		var haoduanOptionsDataNew = this.data.optionsData.haoduanOptions;
+		var hdssCodeArr = [];
+		for (var i = 0; i < haoduanOptionsDataNew.length; i++) {
+			if (haoduanOptionsDataNew[i].selectStatus) {
+				hdssCodeArr.push(haoduanOptionsDataNew[i].code);
+			};
+		};
+		var hdssCode = hdssCodeArr.toString();
+		//更新靓号面板显示与否的标准 和 code值
+		this.setData({
+			'hsQueryData.hdss': hdssCode,
 		});
 	},
 	//号码类型选择
@@ -269,7 +332,6 @@ Page({
 	stepSelFun: function(e) {
 		var index = e.currentTarget.dataset.index;
 		var jgqjCode = e.currentTarget.dataset.code;
-		console.log(jgqjCode);
 		var stepOptions = this.data.optionsData.stepOptions;
 		var item = this.data.optionsData.stepOptions[index];
 		var selectStatus = item.selectStatus;
@@ -341,6 +403,7 @@ Page({
 			'hsQueryData.code': this.data.code,
 			modeid: 0,
 			withoutFourStatus: false,
+			inputVal: '',
 			placeHolderText: "请至少输入4位数字",
 			lianghaoShow: true,
 		});
@@ -348,31 +411,28 @@ Page({
 	//确定按钮
 	confirmBtn: function(e) {
 		var ssfsStatus = this.data.modeid;
-		var searchNum = this.data.hsQueryData.number.length
-		if (ssfsStatus == 0) {
-			if (searchNum > 0 && searchNum < 4) {
-				wx.showToast({
-					title: '请输入至少4位数字',
-					icon: 'none',
-					duration: 2000
-				});
-			}
-		} else if (ssfsStatus == 1) {
-			if (searchNum > 0 && searchNum < 4) {
-				wx.showToast({
-					title: '请输入至少4位数字',
-					icon: 'none',
-					duration: 2000
-				});
-			}
-		} else {
-			if (searchNum > 0 && searchNum < 7) {
-				wx.showToast({
-					title: '请输入至少7位数字',
-					icon: 'none',
-					duration: 2000
-				});
-			}
+		var searchNum = this.data.hsQueryData.number.length;
+		if(searchNum != 0){
+			if (ssfsStatus == 0) {
+				if (searchNum != 4) {
+					console.log("不等于4")
+					wx.showToast({
+						title: '请输入4位数字',
+						icon: 'none',
+						duration: 2000
+					});
+					return false;
+				}
+			} else if (ssfsStatus == 1) {
+				if (searchNum < 4 || searchNum > 11) {
+					wx.showToast({
+						title: '请输入4-11位数字',
+						icon: 'none',
+						duration: 2000
+					});
+					return false;
+				}
+			};
 		};
 		getApp().globalData.hsQueryData = this.data.hsQueryData;
 		wx.navigateBack({

@@ -4,8 +4,10 @@ page {
 	background-color: #f4f4f4;
 	font-family: PingFangSC-Medium;
 }
-
-/* 首页轮播 begin */
+.index-wrap{
+	position: relative;
+}
+/* 首页轮播 */
 .focusWrap .swiperCon {
 	width: 100%;
 	height: 330rpx;
@@ -16,7 +18,48 @@ page {
 	height: 260rpx;
 }
 
-/* 滑块导航 begin */
+/* banner广告 */
+.banner{
+	width: 750rpx;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+}
+.banner .maskbanner {
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.5;
+	overflow: hidden;
+}
+.banner image{
+	width: 650rpx;
+	height: 954rpx;
+	text-align: center;
+	position: absolute;
+	top: 5%;
+	left: 50%;
+	margin-left: -325rpx;
+}
+.banner text{
+	display: block;
+	width: 140rpx;
+	height: 40rpx;
+	line-height: 40rpx;
+	font-size: 24rpx;
+	background: #ccc;
+	color: #fff;
+	text-align: center;
+	position: absolute;
+	top: 1040rpx;
+	left: 50%;
+	margin-left: -70rpx;
+	border-radius: 20rpx;
+}
+
+/* 滑块导航 */
 .tabWrap {
 	margin-top: -137rpx;
 }
@@ -611,7 +654,13 @@ page {
 	font-size: 20rpx;
 	box-sizing: border-box;
 }
-
+.zftable .wxskth{
+	align-items: center;
+	justify-content: center;
+}
+.zftable .wxskth text{
+	height: 160rpx;
+}
 .kameng5 .row image {
 	width: 312rpx;
 	height: 556rpx;
@@ -802,7 +851,7 @@ page {
 	font-size: 32rpx;
 }
 .vipinput {
-	width: 75%;
+	width: 76%;
 	margin: 10rpx auto 80rpx;
 }
 .buyvip{

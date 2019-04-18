@@ -1,9 +1,9 @@
 <!--首页-->
 <import src="../templete/model/model.wxml" />
-<view>
+<view class="index-wrap">
 	<!-- 首页——轮播 -->
 	<view class="focusWrap">
-		<swiper class="swiperCon" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+		<swiper class="swiperCon" circular="{{true}}" indicator-dots="{{false}}" autoplay="{{true}}" interval="3000" duration="500">
 			<block wx:for="{{banners}}">
 				<swiper-item>
 					<image bindtap="gotolink" src="{{item.imgurl}}"  data-link="{{item.linkpath}}" data-linktype="{{item.linktype}}"/>
@@ -263,7 +263,7 @@
 									<text>国内彩信</text>
 								</view>
 								<view class="row td">
-									<text class="flex2 purple">1元/日/300MB，自动叠加续订，不使用不扣费</text>
+									<text class="flex2 purple">1元/日/600MB，自动叠加续订，不使用不扣费</text>
 									<text>免费</text>
 									<text>0.1元/条</text>
 									<text>0.3元/条</text>
@@ -297,7 +297,7 @@
 									<text>国内彩信</text>
 								</view>
 								<view class="row td">
-									<text class="flex2 purple">1元/日/600MB，超出后3元/日不限量</text>
+									<text class="flex2 purple">1元/日/600MB，每日3元封顶，流量不限用</text>
 									<text>0.12元/分钟</text>
 									<text>0.1元/条</text>
 									<text>0.3元/条</text>
@@ -331,7 +331,7 @@
 									<text>国内彩信</text>
 								</view>
 								<view class="row td">
-									<text class="flex2 purple">1元/日/不限量</text>
+									<text class="flex2 purple">1元/日/不限用</text>
 									<text>0.12元/分钟</text>
 									<text>0.1元/条</text>
 									<text>0.3元/条</text>
@@ -366,51 +366,74 @@
 										<view>
 											<text>套餐包含</text>
 										</view>
-										<view class="row">
+										<view class="row wxskth">
 											<text>国内流量</text>
 											<text>国内语音</text>
+											<text>友情可选包(语音VPN)</text>
 										</view>
 									</view>
-									<view class="column flex4">
+									<view class="column flex3">
 										<view>
 											<text>套外资费</text>
 										</view>
-										<view class="row">
-											<text>语音</text>
+										<view class="row wxskth">
 											<text>流量</text>
-											<text>短信</text>
+											<text>语音</text>
+											<text>短/彩信</text>
 										</view>
 									</view>
 								</view>
 								<view class="row td">
 									<view class="flex1 column">
-										<text>39</text>
-										<text>49</text>
-										<text>69</text>
-										<text>99</text>
-										<text>139</text>
+										<text class="flex1">49</text>
+										<text class="flex1">69</text>
+										<text class="flex1">99</text>
 									</view>
 									<view class="row flex3 row">
 										<view class="column flex1">
-											<text>10G</text>
-											<text>12G</text>
-											<text>16G</text>
-											<text>32G</text>
-											<text>48G</text>
+											<text class="flex1">20G</text>
+											<text class="flex1">40G</text>
+											<text class="flex1 purple">不限用</text>
 										</view>
 										<view class="column flex1">
-											<text>0</text>
-											<text>60</text>
-											<text>100</text>
-											<text>100</text>
-											<text>200</text>
+											<text class="flex1">200分钟</text>
+											<text class="flex1">500分钟</text>
+											<text class="flex1">1000分钟</text>
+										</view>
+										<view class="column flex1">
+											<text class="flex1 purple">赠送</text>
+											<text class="flex1">——</text>
+											<text class="flex1">——</text>
 										</view>
 									</view>
-									<view class="row flex4">
-										<text style="padding-top:100rpx">0.12元每分钟</text>
-										<text style="padding-top:100rpx">3元/日不限量流量，每日自动续订</text>
-										<text style="padding-top:100rpx">0.1元每条</text>
+									<view class="row flex3">
+										<view class="column flex1">
+											<text class="flex3">2元/日不限量流量每日自动续订</text>
+											<text class="flex1">——</text>
+										</view>
+										<view class="flex1"><text style="padding-top:100rpx;height: 100%;">0.12元每分钟</text></view>
+										<view class="flex1"><text style="padding-top:100rpx;height: 100%;">短信：0.1元每条\n彩信：0.3元/条</text></view>
+										
+										
 									</view>
+								</view>
+							</view>
+						</view>
+						<view class="tc-table">
+							<text class="line2"></text>
+							<view class="tc-name">
+								<text class="kmh2">可选包</text>
+							</view>
+							<view class="zftable column">
+								<view class="row th">
+									<text class="flex1">可选包名称</text>
+									<text class="flex1">费用</text>
+									<text class="flex3">包含</text>
+								</view>
+								<view class="row td">
+									<text class="flex1 purple">友情可选包</text>
+									<text class="flex1">10元/月</text>
+									<text class="flex3">1709/1708/1707/1704/171/167后续联通转售新号段互相拨打语音免费</text>
 								</view>
 							</view>
 						</view>
@@ -456,7 +479,7 @@
 									<text class="memprice">{{item.productFee/100}}元</text>
 								</view>
 								<view class="membuy column">
-									<text data-itemId="{{item.productId}}" data-productType="{{item.productType}}" data-productName="{{item.productName}}"
+									<text data-itemId="{{item.productId}}" data-productType="{{item.productType}}" data-productName="{{item.productName}}" data-holderText="{{item.holderText}}" 
 									 bindtap="showModal">购买</text>
 								</view>
 							</view>
@@ -477,7 +500,7 @@
 							</view>
 							<text class="wenxintips">温馨提示</text>
 							<view class="vipinput">
-								<input type="number" maxlength="11" bindinput = "input" value="{{inputVal}}" placeholder="{{vipholder}}"/>
+								<input type="number" maxlength="11" bindinput = "input" value="{{inputVal}}" placeholder="请输入您登陆或绑定{{holderText}}的手机号"/>
 							</view>
 						</view>
 						<view class="buyvip" bindtap="buyVip">
@@ -489,6 +512,11 @@
 		</view>
 	</view>
 	<image src="../../images/totop.png" class='goTop' hidden='{{!floorstatus}}' bindtap="goTop"></image>
+	<view class="banner" wx:if="{{showBanner}}">
+		<view class="maskbanner"></view>
+		<image src="{{bannerSrc}}"></image>
+		<text bindtap="skipBanner">跳过({{seconds}}秒)</text>
+	</view>
 	<template is="tip-model" data="{{...showModelInfo}}"></template>
 	<template is="down-model" data="{{...downModelInfo}}"></template>
 </view>

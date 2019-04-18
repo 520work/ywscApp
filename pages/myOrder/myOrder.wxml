@@ -127,9 +127,9 @@
 						<text>{{item.state}}</text>
 					</view>
 				</view>
-				<view class="middle" data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" bindtap="orderDetails">
+				<view class="middle" data-orderid="{{item.id}}" data-orderType="{{item.ywscOrderType}}" data-imgSource="{{item.imgSourceSrc}}" bindtap="orderDetails">
 					<view class="fl row">
-						<image src="../../images/cart.jpg"></image>
+						<image src="{{item.imgSourceSrc}}"></image>
 						<view class="column">
 							<text class="cardnum">{{item.phoneNumber}}</text>
 						</view>

@@ -145,7 +145,7 @@ Page({
 	onReachBottom: function(options) {
 		var that = this;
 		var reachBottomStatus = that.data.reachBottomStatus;
-		if(reachBottomStatus){
+		if (reachBottomStatus) {
 			that.setData({
 				moreText: '加载中...'
 			});
@@ -275,13 +275,14 @@ Page({
 	},
 	//去套餐页
 	chooseTaocan: function(e) {
-		getApp().globalData.ywscOrderType = '1';
 		var qlTelNum = e.currentTarget.dataset.qltelnum;
 		var qlTelNum1 = e.currentTarget.dataset.qltelnum1;
+		var qlNum = qlTelNum + ',' + qlTelNum1;
+		getApp().globalData.ywscOrderType = '1';
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
 		var doubleNumStatus = true;
-		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm', '');
+		util.chooseTaocan('', whereFrom, occupyMoney, doubleNumStatus, qlTelNum, qlTelNum1, '', 'tm', 'qlhtm');
 	},
 	//格式化情侣号码
 	formatTelNum: function(numData) {

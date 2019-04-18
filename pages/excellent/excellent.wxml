@@ -2,11 +2,11 @@
 <view class="excellent-container">
 	<view class="choosetaocan row">
 		<view class="{{introduce1 ? 'first column active':'first column'}}" bindtap="chooseFisrt">
-			<text class="biger">流量不限量</text>
+			<text class="biger">流量不限用</text>
 			<text>19元/每月</text>
 		</view>
 		<view class="{{introduce2 ? 'second column active':'second column'}}" bindtap="chooseSecond">
-			<text class="biger">全国流量12G</text>
+			<text class="biger">全国流量20G</text>
 			<text>49元/每月</text>
 		</view>
 	</view>
@@ -17,7 +17,7 @@
 				<view class="row">
 					<view class="column">
 						<text class="top">全国流量</text>
-						<text class="bottom">1元/每日无限用</text>
+						<text class="bottom">1元/每日不限用</text>
 					</view>
 					<view class="column">
 						<text class="top">来电显示</text>
@@ -48,15 +48,14 @@
 			</view>
 			<view class="zfsm column">
 				<text>资费说明： </text>
-				<text>1、无限时空19元档（无限版）赠送来电显示，全国免费接听；</text>
-				<text>2、全国语音拨打0.12元/分钟，全国1元/日流量无限用，每月累计使用到20G限速至128kb；流量日包不可取消订购；短信0.1元/条；</text>
-				<text>3、流量限速后，用户可订购全国3元/日无限量包，立即升速，每日自动续订，可取消无限量包，次日生效，取消后降速至128kb；</text>
-				<text>4、日包当天24:00自动清零；</text>
-				<text>5、此套餐新老用户均可选择订购，每月最后一天18:00之后无法变更套餐，老用户可于每月最后一天18:00之前变更套餐，变更套餐次月生效，新用户当月有效；</text>
-				<text>6、新用户入网，每月16日之前激活，当月收取全月月费，每月16日及以后激活，当月收取半月月费；</text>
-				<text>7、用户入网默认开通国内语音主被叫（不含港澳台）、短彩信、手机上网、来电显示、可视电话等。国际及港澳台等其他业务默认关闭；</text>
-				<text>8、每月3日前一次性收取当月月费；</text>
-				<text>9、部分特殊号码不可选此套餐。</text>
+				<text>1、2019无限时空19元档赠送来电显示，全国免费接听；</text>
+				<text>2、全国语音拨打0.12元/分钟，全国1元/日流量不限用，流量日包不可取消订购，每月累计使用到100G限速至128kb，短信0.1元/条；</text>
+				<text>3、日包当天24:00自动清零；</text>
+				<text>4、此套餐新老用户均可选择订购，每月最后一天18:00之后无法变更套餐，老用户可于每月最后一天18:00之前变更套餐，变更套餐次月生效，新用户当月有效；</text>
+				<text>5、新用户入网，每月16日之前激活，当月收取全月月费，每月16日及以后激活，当月收取半月月费；</text>
+				<text>6、用户入网默认开通国内语音主被叫（不含港澳台）、短彩信、手机上网、来电显示、可视电话等。国际及港澳台等其他业务默认关闭；</text>
+				<text>7、每月3日前一次性收取当月月费；</text>
+				<text>8、部分特殊号码不可选此套餐。</text>
 			</view>
 			<view class="gotochoosnum" bindtap="goToChooseNum">
 				<text class="iconfont icon-youjiantou">前去选号</text>
@@ -68,19 +67,19 @@
 				<view class="row">
 					<view class="column">
 						<text class="top">全国流量</text>
-						<text class="bottom">12G</text>
+						<text class="bottom">20GB</text>
 					</view>
 					<view class="column">
 						<text class="top">全国语音</text>
-						<text class="bottom">60分钟</text>
+						<text class="bottom">200分钟</text>
 					</view>
 					<view class="column">
 						<text class="top">来电显示</text>
 						<text class="bottom">免费</text>
 					</view>
 					<view class="column">
-						<text class="top">国内接听</text>
-						<text class="bottom">免费</text>
+						<text class="top">友情语音</text>
+						<text class="bottom">赠送</text>
 					</view>
 				</view>
 			</view>
@@ -93,7 +92,7 @@
 					</view>
 					<view class="column">
 						<text class="top">流量</text>
-						<text class="bottom">3元/日流量无限量</text>
+						<text class="bottom">2元/日流量不限用</text>
 					</view>
 					<view class="column">
 						<text class="top">短信</text>
@@ -103,13 +102,14 @@
 			</view>
 			<view class="zfsm column">
 				<text>资费说明： </text>
-				<text>1、无限时空系列套餐均赠送老店显示，全国免费接听</text>
-				<text>2、全国语音拨打0.12元/分钟，套外全国3元/日流量无限量，每日自动续订，流量日包不可取消，短信0.1元/条；</text>
-				<text>3、套内语音、流量当月有效，月末24:00自动清零； </text>
-				<text>4、此套餐新老用户均可选择订购，每月最后一天18:00之后无法变更套餐，老用户可于每月最后一天18:00之前变更套餐，变更套餐次月生效，新用户当月有效；</text>
-				<text>5、新用户入网，每月16日之前激活，当月收取全月月费，套内资源为套内全部资源，每月16日及以后激活，当月收取半月月费，套内资源为原套餐含量的一半，激活次月恢复原套餐含量及月费；</text>
-				<text>6、用户入网默认开通国内语音主被叫（不含港澳台）、短彩信、手机上网、来电显示、可视电话等。国际及港澳台等其他业务默认关闭；</text>
-				<text>7、每月3日前一次性收取当月月费。</text>
+				<text>1、2019无限时空系列套餐均赠送来电显示，全国免费接听；</text>
+				<text>2、全国语音拨打0.12元/分钟，套外全国2元/日流量不限用，每日自动续订，流量日包不可取消（2019无限时空99元档无套外流量），每月累计使用到100G限速至128kb，短信0.1元/条；</text>
+				<text>3、2019年无限时空49元档赠送友情可选包（语音VPN）1709/1708/1707/1704/171/167/后续申请联通转售新号段互相拨打语音免费，不可取消可选包；</text>
+				<text>4、套内语音、流量当月有效，月末24:00自动清零；</text>
+				<text>5、此套餐新老用户均可选择订购，每月最后一天18:00之后无法变更套餐，老用户可于每月最后一天18:00之前变更套餐，变更套餐次月生效，新用户当月有效；</text>
+				<text>6、新用户入网，每月16日之前激活，当月收取全月月费，套内资源为套内全部资源，每月16日及以后激活，当月收取半月月费，套内资源为原套餐含量的一半，激活次月恢复原套餐含量及月费；</text>
+				<text>7、用户入网默认开通国内语音主被叫（不含港澳台）、短彩信、手机上网、来电显示、可视电话等。国际及港澳台等其他业务默认关闭；</text>
+				<text>8、每月3日前一次性收取当月月费。</text>
 			</view>
 			<view class="gotochoosnum" bindtap="goToChooseNum">
 				<text class="iconfont icon-youjiantou">前去选号</text>

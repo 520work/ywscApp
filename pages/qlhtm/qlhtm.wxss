@@ -1,4 +1,5 @@
 /* pages/lhtm/lhtm.wxss */
+@import "../templete/model/model.wxss";
 /* 头部 */
 .lhtm-head {
 	box-shadow:0rpx 8rpx 16rpx -12rpx rgba(118,97,209,1);
@@ -85,6 +86,9 @@ picker-view-column view {
 	text-align: center;
 }
 /* 号板 */
+.qlhtm-body{
+	margin-top: 180rpx;
+}
 .qlhtm-body .lovetellists {
 	height: 104rpx;
 	display: flex;

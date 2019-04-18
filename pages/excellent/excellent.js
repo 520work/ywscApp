@@ -7,7 +7,7 @@ Page({
 	data: {
 		introduce1: true,
 		introduce2: false,
-		datacode: 1353168
+		datacode: 1353242
 	},
 	onLoad: function(options) {
 		var that = this;
@@ -21,7 +21,7 @@ Page({
 		this.setData({
 			introduce1: introduce1,
 			introduce2: introduce2,
-			datacode: 1353168
+			datacode: 1353242
 		})
 	},
 	chooseSecond: function(e) {
@@ -30,12 +30,12 @@ Page({
 		this.setData({
 			introduce1: introduce1,
 			introduce2: introduce2,
-			datacode: 1353170
+			datacode: 1353243
 		})
 	},
 	goToChooseNum: function(e) {
 		wx.navigateTo({
 			url: '../chooseNum/chooseNum?code=' + this.data.code + '&datacode=' + this.data.datacode
-		})
+		});
 	}
 })

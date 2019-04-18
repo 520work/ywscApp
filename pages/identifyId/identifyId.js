@@ -25,10 +25,35 @@ Page({
 	chooseImg: function(e) {
 		var imgType = e.currentTarget.dataset.id;
 		var that = this;
+		//判断购卡方式 1--号卡直选 3--i卡 4--e卡
+		var ywscOrderType = app.globalData.ywscOrderType;
+		var photoSourceType;
+		if(ywscOrderType == 1){
+			var xckg = app.globalData.xckg;
+			if(xckg == 0){
+				photoSourceType = ['album', 'camera'];
+			} else {
+				photoSourceType = ['camera'];
+			};
+		} else if (ywscOrderType == 3){
+			var iKg = app.globalData.iKg;
+			if(iKg == 0){
+				photoSourceType = ['album', 'camera'];
+			} else {
+				photoSourceType = ['camera'];
+			};
+		} else if (ywscOrderType == 4){
+			var eKg = app.globalData.eKg;
+			if(eKg == 0){
+				photoSourceType = ['album', 'camera'];
+			} else {
+				photoSourceType = ['camera'];
+			};
+		};
 		wx.chooseImage({
 			count: 1, // 默认9  
 			sizeType: 'compressed', // 可以指定是原图还是压缩图，默认二者都有 ['original', 'compressed'] 
-			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
+			sourceType: photoSourceType, // 可以指定来源是相册还是相机，默认二者都有  
 			success: function(res) {
 				// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
 				var tempFilePaths = res.tempFilePaths;
@@ -206,7 +231,9 @@ Page({
 												method: 'POST',
 												data: {
 													faceImage: faceImage,
-													handImage: imgPath
+													handImage: imgPath,
+													identityName: that.data.idName,
+													identityCard: that.data.idCard
 												},
 												header: {
 													"Content-Type": "application/x-www-form-urlencoded"
@@ -214,7 +241,7 @@ Page({
 												success: res => {
 													console.log(res);
 													wx.hideLoading();
-													if (res.data[0].Status == "1") {
+													if (res.data[0].GztStatus == "1") {
 														wx.showToast({
 															title: '验证通过',
 															icon: 'success',
@@ -226,7 +253,7 @@ Page({
 														});
 													} else {
 														wx.showToast({
-															title: '验证不通过,请重新上传。',
+															title: res.data[0].msg,
 															icon: 'none',
 															duration: 2000
 														});

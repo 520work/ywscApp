@@ -253,7 +253,7 @@ Page({
 	onReachBottom: function(options) {
 		var that = this;
 		var reachBottomStatus = that.data.reachBottomStatus;
-		if(reachBottomStatus){
+		if (reachBottomStatus) {
 			that.setData({
 				moreText: '加载中...'
 			});
@@ -263,8 +263,8 @@ Page({
 	},
 	//去套餐页
 	chooseTaocan: function(e) {
-		getApp().globalData.ywscOrderType = '1';
 		var telNum = e.currentTarget.dataset.telnum;
+		getApp().globalData.ywscOrderType = '1';
 		var whereFrom = e.currentTarget.dataset.wherefrom;
 		var occupyMoney = e.currentTarget.dataset.occupymoney;
 		util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', '', 'tm', 'lhtm');

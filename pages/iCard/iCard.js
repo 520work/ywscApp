@@ -16,6 +16,17 @@ Page({
 	},
 	onLoad: function(options) {
 		var that = this;
+		//获取开关信息
+		var upadateIkgs = app.globalData.upadateIkgs;
+		var maxBuyCardNum;
+		if(upadateIkgs == 0){
+			maxBuyCardNum = 150;
+		} else {
+			maxBuyCardNum = 5;
+		};
+		that.setData({
+			maxBuyCardNum: maxBuyCardNum
+		});
 		//地址显示
 		var openId = app.globalData.openId;
 		wx.request({
@@ -64,20 +75,22 @@ Page({
 	},
 	//规则详情弹窗
 	bindRule: function() {
+		var maxBuyCardNum = this.data.maxBuyCardNum;
 		wx.showModal({
 			title: '远特i卡购买规则',
-			content: '1.每日购买数量不得超过150张；\r\n2.通过下载【远特i卡】APP进行自助选号开卡；\r\n3.在远微商城购买远特i卡后将以快递形式邮寄；\r\n4.在购买远特i卡后，会在T+2个工作日内邮寄号卡，周末及节假日不邮寄；\r\n5.远特i卡售出后，如有质量问题，可免费更换一次，邮费需自理；\r\n6.购买远特i卡后在使用过程中出现问题可联系10027人工客服咨询；',
+			content: '1.每日购买数量不得超过'+maxBuyCardNum+'张；\r\n2.通过下载【远特i卡】APP进行自助选号开卡；\r\n3.在远微商城购买远特i卡后将以快递形式邮寄；\r\n4.在购买远特i卡后，会在T+2个工作日内邮寄号卡，周末及节假日不邮寄；\r\n5.远特i卡售出后，如有质量问题，可免费更换一次，邮费需自理；\r\n6.购买远特i卡后在使用过程中出现问题可联系10027人工客服咨询；',
 			showCancel: false
 		})
 	},
 	/* 点击减号 */
 	bindMinus: function() {
 		var num = this.data.num;
+		var maxBuyCardNum = this.data.maxBuyCardNum;
 		if (num > 1) {
 			num--;
 		}
 		var minusStatus = num <= 1 ? 'disabled' : 'normal';
-		var plusStatus = num < 150 ? 'normal' : 'disabled';
+		var plusStatus = num < maxBuyCardNum ? 'normal' : 'disabled';
 		// 将数值与状态写回
 		this.setData({
 			num: num,
@@ -89,11 +102,13 @@ Page({
 	/* 点击加号 */
 	bindPlus: function() {
 		var num = this.data.num;
-		if (num < 150) {
+		var maxBuyCardNum = this.data.maxBuyCardNum;
+		if (num < maxBuyCardNum) {
 			num++;
-		}
+		};
+		var maxBuyCardNumMinusOne = maxBuyCardNum-1;
 		var minusStatus = num < 1 ? 'disabled' : 'normal';
-		var plusStatus = num > 149 ? 'disabled' : 'normal';
+		var plusStatus = num > maxBuyCardNumMinusOne ? 'disabled' : 'normal';
 
 		this.setData({
 			num: num,
@@ -105,6 +120,7 @@ Page({
 	/* 输入框事件 */
 	bindManual: function(e) {
 		var num = e.detail.value;
+		var maxBuyCardNum = this.data.maxBuyCardNum;
 		if (num < 1) {
 			num = 1;
 			wx.showToast({
@@ -112,10 +128,10 @@ Page({
 				icon: 'none',
 				duration: 2000
 			});
-		} else if (num > 150) {
-			num = 150;
+		} else if (num > maxBuyCardNum) {
+			num = maxBuyCardNum;
 			wx.showToast({
-				title: '商品数量不能大于150',
+				title: '商品数量不能大于' + maxBuyCardNum,
 				icon: 'none',
 				duration: 2000
 			});
@@ -241,9 +257,10 @@ Page({
 						user_address: this.data.addressData.userAddress,
 					};
 					//验证身份信息
-					var upadateKg = app.globalData.upadateKg;
+					var upadateIkgs = app.globalData.upadateIkgs;
 					//关闭 0 打开 1
-					if (upadateKg == 1) {
+					if (upadateIkgs == 1) {
+						wx.hideLoading();
 						getApp().globalData.iCardData = iCardData;
 						getApp().globalData.idcardbuynum = buyNum;
 						wx.navigateTo({
@@ -271,6 +288,7 @@ Page({
 							},
 							fail: err => {
 								console.log(err);
+								wx.hideLoading();
 								that.setData({
 									'tipsModelInfo.showModelStatus': true,
 									'tipsModelInfo.title': '出错啦，请稍后再试~',
@@ -282,6 +300,7 @@ Page({
 			},
 			fail: err => {
 				console.log(err);
+				wx.hideLoading();
 				this.setData({
 					'tipsModelInfo.showModelStatus': true,
 					'tipsModelInfo.title': '出错啦，请稍后再试~',

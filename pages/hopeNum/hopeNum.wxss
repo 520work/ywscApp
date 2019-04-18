@@ -28,12 +28,16 @@
 	margin-left: 10rpx;
 	margin-right: 10rpx;
 }
+.search-wrap{
+	position: inherit;
+	box-shadow: 0 0 0 #fff;
+}
 /* 号板 */
 .hn-card-board {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	margin: 16rpx auto;
+	margin: 32rpx auto 16rpx;
 }
 
 .hn-card-board view {

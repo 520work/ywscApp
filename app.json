@@ -25,7 +25,6 @@
 	"subPackages": [{
 		"root": "packageA",
 		"pages": [
-			"pages/icardHelp/icardHelp",
 			"pages/kkzn/kkzn"
 		]
 	}],
