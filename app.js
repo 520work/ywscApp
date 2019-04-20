@@ -31,15 +31,16 @@ App({
 							},
 							method: 'GET',
 							success: function(openIdRes) {
-
 								that.globalData.payOpenId = openIdRes.data.info.openid
-
-								if (openIdRes.data.info.unionid == null) {
-									wx.showToast({
-										title: '获取用户信息失败，请稍后再试。',
-										icon: 'none',
-										duration: 2000
-									});
+								if (openIdRes.data.info.unionid == null || openIdRes.data.info.unionid == "" || openIdRes.data.info.unionid == undefined) {
+									//wx.showToast({
+									// 	title: '获取用户信息失败，请稍后再试。',
+									// 	icon: 'none',
+									// 	duration: 2000
+									//});
+									
+									//提示用户去关注远微商城公众号
+									that.globalData.isSubscribe = true;
 								} else {
 									wx.request({
 										url: 'https://www.m10027.com/WeChatServices/xiaochengxu.ashx?',
@@ -52,7 +53,7 @@ App({
 											'content-type': 'application/x-www-form-urlencoded' // 默认值
 										},
 										success: function(res) {
-											if (res.data.Status == true) {
+											if (res.data.Status == true && res.data.Value != "") {
 												that.globalData.openId = res.data.Value;
 											} else {
 												//提示用户去关注远微商城公众号
@@ -66,19 +67,25 @@ App({
 								};
 							},
 							fail: function(error) {
-								wx.showToast({
-									title: '获取用户信息失败，请稍后再试。',
-									icon: 'none',
-									duration: 2000
-								});
+								//wx.showToast({
+								// 	title: '获取用户信息失败，请稍后再试。',
+								// 	icon: 'none',
+								// 	duration: 2000
+								//});
+
+								//提示用户去关注远微商城公众号
+								that.globalData.isSubscribe = true;
 							}
 						})
 					} else {
-						wx.showToast({
-							title: '登录失败！' + res.errMsg,
-							icon: 'none',
-							duration: 2000
-						});
+						//wx.showToast({
+						// 	title: '登录失败！' + res.errMsg,
+						// 	icon: 'none',
+						// 	duration: 2000
+						//});
+
+						//提示用户去关注远微商城公众号
+						that.globalData.isSubscribe = true;
 					}
 				}
 			})
@@ -94,7 +101,7 @@ App({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: function(res) {
-				if(res.statusCode == 500 || res.statusCode == 404){
+				if (res.statusCode == 500 || res.statusCode == 404) {
 					wx.showModal({
 						title: '提示',
 						content: '系统维护中',
@@ -116,7 +123,7 @@ App({
 				that.globalData.xckg = res.data[0].xckg;
 				that.globalData.iKg = res.data[0].iKg;
 				that.globalData.eKg = res.data[0].eKg;
-				
+
 			},
 			fail: function(err) {
 				console.log(err);

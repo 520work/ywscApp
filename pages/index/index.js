@@ -412,6 +412,14 @@ Page({
 	},
 	//显示底部抽屉
 	showModal: function(e) {
+		//购买支付接口有问题 暂时提示用户去公众号购买会员 beign
+		this.setData({
+			'showModelInfo.showModelStatus': true,
+			'showModelInfo.title': '功能维护中，请到"远微商城"公众号进行购买。'
+		});
+		return false;
+		//购买支付接口有问题 暂时提示用户去公众号购买会员 end
+		
 		// 显示遮罩层
 		var animation = wx.createAnimation({
 			duration: 200,
@@ -595,7 +603,8 @@ Page({
 				var resJson = JSON.parse(resData.data); //Json 转 字符串
 				if (resJson.Status) {
 					wx.setStorageSync('ServiceStatus', resJson.Value);
-					if (resJson.Value === '1') {
+					//if (resJson.Value === '1') {
+					if (resJson.Value === '0') {
 						wx.setStorageSync('weihumsg', resJson.Msg);
 						wx.redirectTo({
 							url: '../weihu/weihu',

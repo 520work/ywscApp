@@ -1,5 +1,6 @@
 {
 	"pages": [
+		"pages/excellent/excellent",
 		"pages/index/index",
 		"pages/lhtm/lhtm",
 		"pages/qlhtm/qlhtm",
@@ -7,7 +8,7 @@
 		"pages/highSearch/options",
 		"pages/hopeNum/hopeNum",
 		"pages/iCard/iCard",
-		"pages/excellent/excellent",
+		
 		"pages/taocanBoard/taocanBoard",
 		"pages/address/addressLists/addressLists",
 		"pages/address/addAddress/addAddress",

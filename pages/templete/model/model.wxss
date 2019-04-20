@@ -34,7 +34,7 @@
 }
 .model .title {
 	height: 80rpx;
-	line-height: 80rpx;
+	/* line-height: 80rpx; */
 	font-size: 28rpx;
 	font-weight: 500;
 	color: #7661D1;
@@ -157,7 +157,7 @@
 }
 
 .tip-model .modalDlg .title {
-	padding-top: 40rpx;
+	padding: 40rpx 40rpx 0;
 }
 .del-model .btn-wrap text{
 	color: #fff;
