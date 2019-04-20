@@ -1,6 +1,0 @@
-.help-title{
-	font-size: 30rpx;
-	text-align: center;
-	padding: 28rpx 0;
-	border-bottom: 1px solid #eee;
-}
