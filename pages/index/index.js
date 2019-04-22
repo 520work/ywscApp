@@ -603,7 +603,7 @@ Page({
 				var resJson = JSON.parse(resData.data); //Json 转 字符串
 				if (resJson.Status) {
 					wx.setStorageSync('ServiceStatus', resJson.Value);
-					//if (resJson.Value === '1') {
+					//维护状态 值为1
 					if (resJson.Value === '0') {
 						wx.setStorageSync('weihumsg', resJson.Msg);
 						wx.redirectTo({

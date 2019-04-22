@@ -51,7 +51,7 @@
 				<view class="btnWrap" wx:if="{{fromYztc}}">
 					<block wx:for="{{yuyinData}}" wx:key="*this">
 						<view class="btn_group btn_group1 taocan">
-							<view bindtap='yuyinSelFun' data-id="{{index}}" class="{{index == yyid?'active':'default'}}">
+							<view data-id="{{index}}" class="{{index == yyid?'active':'default'}}">
 								<text class="name">{{item.name}}</text>
 								<text class="taocanprice">{{item.price}}</text>
 							</view>
@@ -168,7 +168,7 @@
 			<view class="process_top">
 				<text class="circle"></text>
 				<text class="title">选择收货地址</text>
-				<text bindtap="chooseAddress" class="toChoose iconfont icon-arrow">已选择</text>
+				<text bindtap="chooseAddress" class="toChoose iconfont icon-arrow">{{addressStatus?'已选择':'未选择'}}</text>
 			</view>
 			<view class="addressbody">
 				<text wx:if="{{addressStatus}}">{{addressData.showText}}</text>
