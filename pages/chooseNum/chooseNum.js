@@ -252,6 +252,13 @@ Page({
 						noNum: false,
 						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 					});
+				} else if(numData.length > 0 && numData.length < 30){
+					that.handleData(numData, pageIndex, that);
+					that.setData({
+						moreNum: true,
+						noNum: false,
+						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+					});
 				} else {
 					var pageIndex = that.data.pageIndex;
 					that.handleData(numData, pageIndex, that);

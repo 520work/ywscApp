@@ -14,7 +14,8 @@ Page({
 			title: '',
 			btn: '确定',
 			showModelStatus: false
-		}
+		},
+		bwcShow: false
 	},
 	//生命周期函数--监听页面加载
 	onLoad: function(options) {
@@ -40,9 +41,14 @@ Page({
 		};
 		//判断用户来源
 		var haokaType;
-		if(options.tmType != 'undefined'){
+		if (options.tmType != 'undefined') {
+			//五一活动 begin
+			that.setData({
+				fromBytm: true
+			});
+			//五一活动 end
 			//特卖过来的用户 分辨靓号和情侣号
-			if(options.tmType == 'lhtm'){
+			if (options.tmType == 'lhtm') {
 				that.setData({
 					fromLhtm: true
 				});
@@ -55,7 +61,7 @@ Page({
 			};
 		} else {
 			//分辨号码直选和优质套餐
-			if(options.dataCode != ''){
+			if (options.dataCode != '') {
 				haokaType = 2;
 			} else {
 				haokaType = 1;
@@ -177,6 +183,14 @@ Page({
 			liuliangData[0].package_name = defaultPackage.PackageList[0].package_name;
 			liuliangData[0].code = defaultPackage.PackageList[0].code;
 			liuliangData[0].fee_describe = defaultPackage.PackageList[0].fee_describe;
+			//五一活动 begin
+			var huodongValid = app.globalData.huodongValid;
+			if(huodongValid){
+				if (liuliangData[0].code == "1353243" || liuliangData[0].code == "1353242") {
+					liuliangData[0].showBwc = true
+				};
+			}
+			//五一活动 end
 		} else {
 			for (var i = 0; i < defaultPackage.PackageList.length; i++) {
 				var liuliangInfo = defaultPackage.PackageList[i].title;
@@ -193,15 +207,23 @@ Page({
 				liuliangData[i].package_name = defaultPackage.PackageList[i].package_name;
 				liuliangData[i].code = defaultPackage.PackageList[i].code;
 				liuliangData[i].fee_describe = defaultPackage.PackageList[i].fee_describe;
+				//五一活动 begin
+				var huodongValid = app.globalData.huodongValid;
+				if(huodongValid){
+					if (liuliangData[i].code == "1353243" || liuliangData[i].code == "1353242") {
+						liuliangData[i].showBwc = true
+					};
+				};
+				//五一活动 end
 			};
-			
+
 		};
 		//切换资费说明信息
 		var zifeiData = basicPackageLists[ids].PackageList[0].standard;
 		//切换增值业务信息
 		var zengzhiData = [];
-		for(var i=0;i<basicPackageLists[ids].PackageList[0].Optional_package.length;i++){
-			if(basicPackageLists[ids].PackageList[0].Optional_package[i].code != "000000"){
+		for (var i = 0; i < basicPackageLists[ids].PackageList[0].Optional_package.length; i++) {
+			if (basicPackageLists[ids].PackageList[0].Optional_package[i].code != "000000") {
 				zengzhiData.push(basicPackageLists[ids].PackageList[0].Optional_package[i])
 			}
 		};
@@ -218,16 +240,34 @@ Page({
 			};
 		};
 		//切换预存话费信息
-		if(this.data.fromLhtm == true){
-			var yucunData = [30000];
+		if (this.data.fromLhtm == true) {
+			var yucunData = [5000];
 		} else {
-			var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
+			// var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
+			//五一活动 begin
+			var huodongValid = app.globalData.huodongValid;
+			if(huodongValid){
+				if(ids == 2){
+					var yucunData =[];
+					var despositM = basicPackageLists[ids].PackageList[0].deposit_money;
+					for (var i = 0; i < despositM.length; i++) {
+						if (despositM[i] != 10000) {
+							yucunData.push(despositM[i]);
+						};
+					};
+				} else {
+					var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
+				};
+			}else{
+				var yucunData = basicPackageLists[ids].PackageList[0].deposit_money;
+			};
+			//五一活动 end
 		};
 		var fromQlhao = this.data.doubleNumStatus;
 		var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
-		if(fromQlhao == true){
-			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)*2); //订单总计
+		if (fromQlhao == true) {
+			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine) * 2); //订单总计
 			var payMoney = this.keepTwoFloor(orderTotal - Number(this.data.yhje)); //实付金额
 		} else {
 			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)); //订单总计
@@ -257,8 +297,8 @@ Page({
 		var zifeiData = liuliangPackage.standard;
 		//切换增值业务信息
 		var zengzhiData = [];
-		for(var i=0;i<liuliangPackage.Optional_package.length;i++){
-			if(liuliangPackage.Optional_package[i].code != "000000"){
+		for (var i = 0; i < liuliangPackage.Optional_package.length; i++) {
+			if (liuliangPackage.Optional_package[i].code != "000000") {
 				zengzhiData.push(liuliangPackage.Optional_package[i]);
 			}
 		};
@@ -275,16 +315,34 @@ Page({
 			};
 		};
 		//切换预存话费信息
-		if(this.data.fromLhtm == true){
-			var yucunData = [30000];
+		if (this.data.fromLhtm == true) {
+			var yucunData = [5000];
 		} else {
-			var yucunData = liuliangPackage.deposit_money;
+			// var yucunData = liuliangPackage.deposit_money;
+			//五一活动 begin
+			var huodongValid = app.globalData.huodongValid;
+			if(huodongValid){
+				if(liuliangPackage.code == "1353243"){
+					var yucunData =[];
+					var despositM = liuliangPackage.deposit_money;
+					for (var i = 0; i < despositM.length; i++) {
+						if (despositM[i] != 10000) {
+							yucunData.push(despositM[i]);
+						};
+					};
+				} else {
+					var yucunData = liuliangPackage.deposit_money;
+				};
+			} else {
+				var yucunData = liuliangPackage.deposit_money;
+			};
+			//五一活动 end
 		};
 		var fromQlhao = this.data.doubleNumStatus;
 		var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
-		if(fromQlhao == true){
-			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)*2);
+		if (fromQlhao == true) {
+			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine) * 2);
 			var payMoney = this.keepTwoFloor(orderTotal - Number(this.data.yhje));
 		} else {
 			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine));
@@ -314,7 +372,7 @@ Page({
 		var isBiXuan = zengzhiItem.isBiXuan;
 		var isDefault = zengzhiItem.isDefault;
 		var chooseBtnText, chooseStatus, chooseBtnStatus;
-		if(isBiXuan){
+		if (isBiXuan) {
 			chooseBtnStatus = false;
 			chooseBtnText = '不显示';
 			chooseStatus = '';
@@ -375,8 +433,8 @@ Page({
 		var fromQlhao = this.data.doubleNumStatus;
 		var yucunjine = Number(e.currentTarget.dataset.yucun).toFixed(2);
 		var occupyMoney = this.data.occupyMoney;
-		if(fromQlhao == true){
-			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)*2);
+		if (fromQlhao == true) {
+			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine) * 2);
 			var payMoney = this.keepTwoFloor(orderTotal - Number(this.data.yhje));
 		} else {
 			var orderTotal = this.keepTwoFloor(Number(occupyMoney) + Number(yucunjine));
@@ -509,7 +567,7 @@ Page({
 	// 	},
 	//请求套餐数据
 	getTaocanInfo: function(that, fromLhtm, doubleNumStatus, options, whereFrom, occupyMoney) {
-		if(fromLhtm == true){
+		if (fromLhtm == true) {
 			that.taocanOptions(that, dataBase.lhtcData.Content.BasicPackageList, occupyMoney);
 		} else if (doubleNumStatus == "true") {
 			that.taocanOptions(that, dataBase.qinglvData.Content.BasicPackageList, occupyMoney);
@@ -534,7 +592,7 @@ Page({
 					if (res.data.code == 201) {
 						console.log("未查询到该号码信息");
 					} else {
-						if(res.statusCode == 500 || res.statusCode == 404){
+						if (res.statusCode == 500 || res.statusCode == 404) {
 							wx.showModal({
 								title: '提示',
 								content: '套餐查询失败，请稍后重试',
@@ -576,6 +634,16 @@ Page({
 				packageTitle[i] = {};
 				packageTitle[i].name = npinfo[0];
 				packageTitle[i].price = npinfo[1];
+				//五一活动 begin
+				var huodongValid = app.globalData.huodongValid;
+				if(huodongValid){
+					if(!this.data.fromBytm){
+						if (packageTitle[i].name == "无限时空系列") {
+							packageTitle[i].showBwc = true
+						};
+					};
+				};
+				//五一活动 end
 			};
 			//默认 流量档位信息
 			var defaultPackage = data[0];
@@ -594,6 +662,14 @@ Page({
 				liuliangData[0].package_name = defaultPackage.PackageList[0].package_name;
 				liuliangData[0].code = defaultPackage.PackageList[0].code;
 				liuliangData[0].fee_describe = defaultPackage.PackageList[0].fee_describe;
+				//五一活动 begin
+				var huodongValid = app.globalData.huodongValid;
+				if(huodongValid){
+					if (liuliangData[0].code == "1353243" || liuliangData[0].code == "1353242") {
+						liuliangData[0].showBwc = true
+					};
+				};
+				//五一活动 end
 			} else {
 				for (var i = 0; i < defaultPackage.PackageList.length; i++) {
 					var liuliangInfo = defaultPackage.PackageList[i].title;
@@ -615,15 +691,15 @@ Page({
 			//默认 资费说明信息
 			zifeiData = data[0].PackageList[0].standard;
 			//默认 增值业务信息
-			for(var i=0;i<data[0].PackageList[0].Optional_package.length;i++){
-				if(data[0].PackageList[0].Optional_package[i].code != "000000"){
+			for (var i = 0; i < data[0].PackageList[0].Optional_package.length; i++) {
+				if (data[0].PackageList[0].Optional_package[i].code != "000000") {
 					zengzhiData.push(data[0].PackageList[0].Optional_package[i])
 				}
 			}
 			// zengzhiData = data[0].PackageList[0].Optional_package;
 			//默认 预存话费信息
-			if(this.data.fromLhtm == true){
-				yucunData = [30000];
+			if (this.data.fromLhtm == true) {
+				yucunData = [5000];
 			} else {
 				yucunData = data[0].PackageList[0].deposit_money;
 			};
@@ -637,7 +713,7 @@ Page({
 						var packageInfo = dataSon[k].package_name;
 						var npinfo = packageInfo.split("<br/>");
 						packageTitle[0] = {};
-						if(that.data.dataCode == '1353242'){
+						if (that.data.dataCode == '1353242') {
 							packageTitle[0].name = '流量不限用';
 						} else {
 							packageTitle[0].name = npinfo[0];
@@ -651,17 +727,31 @@ Page({
 						//默认 资费说明信息
 						zifeiData = dataSon[k].standard;
 						//默认 增值业务信息
-						for(var i=0;i<dataSon[k].Optional_package.length;i++){
-							if(dataSon[k].Optional_package[i].code != "000000"){
+						for (var i = 0; i < dataSon[k].Optional_package.length; i++) {
+							if (dataSon[k].Optional_package[i].code != "000000") {
 								zengzhiData.push(dataSon[k].Optional_package[i])
 							}
 						}
 						// zengzhiData = dataSon[k].Optional_package;
 						//默认 预存话费信息
-						if(this.data.fromLhtm == true){
-							yucunData = [30000];
+						if (this.data.fromLhtm == true) {
+							yucunData = [5000];
 						} else {
-							yucunData = dataSon[k].deposit_money;
+							//yucunData = dataSon[k].deposit_money;
+							//五一活动 begin
+							var huodongValid = app.globalData.huodongValid;
+							if(huodongValid){
+								var yucunData =[];
+								var despositM = dataSon[k].deposit_money;
+								for (var i = 0; i < despositM.length; i++) {
+									if (despositM[i] != 10000) {
+										yucunData.push(despositM[i]);
+									};
+								};
+							} else {
+								yucunData = dataSon[k].deposit_money;
+							};
+							//五一活动 end
 						};
 						var yucunjine = Number(yucunData[0] / 100).toFixed(2);
 					};
@@ -669,8 +759,8 @@ Page({
 			};
 		};
 		var fromQlhao = this.data.doubleNumStatus;
-		if(fromQlhao == true){
-			var orderTotal = that.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)*2); //订单总计
+		if (fromQlhao == true) {
+			var orderTotal = that.keepTwoFloor(Number(occupyMoney) + Number(yucunjine) * 2); //订单总计
 			var payMoney = that.keepTwoFloor(orderTotal - Number(that.data.yhje));
 		} else {
 			var orderTotal = that.keepTwoFloor(Number(occupyMoney) + Number(yucunjine)); //订单总计
@@ -772,7 +862,7 @@ Page({
 					incrementId = incrementIdArr.toString();
 					//下单请求参数体
 					var fromQlhao = this.data.doubleNumStatus;
-					if(fromQlhao == true){
+					if (fromQlhao == true) {
 						var preDeposit = this.data.yucunData[this.data.hfid] / 100 * 2;
 					} else {
 						var preDeposit = this.data.yucunData[this.data.hfid] / 100;
@@ -798,7 +888,7 @@ Page({
 						"paid_money": this.data.orderTotal, //实付
 						"user_name": this.data.addressData.contacts, //收货人姓名
 						"phone": this.data.addressData.phonenumber, //收货人电话
-						"user_address": this.data.addressData.userAddress ,//收货人地址
+						"user_address": this.data.addressData.userAddress, //收货人地址
 						"haokaType": this.data.haokaType //1号码直选，2优质套餐，3特卖靓号，4特卖情侣号
 					};
 					//开关判断
@@ -823,7 +913,7 @@ Page({
 							success: res => {
 								wx.hideLoading();
 								getApp().globalData.orderId = res.data[0].id;
-								if(res.data[0].preDeposit == '-1'){
+								if (res.data[0].preDeposit == '-1') {
 									this.setData({
 										'tipsModelInfo.title': '您的预存与实际不符，请重新选择',
 										'tipsModelInfo.showModelStatus': true
@@ -918,7 +1008,7 @@ Page({
 		})
 	},
 	//打开资费详情弹窗
-	openZfxqWindow: function(e){
+	openZfxqWindow: function(e) {
 		var zifeiIndex = this.data.llid;
 		var zifeiTitle = this.data.liuliangData[zifeiIndex].name;
 		var zifeiDescribe = this.data.liuliangData[zifeiIndex].fee_describe.replace(/<br\/\>/g, "\n");
@@ -943,5 +1033,17 @@ Page({
 			};
 		};
 		return twoFloorNum;
+	},
+	//打开五一活动弹窗
+	openHdRule: function(e) {
+		this.setData({
+			showRuleModel: true
+		})
+	},
+	//关闭五一活动弹窗
+	closeHdRule: function(e) {
+		this.setData({
+			showRuleModel: false
+		})
 	}
 })

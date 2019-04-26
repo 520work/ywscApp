@@ -44,6 +44,7 @@
 							<view bindtap='yuyinSelFun' data-id="{{index}}" class="{{index == yyid?'active':'default'}}">
 								<text class="name">{{item.name}}</text>
 								<text class="taocanprice">{{item.price}}</text>
+								<image bindtap="openHdRule" wx:if="{{item.showBwc}}" src="../../images/bwc.gif"></image>
 							</view>
 						</view>
 					</block>
@@ -71,6 +72,7 @@
 							<view bindtap='liuliangSelFun' data-id="{{index}}" class="{{index == llid?'active':'default'}}">
 								<text class="{{item.price?'name lineH50':'name lineH100'}}">{{item.name}}</text>
 								<text wx:if="{{item.price}}" class="{{item.price?'taocanprice lineH50':'taocanprice lineH100'}}">{{item.price}}</text>
+								<image bindtap="openHdRule" wx:if="{{item.showBwc}}" src="../../images/bwc.gif"></image>
 							</view>
 						</view>
 					</block>
@@ -193,6 +195,26 @@
 	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
 	<template is="taocan-model" data="{{...tcModelInfo}}"></template>
 	<template is="zifei-model" data="{{...zfModelInfo}}"></template>
+	<!-- 五一活动弹窗 begin -->
+	<view class="hdrulewindow" wx:if="{{showRuleModel}}">
+		<view class="rulemask"></view>
+		<view class="rulecon">
+			<view class="ruletitle column">
+				<text>活动规则</text>
+			</view>
+			<view class="ruledetails column">
+				<text>1、2019年4月26日—5月10日，凡在远微商城【号码直选】和【优质套餐】处购卡的用户，选择2019无限时空19元档、49元档中的任意一套餐，且预存200元及以上，即可成功参与此次活动；</text>
+				<text>2、成功参与活动的用户，在一个月内激活即可得100元话费奖励（分5个月返还，每月返还20元）、搜狐视频黄金会员月卡奖励、酷我音乐豪华Vip月卡奖励；</text>
+				<text>3、所有奖励均在6月10日后发放，请耐心等待。搜狐视频及酷我音乐会员直接充值至购卡号码，用此号码登录搜狐视频及酷我音乐APP即可；</text>
+				<text>4、若用户发生停机的情况，则延后一个月发放奖励；</text>
+				<text>5、本次活动最终解释权归远特（北京）通信技术有限公司所有。</text>
+			</view>
+			<view class="hdclose">
+				<image bindtap="closeHdRule" src="../../images/closemodel.png"></image>
+			</view>
+		</view>
+	</view>
+	<!-- 五一活动弹窗 end -->
 </view>
 <view class="coupon-box" animation="{{moveData}}">
 	<view class="mask1" catchtouchmove="move" bindtap='hide'>

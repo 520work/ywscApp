@@ -25,7 +25,7 @@
 	"subPackages": [{
 		"root": "packageA",
 		"pages": [
-			"pages/kkzn/kkzn"
+			"pages/excellent/excellent"
 		]
 	}],
 	"window": {

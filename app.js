@@ -32,13 +32,14 @@ App({
 							method: 'GET',
 							success: function(openIdRes) {
 								that.globalData.payOpenId = openIdRes.data.info.openid
-								if (openIdRes.data.info.unionid == null || openIdRes.data.info.unionid == "" || openIdRes.data.info.unionid == undefined) {
+								if (openIdRes.data.info.unionid == null || openIdRes.data.info.unionid == "" || openIdRes.data.info.unionid ==
+									undefined) {
 									//wx.showToast({
 									// 	title: '获取用户信息失败，请稍后再试。',
 									// 	icon: 'none',
 									// 	duration: 2000
 									//});
-									
+
 									//提示用户去关注远微商城公众号
 									that.globalData.isSubscribe = true;
 								} else {
@@ -101,19 +102,11 @@ App({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: function(res) {
-				if (res.statusCode == 500 || res.statusCode == 404) {
-					wx.showModal({
-						title: '提示',
-						content: '系统维护中',
-						showCancel: false,
-						success(res) {
-							if (res.confirm) {
-								console.log('用户点击确定')
-							} else if (res.cancel) {
-								console.log('用户点击取消')
-							}
-						}
-					})
+				if (res.statusCode != 200) {
+					wx.setStorageSync('weihumsg', '抱歉，系统正在进行升级维护，给您带来的不便，请谅解！');
+					wx.redirectTo({
+						url: '../weihu/weihu',
+					});
 				};
 				//kg号码直选优质套餐本月特卖 eKgs iKgs 上传身份证开关----0，关闭，1开启
 				that.globalData.upadateKg = res.data[0].kg;
@@ -127,18 +120,10 @@ App({
 			},
 			fail: function(err) {
 				console.log(err);
-				wx.showModal({
-					title: '提示',
-					content: '系统维护中',
-					showCancel: false,
-					success(res) {
-						if (res.confirm) {
-							console.log('用户点击确定')
-						} else if (res.cancel) {
-							console.log('用户点击取消')
-						}
-					}
-				})
+				wx.setStorageSync('weihumsg', '抱歉，系统正在进行升级维护，给您带来的不便，请谅解！');
+				wx.redirectTo({
+					url: '../weihu/weihu',
+				});
 			}
 		});
 		//获取用户当前位置（市）
@@ -169,5 +154,23 @@ App({
 				that.globalData.city = '全国';
 			}
 		});
+		//五一活动倒计时
+		that.countDownGlobal();
+	},
+	//倒计时函数
+	countDownGlobal: function() {
+		// 获取当前时间，同时得到活动结束时间数组 
+		let newTime = new Date().getTime();
+		// 对结束时间进行处理渲染到页面 
+		let endTime = new Date('2019/05/10 00:00:00').getTime();
+		let obj = null;
+		// 如果活动未结束，对时间进行处理 
+		if (endTime - newTime > 0) {
+			this.globalData.huodongValid = true;
+		} else {
+			//活动已结束 
+			this.globalData.huodongValid = false;
+		};
+		setTimeout(this.countDownGlobal, 1000);
 	}
 })

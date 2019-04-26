@@ -52,19 +52,21 @@
 	height: 68rpx;
 	border: 1px solid #7661D1;
 	border-radius: 26rpx;
-
 	padding: 0 24rpx;
 	position: relative;
 }
 
 .search .select {
 	vertical-align: middle;
+	min-width: 100rpx;
 }
 
 .icon-sanjiao1 {
 	border-right: 1px solid #999;
 }
-
+.entry {
+	width: 60%;
+}
 .entry input {
 	height: 100%;
 	font-size: 24rpx;

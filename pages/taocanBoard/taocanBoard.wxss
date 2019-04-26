@@ -7,7 +7,6 @@ page {
 
 .tcb-container {
 	width: 750rpx;
-	height: 100%;
 	position: relative;
 }
 
@@ -151,7 +150,18 @@ page {
 .btnWrap .active text {
 	color: #fff;
 }
-
+/* 五一活动按钮样式 */
+.btnWrap .taocan view{
+	position: relative;
+}
+.btnWrap .taocan image{
+	width: 82rpx;
+	height: 82rpx;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+/* 五一活动按钮样式 */
 /* 资费说明和订单详情 */
 .textcon {
 	padding: 30rpx 50rpx;
@@ -353,3 +363,57 @@ page {
 	font-size: 24rpx;
 	color: #666;
 }
+/* 五一活动弹窗样式 begin */
+.hdrulewindow{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+}
+.hdrulewindow .rulemask{
+	background: #000;
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+}
+.ruletitle{
+	width: 434rpx;
+	height: 54rpx;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbAAAAAHCAYAAABp9hhTAAAACXBIWXMAAAsSAAALEgHS3X78AAABcElEQVRoge3awW2DMBQG4L8S92aD5upTu0EreYB2g7QbZAGfvEA3aLpBFrDUbkBPvtIN6AREVCAhagMGA0n1f1IOcbABO9bjGV8VRQFal1HiDsBmwEVkUtuMw0U0D6PEFsB2QOO51DblMKzrLANYwJ+oFnr81Hq1MvBcT6g/xrvU9nnhcxL9e0aJA4Ddwvf5A2BKIMyqz9z1zvLh2RvAjBIPjuKuTGFIFnEffIXk8iK1PbBniOIwSpQPhW/szig+exrJO4K28zep7Yfr4MQo8QRgv1I2QeNMyRqJ6C/OqXiGJCqPIWczSjS/1lnrayK1PQI4GiU2VRCr+ZbXXJlZs85NtG4gn5w9QxQV59QyvnuWLl2ZVnu5M5Xa/o5XUpdUBc40LaaADQvoCZYuIW03XVLg/QLA5UOiuMo5VS4j3l5Iv/YFAp+u5TufoXFh8Y0t3IUYwYhNJz7tLLgt47svovlU78K65nIaKVvjjuKpAJwAes9ls5UCpwIAAAAASUVORK5CYII=") no-repeat 0 24rpx;
+	background-size: 100%;
+	align-items: center;
+	margin: 0 auto 14rpx;
+}
+.ruletitle text{
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #bc7b29;
+}
+.hdrulewindow .rulecon{
+	width: 572rpx;
+	height: 672rpx;
+	background: linear-gradient(#f5dc94,#edbc70);
+	padding: 40rpx;
+	position: absolute;
+	top: 220rpx;
+	box-sizing: border-box;
+	left: 50%;
+	margin-left: -286rpx;
+	border-radius: 28rpx;
+}
+.ruledetails text{
+	font-size: 22rpx;
+	color: #484a47;
+	line-height: 36rpx;
+}
+.hdclose {
+	text-align: center;
+	margin-top: 50rpx;
+}
+.hdclose image{
+	width: 50rpx;
+	height: 50rpx;
+}
+/* end */

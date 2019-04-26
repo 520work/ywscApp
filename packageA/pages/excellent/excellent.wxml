@@ -1,0 +1,89 @@
+<!--优质套餐-->
+<view class="excellent-container">
+	<view class="toplogo">
+		<image class="ytlogo" src="../../images/51/logo.png"></image>
+		<text class="rule51" bindtap="openHdRule">活动规则</text>
+	</view>
+	<view class="hdrulewindow" wx:if="{{showRuleModel}}">
+		<view class="rulemask"></view>
+		<view class="rulecon">
+			<view class="ruletitle column">
+				<text>活动规则</text>
+			</view>
+			<view class="ruledetails column">
+				<text>1、2019年4月26日—5月10日，凡在远微商城【号码直选】和【优质套餐】处购卡的用户，选择2019无限时空19元档、49元档中的任意一套餐，且预存200元及以上，即可成功参与此次活动；</text>
+				<text>2、成功参与活动的用户，在一个月内激活即可得100元话费奖励（分5个月返还，每月返还20元）、搜狐视频黄金会员月卡奖励、酷我音乐豪华Vip月卡奖励；</text>
+				<text>3、所有奖励均在6月10日后发放，请耐心等待。搜狐视频及酷我音乐会员直接充值至购卡号码，用此号码登录搜狐视频及酷我音乐APP即可；</text>
+				<text>4、若用户发生停机的情况，则延后一个月发放奖励；</text>
+				<text>5、本次活动最终解释权归远特（北京）通信技术有限公司所有。</text>
+			</view>
+			<view class="hdclose">
+				<image bindtap="closeHdRule" src="../../../images/closemodel.png"></image>
+			</view>
+		</view>
+	</view>
+	<view class="hdtitle column">
+		<image src="../../images/51/title.png"></image>
+		<text>距活动结束还有 <text class="djstime">{{countDownList.day}}</text> 天 <text class="djstime">{{countDownList.hou}}</text> 时 <text class="djstime">{{countDownList.min}}</text> 分</text>
+	</view>
+	<view class="choosetaocan row">
+		<view class="{{introduce1 ? 'first column active':'first column'}}" bindtap="chooseFisrt">
+			<text class="biger">流量不限用</text>
+			<text>19元/每月</text>
+			<text class="smaller">2019无限时空</text>
+			<text wx:if="{{introduce1}}" class="yixuan">已选</text>
+		</view>
+		<view class="{{introduce2 ? 'second column active':'second column'}}" bindtap="chooseSecond">
+			<text class="biger">语音免费打</text>
+			<text>49元/每月</text>
+			<text class="smaller">2019无限时空</text>
+			<text wx:if="{{introduce2}}" class="yixuan">已选</text>
+		</view>
+	</view>
+	<view class="introduce">
+		<view class="tequan">
+			<text class="tqtitle">尊享特权</text>
+			<view class="row">
+				<view class="column">
+					<image class="shf" src="../../images/51/51huafei.png"></image>
+					<text>激活就送</text>
+					<text>100元话费</text>
+				</view>
+				<view class="column">
+					<image src="../../images/51/51suhu.png"></image>
+					<text>激活就送</text>
+					<text>100元话费</text>
+				</view>
+				<view class="column">
+					<image src="../../images/51/51kuwo.png"></image>
+					<text>激活就送</text>
+					<text>100元话费</text>
+				</view>
+			</view>
+		</view>
+		<view class="zifei">
+			<text class="tqtitle">资费说明</text>
+			<view class="zftb">
+				<image src="../../images/51/zf.png"></image>
+			</view>
+			<view class="zfsm column" wx:if="{{showZfsm}}">
+				<text class="zfsmtitle">2019无限时空19元档资费详情：</text>
+				<text>1、2019无限时空19元档赠送来电显示，全国免费接听；</text>
+				<text>2、全国语音拨打0.12元/分钟，全国1元/日流量不限用，流量日包不可取消订购，每月累计使用到100G限速至128kb，短信0.1元/条；</text>
+				<text>3、日包当天24:00自动清零。</text>
+				<text class="zfsmtitle">2019无限时空49元档资费详情：</text>
+				<text>1、2019年无限时空49元档赠送友情语音可选包（语音VPN）1709/1708/1707/1704/171/167/后续申请联通转售新号段互相拨打语音免费，不可取消可选包；</text>
+				<text>2、2019无限时空49元档赠送来电显示，全国免费接听；</text>
+				<text>3、套外全国语音拨打0.12元/分钟，套外全国2元/日流量不限用，每日自动续订，流量日包不可取消，每月累计使用到100G限速至128kb，短信0.1元/条；</text>
+				<text>4、套内语音、流量当月有效，月末24:00自动清零。</text>
+			</view>
+			<view class="upanddown row" bindtap="toggleZfsm">
+				<text>{{toggleText}}</text>
+				<image src="{{toggleImgSrc}}"></image>
+			</view>
+		</view>
+	</view>
+	<view class="gotochoosnum column" bindtap="goToChooseNum">
+		<text class="iconfont icon-youjiantou">前去选号</text>
+	</view>
+</view>

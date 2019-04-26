@@ -138,13 +138,16 @@ Page({
 	},
 	//优质套餐跳转页面
 	goToYztc: function() {
-		// 		this.setData({
-		// 			'showModelInfo.showModelStatus': true,
-		// 			'showModelInfo.title': '正在维护中'
-		// 		});
-		wx.navigateTo({
-			url: '../excellent/excellent?code=yztc'
-		})
+		var huodongValid = app.globalData.huodongValid;
+		if (huodongValid) {
+			wx.navigateTo({
+				url: '../../packageA/pages/excellent/excellent?code=yztc'
+			})
+		} else {
+			wx.navigateTo({
+				url: '../excellent/excellent?code=yztc'
+			})
+		};
 	},
 	//靓号特卖跳转页面
 	goToLhtm: function() {
@@ -233,7 +236,7 @@ Page({
 				var bannerArr = res.data;
 				var bannerListLength = bannerArr.length;
 				for (var i = 0; i < bannerListLength; i++) {
-					if(bannerArr[i].classify == 2){
+					if (bannerArr[i].classify == 2) {
 						that.setData({
 							showBanner: true,
 							seconds: 3,
@@ -419,7 +422,7 @@ Page({
 		});
 		return false;
 		//购买支付接口有问题 暂时提示用户去公众号购买会员 end
-		
+
 		// 显示遮罩层
 		var animation = wx.createAnimation({
 			duration: 200,
@@ -604,7 +607,7 @@ Page({
 				if (resJson.Status) {
 					wx.setStorageSync('ServiceStatus', resJson.Value);
 					//维护状态 值为1
-					if (resJson.Value === '0') {
+					if (resJson.Value === '1') {
 						wx.setStorageSync('weihumsg', resJson.Msg);
 						wx.redirectTo({
 							url: '../weihu/weihu',
@@ -636,5 +639,18 @@ Page({
 		this.setData({
 			showBanner: false
 		})
+	},
+	//转发
+	onShareAppMessage: function() {
+		return {
+			title: '海量号码资源，限时特卖',
+			path: 'pages/index/index',
+			imageUrl: '../../images/czfx.jpg',
+			success: function() {
+				wx.showShareMenu({
+					withShareTicket: true
+				})
+			}
+		}
 	}
 });
