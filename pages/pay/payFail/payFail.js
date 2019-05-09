@@ -3,7 +3,6 @@ var util = require('../../../utils/util.js');
 var ajaxUrl = util.ajaxUrl;
 Page({
 	goToIndex: function() {
-		console.log('sss')
 		wx.switchTab({
 			url: '../../index/index'
 		})
@@ -34,8 +33,13 @@ Page({
 		var ywscOrderType = app.globalData.ywscOrderType,
 			id = app.globalData.orderId,
 			yufuStatus = app.globalData.yufu,
-			that = this,
-			guishudi = app.globalData.guishudi;
+			that = this;
+
+		if(app.globalData.guishudi == undefined){
+			var guishudi = '';
+		} else {
+			var guishudi = app.globalData.guishudi;
+		};
 		that.setData({
 			ywscOrderType: ywscOrderType,
 			guishudi: guishudi

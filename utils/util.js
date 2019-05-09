@@ -203,6 +203,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 			"Content-Type": "application/x-www-form-urlencoded"
 		},
 		success: res => {
+			wx.hideLoading();
 			console.log(res);
 			if (res.statusCode == 200) {
 				wx.requestPayment({
@@ -212,7 +213,6 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 					signType: res.data.signType,
 					paySign: res.data.paySign,
 					success(res) {
-						wx.hideLoading();
 						wx.showLoading({
 							mask: true,
 							title: '支付结果确认中'
@@ -224,7 +224,6 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 					},
 					fail(res) {
 						console.log(res);
-						wx.hideLoading();
 						wx.showLoading({
 							mask: true,
 							title: '支付结果确认中'
@@ -251,6 +250,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 				wx.hideLoading();
 				that.setData({
 					'tipsModelInfo.title': '微信支付异常,请稍后再试',
+					'tipsModelInfo.btn': '确定',
 					'tipsModelInfo.showModelStatus': true
 				});
 			};
@@ -259,6 +259,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 			wx.hideLoading();
 			that.setData({
 				'tipsModelInfo.title': '支付异常,请稍后再试',
+				'tipsModelInfo.btn': '确定',
 				'tipsModelInfo.showModelStatus': true
 			});
 		}

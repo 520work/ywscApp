@@ -238,8 +238,9 @@ Page({
 	lookinfo: function(e) {
 		var orderId = e.currentTarget.dataset.orderid;
 		var orderType = e.currentTarget.dataset.ordertype;
+		var imgSource = e.currentTarget.dataset.imgsource;
 		wx.navigateTo({
-			url: '../orderDetails/orderDetails?orderId=' + orderId + '&orderType=' + orderType
+			url: '../orderDetails/orderDetails?orderId=' + orderId + '&orderType=' + orderType + '&imgSource=' + imgSource
 		});
 	},
 	//查看物流信息

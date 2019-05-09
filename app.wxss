@@ -65,7 +65,7 @@
 	border-right: 1px solid #999;
 }
 .entry {
-	width: 60%;
+	width: 70%;
 }
 .entry input {
 	height: 100%;

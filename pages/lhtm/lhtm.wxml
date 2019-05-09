@@ -28,7 +28,7 @@
 		<block wx:for="{{lianghaoListData}}">
 			<view class="lianghaolists" bindtap="chooseTaocan" data-telNum="{{item.phoneNumber}}" data-whereFrom ="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
 				<view class="top row">
-					<text class="tel">{{item.phoneNumber}}</text>
+					<text class="tel">{{item.formatTelNum}}</text>
 					<!-- <text class="telScore">{{item.description}}</text> -->
 					<image class="numbertype" src="../../images/common_liang.png"></image>
 				</view>

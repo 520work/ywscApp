@@ -519,5 +519,6 @@
 	</view>
 	<template is="tip-model" data="{{...showModelInfo}}"></template>
 	<template is="down-model" data="{{...downModelInfo}}"></template>
+  <template is="forever-model" data="{{...userModelInfo}}"></template>
 </view>
 <web-view wx:if="{{isSubscribe}}" src="https://www.m10027.com/wxlhhd/kmbsaoma/gz_page.html"></web-view>

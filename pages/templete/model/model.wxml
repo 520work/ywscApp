@@ -1,7 +1,7 @@
 <!--模态框组件-->
 <template name="tip-model">
 	<view class="tip-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<text class="title">{{title}}</text>
 			<!-- <text class="content">{{content}}</text> -->
@@ -12,7 +12,7 @@
 <!-- 身份认证提示框 -->
 <template name="id-model">
 	<view class="id-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<text class="title">{{title}}</text>
 			<text class="content">{{content}}</text>
@@ -23,7 +23,7 @@
 <!-- 删除地址确认提示框 -->
 <template name="del-model">
 	<view class="del-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<text class="title">{{title}}</text>
 			<text class="content">{{content}}</text>
@@ -38,7 +38,7 @@
 <!-- 删除订单确认提示框 -->
 <template name="del-model1">
 	<view class="del-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<text class="title">{{title}}</text>
 			<text class="content">{{content}}</text>
@@ -53,7 +53,7 @@
 <!-- 套餐详情提示框 -->
 <template name="taocan-model">
 	<view class="taocan-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<text class="title">{{title}}</text>
 			<view class="content-wrap column">
@@ -74,7 +74,7 @@
 <!-- 心仪数字号段提示框 -->
 <template name="hn-model">
 	<view class="hn-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<!-- <image wx:if="{{sellStatus}}" src="../../../images/sellout.png"></image> -->
 			<image wx:if="{{sellout}}" src="/images/sellout.png"></image>
@@ -91,7 +91,7 @@
 <!-- 重置模态框 -->
 <template name="reset-model">
 	<view class="reset-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="modalDlg">
 			<view class="title-wrap column">
 				<text>重置之后您需要重新选择</text>
@@ -107,7 +107,7 @@
 <!-- 下载图片弹窗 -->
 <template name="down-model">
 	<view class="down-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="down-con">
 			<image bindtap="goBackBtn" class="closeimg" src="/images/closemodel.png"></image>
 			<image class="appimg" src="{{appImgSrc}}"></image>
@@ -117,11 +117,20 @@
 </template>
 <template name="zifei-model">
 	<view class="zifei-model model" wx:if="{{showModelStatus}}">
-		<view class="mask"></view>
+		<view class="mask" catchtouchmove='move'></view>
 		<view class="zifei-con">
 			<text class="zftitle">{{title}}</text>
 			<text class="zfdes">{{zishuoming}}</text>
 			<text class="btnback" bindtap="goBackBtn">确定</text>
+		</view>
+	</view>
+</template>
+<!-- 永不消失的弹窗 -->
+<template name="forever-model">
+	<view class="forever-model model" wx:if="{{showModelStatus}}">
+		<view class="mask" catchtouchmove='move'></view>
+		<view class="modalDlg">
+			<text class="title">{{title}}</text>
 		</view>
 	</view>
 </template>

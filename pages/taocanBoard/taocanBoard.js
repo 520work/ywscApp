@@ -889,7 +889,8 @@ Page({
 						"user_name": this.data.addressData.contacts, //收货人姓名
 						"phone": this.data.addressData.phonenumber, //收货人电话
 						"user_address": this.data.addressData.userAddress, //收货人地址
-						"haokaType": this.data.haokaType //1号码直选，2优质套餐，3特卖靓号，4特卖情侣号
+						"haokaType": this.data.haokaType ,//1号码直选，2优质套餐，3特卖靓号，4特卖情侣号，
+						"ghxc": "2"
 					};
 					//开关判断
 					var upadateKg = app.globalData.upadateKg;
@@ -911,7 +912,6 @@ Page({
 								"Content-Type": "application/x-www-form-urlencoded"
 							},
 							success: res => {
-								wx.hideLoading();
 								getApp().globalData.orderId = res.data[0].id;
 								if (res.data[0].preDeposit == '-1') {
 									this.setData({

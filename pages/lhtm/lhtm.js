@@ -163,6 +163,9 @@ Page({
 						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 					});
 					var lianghaoListData = that.data.lianghaoListData;
+					for(var i=0; i<lianghaoData.length; i++){
+						lianghaoData[i].formatTelNum = lianghaoData[i].phoneNumber.slice(0,3) + ' ' + lianghaoData[i].phoneNumber.slice(3,7) + ' ' + lianghaoData[i].phoneNumber.slice(7,11);
+					};
 					if (lianghaoListData == undefined) {
 						that.setData({
 							lianghaoListData: lianghaoData,
@@ -182,6 +185,9 @@ Page({
 					});
 					pageIndex++;
 					var lianghaoListData = that.data.lianghaoListData;
+					for(var i=0; i<lianghaoData.length; i++){
+						lianghaoData[i].formatTelNum = lianghaoData[i].phoneNumber.slice(0,3) + ' ' + lianghaoData[i].phoneNumber.slice(3,7) + ' ' + lianghaoData[i].phoneNumber.slice(7,11);
+					};
 					if (lianghaoListData == undefined) {
 						that.setData({
 							lianghaoListData: lianghaoData,

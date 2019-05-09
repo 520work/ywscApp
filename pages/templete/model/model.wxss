@@ -34,7 +34,7 @@
 }
 .model .title {
 	height: 80rpx;
-	/* line-height: 80rpx; */
+	line-height: 80rpx;
 	font-size: 28rpx;
 	font-weight: 500;
 	color: #7661D1;
@@ -158,6 +158,7 @@
 
 .tip-model .modalDlg .title {
 	padding: 40rpx 40rpx 0;
+	line-height: 40rpx;
 }
 .del-model .btn-wrap text{
 	color: #fff;
@@ -222,4 +223,14 @@
 	color: #999999;
 	padding: 0 40rpx;
 	padding-bottom: 100rpx;
+}
+.forever-model{
+  text-align: center;
+}
+.forever-model .modalDlg{
+  padding-bottom: 10rpx;
+  background: none;
+}
+.forever-model .modalDlg .title{
+  color: #fff;
 }

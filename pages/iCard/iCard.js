@@ -255,6 +255,7 @@ Page({
 						paid_money: this.data.totalPrice,
 						num: buyNum,
 						user_address: this.data.addressData.userAddress,
+						ghxc: "2"
 					};
 					//验证身份信息
 					var upadateIkgs = app.globalData.upadateIkgs;
@@ -277,7 +278,6 @@ Page({
 								"Content-Type": "application/x-www-form-urlencoded"
 							},
 							success: res => {
-								wx.hideLoading();
 								//成功后 发起付款请求
 								getApp().globalData.orderId = res.data[0].id;
 								var payOpenId = app.globalData.payOpenId;

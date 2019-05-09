@@ -121,7 +121,7 @@ Page({
 		this.setData({
 			inputVal: e.detail.value
 		});
-		if (nubmer.length < 4) {
+		if (nubmer.length < 3) {
 			this.setData({
 				searchMode: "highSearch",
 				searchText: "高级搜索"
@@ -138,6 +138,7 @@ Page({
 			mask: true,
 			title: '加载中'
 		});
+		getApp().globalData.hsQueryData = '';
 		this.setData({
 			condition: !this.data.condition,
 			pageIndex: 0,
@@ -293,6 +294,8 @@ Page({
 			var originalOccupyMoney = numData[i].occupyMoney;
 			var formatOccupyMoney = that.keepTwoFloor(originalOccupyMoney);
 			numData[i].occupyMoney = formatOccupyMoney;
+			//格式化号码
+			numData[i].formatTelNum = numData[i].phoneNumber.slice(0,3) + ' ' + numData[i].phoneNumber.slice(3,7) + ' ' + numData[i].phoneNumber.slice(7,11);
 		};
 		if (numListData == undefined) {
 			that.setData({

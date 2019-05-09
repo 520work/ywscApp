@@ -376,29 +376,37 @@ Page({
 									},
 									success: res => {
 										getApp().globalData.orderId = res.data[0].id;
-										if (res.data[0].discountMoney == '0') {
-											getApp().globalData.yufu = false;
-											//调用付款接口
-											var payOpenId = app.globalData.payOpenId,
-												paidMoney = res.data[0].paidMoney,
-												orderNo = res.data[0].outTradeNo;
-											util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序号卡商城');
+										if (res.data[0].preDeposit == '-1') {
+											this.setData({
+												'tipsModelInfo.title': '您的预存与实际不符，请重新选择',
+												'tipsModelInfo.showModelStatus': true
+											});
 										} else {
-											//支付金额大于3000 付定金
-											getApp().globalData.yufu = true;
-											wx.navigateTo({
-												url: '../pay/payAbovePause/pap?payOpenId=' + app.globalData.payOpenId + '&orderNo=' + res.data[
-														0]
-													.outTradeNo + '&phoneNumber=' + res.data[0].phoneNumber + '&phoneNumber1=' + res.data[0].phoneNumber1 +
-													'&city=' + res.data[0].city + '&occupyMoney=' + res.data[0].occupyMoney + '&preDeposit=' + res.data[
-														0]
-													.preDeposit + '&yhMoney=' + res.data[0].yhMoney + '&discountMoney=' + res.data[0].discountMoney +
-													'&paidMoney=' + res.data[0].paidMoney
-											})
+											if (res.data[0].discountMoney == '0') {
+												getApp().globalData.yufu = false;
+												//调用付款接口
+												var payOpenId = app.globalData.payOpenId,
+													paidMoney = res.data[0].paidMoney,
+													orderNo = res.data[0].outTradeNo;
+												util.wxPay(payOpenId, paidMoney, orderNo, that, '小程序号卡商城');
+											} else {
+												//支付金额大于3000 付定金
+												getApp().globalData.yufu = true;
+												wx.navigateTo({
+													url: '../pay/payAbovePause/pap?payOpenId=' + app.globalData.payOpenId + '&orderNo=' + res.data[
+															0]
+														.outTradeNo + '&phoneNumber=' + res.data[0].phoneNumber + '&phoneNumber1=' + res.data[0].phoneNumber1 +
+														'&city=' + res.data[0].city + '&occupyMoney=' + res.data[0].occupyMoney + '&preDeposit=' + res.data[
+															0]
+														.preDeposit + '&yhMoney=' + res.data[0].yhMoney + '&discountMoney=' + res.data[0].discountMoney +
+														'&paidMoney=' + res.data[0].paidMoney
+												})
+											};
 										};
 									},
 									fail: err => {
 										console.log(err);
+										wx.hideLoading();
 										that.setData({
 											'tipsModelInfo.showModelStatus': true,
 											'tipsModelInfo.title': '出错啦，请稍后再试~'
@@ -425,9 +433,6 @@ Page({
 										"Content-Type": "application/x-www-form-urlencoded"
 									},
 									success: res => {
-										console.log('接收E卡订单信息成功');
-										console.log(res);
-										wx.hideLoading();
 										//成功后 发起付款请求
 										getApp().globalData.orderId = res.data[0].id;
 										var payOpenId = app.globalData.payOpenId;
@@ -437,6 +442,7 @@ Page({
 									},
 									fail: err => {
 										console.log(err);
+										wx.hideLoading();
 										that.setData({
 											'tipsModelInfo.showModelStatus': true,
 											'tipsModelInfo.title': '出错啦，请稍后再试~'
@@ -461,9 +467,6 @@ Page({
 										"Content-Type": "application/x-www-form-urlencoded"
 									},
 									success: res => {
-										console.log('接收E卡订单信息成功');
-										console.log(res);
-										wx.hideLoading();
 										//成功后 发起付款请求
 										getApp().globalData.orderId = res.data[0].id;
 										var payOpenId = app.globalData.payOpenId;
@@ -473,6 +476,7 @@ Page({
 									},
 									fail: err => {
 										console.log(err);
+										wx.hideLoading();
 										that.setData({
 											'tipsModelInfo.showModelStatus': true,
 											'tipsModelInfo.title': '出错啦，请稍后再试~'
@@ -501,7 +505,6 @@ Page({
 				}
 			});
 		} else {
-			console.log("no");
 			var idFaceSuccess = this.data.idFaceSuccess,
 				idBackSuccess = this.data.idBackSuccess,
 				headSuccess = this.data.headSuccess;

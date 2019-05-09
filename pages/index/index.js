@@ -218,12 +218,45 @@ Page({
 	 */
 	onLoad: function() {
 		var that = this;
+
 		//获取服务状态
 		that.getServiceStatus();
+
+    //判断是否获取到用户信息
+    if (app.globalData.getUserInfoFail) {
+      this.setData({
+        'userModelInfo.showModelStatus': true,
+        'userModelInfo.title': '获取用户信息失败，请稍后再试。'
+      });
+    } else {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.getUserInfoFailCallback = getUserInfoFail => {
+        if (getUserInfoFail) {
+          this.setData({
+            'userModelInfo.showModelStatus': true,
+            'userModelInfo.title': '获取用户信息失败，请稍后再试。'
+          });
+        }
+      }
+    };
+
 		//判断是否关注远微商城公众号
-		if (app.globalData.isSubscribe) {
-			getApp().globalData.isSubscribe = true;
-		};
+    if (app.globalData.isSubscribe) {
+      this.setData({
+        isSubscribe: true
+      });
+    } else {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.isSubscribeCallback = isSubscribe => {
+        if (isSubscribe) {
+          this.setData({
+            isSubscribe: true
+          });
+        }
+      }
+    };
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
@@ -506,8 +539,11 @@ Page({
 					mask: true,
 					title: '加载中'
 				});
-				var openId = app.globalData.openId,
-					itemId = that.data.itemId,
+        if (!that.data.isSubscribe){
+          var openId = app.globalData.openId;
+          console.log(openId);
+        }
+				var itemId = that.data.itemId,
 					productType = that.data.productType,
 					productName = that.data.productName;
 				wx.request({
@@ -607,7 +643,7 @@ Page({
 				if (resJson.Status) {
 					wx.setStorageSync('ServiceStatus', resJson.Value);
 					//维护状态 值为1
-					if (resJson.Value === '1') {
+					if (resJson.Value === '0') {
 						wx.setStorageSync('weihumsg', resJson.Msg);
 						wx.redirectTo({
 							url: '../weihu/weihu',

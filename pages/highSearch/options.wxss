@@ -20,6 +20,9 @@
 	color: #403f3f;
 	margin-bottom: 20rpx;
 }
+.filter-search, .filter-search .entry, .filter-search input{
+	width: 100%;
+}
 
 .font12 {
 	font-size: 24rpx;

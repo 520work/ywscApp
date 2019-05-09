@@ -485,7 +485,8 @@ Page({
 										phone: that.data.addressData.phonenumber,
 										user_address: that.data.addressData.userAddress,
 										total_money: that.data.totalPrice,
-										paid_money: that.data.totalPrice
+										paid_money: that.data.totalPrice,
+										ghxc: "2"
 									};
 									//验证身份信息
 									var upadateEkgs = app.globalData.upadateEkgs;
@@ -507,7 +508,6 @@ Page({
 												"Content-Type": "application/x-www-form-urlencoded"
 											},
 											success: res => {
-												wx.hideLoading();
 												getApp().globalData.orderId = res.data[0].id;
 												//成功后 发起付款请求
 												var payOpenId = app.globalData.payOpenId;

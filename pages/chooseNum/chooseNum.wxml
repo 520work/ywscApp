@@ -8,7 +8,7 @@
 				<text class="font12 iconfont icon-sanjiao1" bindtap="open">{{city}}</text>
 			</view>
 			<view class="entry">
-				<input type="number" bindinput="input" placeholder="至少输入四位数字" maxlength="11" value="{{inputVal}}" />
+				<input type="number" bindinput="input" placeholder="至少输入三位数字" maxlength="11" value="{{inputVal}}" />
 			</view>
 		</view>
 		<view class="search-high" bindtap="{{searchMode == 'highSearch'? 'highSearchFun':'searchBtn'}}">
@@ -21,7 +21,7 @@
 			<view class="num-lists" bindtap="chooseTaocan" data-cardType="{{item.cardType}}" data-telNum="{{item.phoneNumber}}"
 			 data-whereFrom="{{item.city}}" data-occupyMoney="{{item.occupyMoney}}">
 				<view class="top">
-					<text class="tel">{{item.phoneNumber}}</text>
+					<text class="tel">{{item.formatTelNum}}</text>
 					<image wx:if="{{item.cardType == 5}}" src="../../images/yushou.png" class="cardtype"></image>
 					<image wx:if="{{item.cardType == 2}}" src="../../images/yishou.png" class="cardtype"></image>
 					<image wx:if="{{item.cardType == 0 && item.numberType == 2}}" src="../../images/common_liang.png" class="numbertype"></image>
