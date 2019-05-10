@@ -20,7 +20,7 @@ Page({
 	//生命周期函数--监听页面加载
 	onLoad: function(options) {
 		var that = this;
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		if (options.dataCode != '') {
 			that.setData({
 				dataCode: options.dataCode,
@@ -873,7 +873,7 @@ Page({
 						"faceImage": "",
 						"backImage": "",
 						"handImage": "",
-						"openid": app.globalData.openId,
+						"openid": app.globalData.payOpenId,
 						"numberType": numberType, //号码类型
 						"occupyMoney": Number(this.data.occupyMoney), //占用费
 						"phone_number": num, //卡号

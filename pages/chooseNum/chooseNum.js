@@ -159,63 +159,72 @@ Page({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: res => {
-				wx.hideLoading();
-				var numData = res.data;
-				var pageIndex = that.data.pageIndex;
-				if (numData.length == 0) {
-					//初始化进入没数据
-					if (searchType == 'pageIn') {
-						that.setData({
-							noNum: true,
-							moreNum: false,
-							time: 5
-						});
-						//重新搜索倒计时
-						var setTime;
-						var time = that.data.time;
-						setTime = setInterval(function() {
-							if (time <= 0) {
-								clearInterval(setTime);
-								var searchData = {
-									city: '全国',
-									number: '',
-									pageIndex: '0',
-									code: that.data.code
-								};
-								wx.showLoading({
-									mask: true,
-									title: '加载中'
-								});
-								that.setData({
-									city: '全国',
-									moreNum: false,
-									noNum: false,
-								});
-								that.getHmzxCardList(searchData, 'searchIn');
-							}
-							time--;
+				if(res.statusCode == 200){
+					wx.hideLoading();
+					var numData = res.data;
+					var pageIndex = that.data.pageIndex;
+					if (numData.length == 0) {
+						//初始化进入没数据
+						if (searchType == 'pageIn') {
 							that.setData({
-								time: time
+								noNum: true,
+								moreNum: false,
+								time: 5
 							});
-						}, 1000);
-					} else if (searchType == 'searchIn') {
+							//重新搜索倒计时
+							var setTime;
+							var time = that.data.time;
+							setTime = setInterval(function() {
+								if (time <= 0) {
+									clearInterval(setTime);
+									var searchData = {
+										city: '全国',
+										number: '',
+										pageIndex: '0',
+										code: that.data.code
+									};
+									wx.showLoading({
+										mask: true,
+										title: '加载中'
+									});
+									that.setData({
+										city: '全国',
+										moreNum: false,
+										noNum: false,
+									});
+									that.getHmzxCardList(searchData, 'searchIn');
+								}
+								time--;
+								that.setData({
+									time: time
+								});
+							}, 1000);
+						} else if (searchType == 'searchIn') {
+							that.setData({
+								moreNum: true,
+								noNum: false,
+								reachBottomStatus: false,
+								moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+							});
+						};
+					} else if (numData.length > 0 && numData.length < 30) {
+						that.handleData(numData, pageIndex, that);
 						that.setData({
 							moreNum: true,
 							noNum: false,
 							reachBottomStatus: false,
 							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 						});
+					} else {
+						that.handleData(numData, pageIndex, that);
 					};
-				} else if (numData.length > 0 && numData.length < 30) {
-					that.handleData(numData, pageIndex, that);
-					that.setData({
-						moreNum: true,
-						noNum: false,
-						reachBottomStatus: false,
-						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
-					});
 				} else {
-					that.handleData(numData, pageIndex, that);
+					wx.hideLoading();
+					wx.showToast({
+						title: '请求失败，请刷新网页重试',
+						icon: 'none',
+						duration: 2000
+					});
 				};
 			},
 			fail: err => {
@@ -244,34 +253,37 @@ Page({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: res => {
-				console.log(res);
 				wx.hideLoading();
-				var numData = res.data;
-				if (numData == 0) {
-					that.setData({
-						moreNum: true,
-						noNum: false,
-						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
-					});
-				} else if(numData.length > 0 && numData.length < 30){
-					that.handleData(numData, pageIndex, that);
-					that.setData({
-						moreNum: true,
-						noNum: false,
-						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
-					});
+				console.log(res);
+				if (res.statusCode == 200) {
+					var numData = res.data;
+					if (numData == 0) {
+						that.setData({
+							moreNum: true,
+							noNum: false,
+							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+						});
+					} else if(numData.length > 0 && numData.length < 30){
+						that.handleData(numData, pageIndex, that);
+						that.setData({
+							moreNum: true,
+							noNum: false,
+							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+						});
+					} else {
+						var pageIndex = that.data.pageIndex;
+						that.handleData(numData, pageIndex, that);
+					};
 				} else {
-					var pageIndex = that.data.pageIndex;
-					that.handleData(numData, pageIndex, that);
-				}
+					that.setData({
+						moreNum: true,
+						noNum: false,
+						moreText: '请求失败，请刷新网页重试'
+					});
+				};
 			},
 			fail: err => {
 				wx.hideLoading();
-				wx.showToast({
-					title: '请求失败，请刷新网页重试',
-					icon: 'none',
-					duration: 2000
-				});
 				that.setData({
 					moreNum: true,
 					noNum: false,
@@ -401,15 +413,22 @@ Page({
 				},
 				success: res => {
 					wx.hideLoading();
-					if (res.data[0].sell_state == '0') {
-						getApp().globalData.ywscOrderType = '1';
-						var whereFrom = e.currentTarget.dataset.wherefrom;
-						var occupyMoney = e.currentTarget.dataset.occupymoney;
-						var dataCode = this.data.datacode;
-						util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', dataCode);
+					if (res.statusCode == 200) {
+						if (res.data[0].sell_state == '0') {
+							getApp().globalData.ywscOrderType = '1';
+							var whereFrom = e.currentTarget.dataset.wherefrom;
+							var occupyMoney = e.currentTarget.dataset.occupymoney;
+							var dataCode = this.data.datacode;
+							util.chooseTaocan(telNum, whereFrom, occupyMoney, '', '', '', dataCode);
+						} else {
+							this.setData({
+								'tipsModelInfo.title': '手慢了一步，被别人抢先了，再去看看别的吧~',
+								'tipsModelInfo.showModelStatus': true
+							});
+						};
 					} else {
 						this.setData({
-							'tipsModelInfo.title': '手慢了一步，被别人抢先了，再去看看别的吧~',
+							'tipsModelInfo.title': '出错啦，请稍后再试~',
 							'tipsModelInfo.showModelStatus': true
 						});
 					};

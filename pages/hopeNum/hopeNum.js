@@ -78,29 +78,37 @@ Page({
 		});
 		that.getEcardList(searchData, 'onloadType');
 		//地址显示
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		wx.request({
 			url: ajaxUrl + 'userAddressController.do?addressList' + '&openid=' + openId,
 			success: function(res) {
-				if (res.data == "") {
-					that.setData({
-						addressStatus: false
-					});
-				} else {
-					var addressLists = res.data;
-					for (var i = 0; i < addressLists.length; i++) {
-						if (addressLists[i].sort == 1) {
-							var addressData = "收货人：" + addressLists[i].contacts + " " + addressLists[i].phonenumber + " 收货地址：" +
-								addressLists[i].address + " " + addressLists[i].street;
-							that.setData({
-								addressStatus: true,
-								'addressData.showText': addressData,
-								'addressData.contacts': addressLists[i].contacts,
-								'addressData.phonenumber': addressLists[i].phonenumber,
-								'addressData.userAddress': addressLists[i].address + " " + addressLists[i].street
-							});
+				if (res.statusCode == 200) {
+					if (res.data == "") {
+						that.setData({
+							addressStatus: false
+						});
+					} else {
+						var addressLists = res.data;
+						for (var i = 0; i < addressLists.length; i++) {
+							if (addressLists[i].sort == 1) {
+								var addressData = "收货人：" + addressLists[i].contacts + " " + addressLists[i].phonenumber + " 收货地址：" +
+									addressLists[i].address + " " + addressLists[i].street;
+								that.setData({
+									addressStatus: true,
+									'addressData.showText': addressData,
+									'addressData.contacts': addressLists[i].contacts,
+									'addressData.phonenumber': addressLists[i].phonenumber,
+									'addressData.userAddress': addressLists[i].address + " " + addressLists[i].street
+								});
+							};
 						};
 					};
+				} else {
+					wx.showToast({
+						title: '加载收货地址失败，请稍后重试',
+						icon: 'none',
+						duration: 2000
+					});
 				};
 			},
 			fail: function(err) {
@@ -140,42 +148,50 @@ Page({
 			},
 			success: res => {
 				wx.hideLoading();
-				var ecardData = res.data;
-				if (ecardData.length == 0) {
-					if (searchType == 'onloadType') {
-						wx.showToast({
-							title: '当前城市无号段，正在为您切换为全国...',
-							icon: 'none',
-							duration: 3000
-						});
-						var searchData = {
-							cityId: '全国',
-							findnum: ''
-						};
-						this.setData({
-							city: '全国',
-							province: '全国',
-							value: [0, 0, 0],
-							values: [0, 0, 0]
-						});
-						this.getEcardList(searchData);
+				if (res.statusCode == 200) {
+					var ecardData = res.data;
+					if (ecardData.length == 0) {
+						if (searchType == 'onloadType') {
+							wx.showToast({
+								title: '当前城市无号段，正在为您切换为全国...',
+								icon: 'none',
+								duration: 3000
+							});
+							var searchData = {
+								cityId: '全国',
+								findnum: ''
+							};
+							this.setData({
+								city: '全国',
+								province: '全国',
+								value: [0, 0, 0],
+								values: [0, 0, 0]
+							});
+							this.getEcardList(searchData);
+						} else {
+							this.setData({
+								noNum: true
+							});
+						}
 					} else {
 						this.setData({
-							noNum: true
+							noNum: false
 						});
-					}
-				} else {
-					this.setData({
-						noNum: false
-					});
-					for (var i = 0; i < ecardData.length; i++) {
-						ecardData[i].haoduanL = ecardData[i].sectionNo.slice(0, 3);
-						ecardData[i].haoduanR = ecardData[i].sectionNo.slice(3, 7)
+						for (var i = 0; i < ecardData.length; i++) {
+							ecardData[i].haoduanL = ecardData[i].sectionNo.slice(0, 3);
+							ecardData[i].haoduanR = ecardData[i].sectionNo.slice(3, 7)
+						};
+						this.setData({
+							ecardData: ecardData
+						});
 					};
-					this.setData({
-						ecardData: ecardData
+				} else {
+					wx.showToast({
+						title: '获取号段失败，请稍后再试。',
+						icon: 'none',
+						duration: 2000
 					});
-				}
+				};
 			},
 			fail: err => {
 				wx.hideLoading();
@@ -441,7 +457,7 @@ Page({
 				} else {
 					//余量不足
 					var buyNum = that.data.num;
-					var openId = app.globalData.openId;
+					var openId = app.globalData.payOpenId;
 					if (buyNum > res.data[0].num) {
 						wx.hideLoading();
 						that.setData({

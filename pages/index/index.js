@@ -217,51 +217,20 @@ Page({
 	 ** 数据展示
 	 */
 	onLoad: function() {
-		var that = this;
-
-		//获取服务状态
-		that.getServiceStatus();
-
-    //判断是否获取到用户信息
-    if (app.globalData.getUserInfoFail) {
-      this.setData({
-        'userModelInfo.showModelStatus': true,
-        'userModelInfo.title': '获取用户信息失败，请稍后再试。'
-      });
-    } else {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.getUserInfoFailCallback = getUserInfoFail => {
-        if (getUserInfoFail) {
-          this.setData({
-            'userModelInfo.showModelStatus': true,
-            'userModelInfo.title': '获取用户信息失败，请稍后再试。'
-          });
-        }
-      }
-    };
-
-		//判断是否关注远微商城公众号
-    if (app.globalData.isSubscribe) {
-      this.setData({
-        isSubscribe: true
-      });
-    } else {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.isSubscribeCallback = isSubscribe => {
-        if (isSubscribe) {
-          this.setData({
-            isSubscribe: true
-          });
-        }
-      }
-    };
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
 		});
-		//首页广告
+		var that = this;
+		//获取服务状态
+		that.getServiceStatus(that);
+	},
+	onShow: function() {
+		//移除高级筛选参数数据
+		getApp().globalData.hsQueryData = '';
+	},
+	//获取首页广告
+	getAds: function(that) {
 		wx.request({
 			url: ajaxUrl + 'cardServiceController.do?bannerIndex&mp=1',
 			method: 'POST',
@@ -290,7 +259,9 @@ Page({
 							});
 						}, 1000);
 					}
-				}
+				};
+				//首页banner
+				that.getBanners(that);
 			},
 			fail: function(err) {
 				wx.showToast({
@@ -300,91 +271,9 @@ Page({
 				});
 			}
 		});
-		//首页banner
-		that.getBanners();
-		//本月特卖首页号码展示
-		var that = this;
-		var liangNum = [];
-		var qinglvNum = [];
-		wx.request({
-			url: ajaxUrl + 'cardServiceController.do?tMIndexList',
-			method: 'POST',
-			header: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			success: function(res) {
-				if (res.data.length) {
-					var numData = res.data;
-					numData.forEach(function(item, index) {
-						if (item.numberType == 0) {
-							qinglvNum.push(item);
-						} else if (item.numberType == 2) {
-							liangNum.push(item);
-						}
-					});
-					that.setData({
-						qinglvNumLists: qinglvNum,
-						liangNumLists: liangNum
-					});
-				} else {
-					that.setData({
-						tmListsNoData: true
-					});
-				}
-			},
-			fail: function(err) {
-				console.log(err);
-			},
-			complete: function(res) {
-				wx.hideLoading();
-			}
-		});
-		//会员中心
-		wx.request({
-			url: 'https://www.m10027.com/BusinessServices/ServicesForBusiness.ashx?requestType=GetProductList',
-			method: 'POST',
-			header: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			success: res => {
-				if (res.data.Status == true) {
-					var productListsArr = res.data.list;
-					for (var i = 0; i < productListsArr.length; i++) {
-						if (productListsArr[i].productType == 1) {
-							productListsArr[i].imgSrc = '../../images/kuwo.png';
-							productListsArr[i].holderText = '酷我音乐';
-						} else if (productListsArr[i].productType == 2) {
-							productListsArr[i].imgSrc = '../../images/souhu.png';
-							productListsArr[i].holderText = '搜狐视频';
-						} else {
-							productListsArr[i].imgSrc = '../../images/mobike.png';
-							productListsArr[i].holderText = '摩拜单车';
-						};
-						var itemProductName = productListsArr[i].productName.split(' ')[0];
-						productListsArr[i].itemProductName = itemProductName;
-					};
-					that.setData({
-						productLists: productListsArr
-					})
-				};
-			},
-			fail: err => {
-				console.log(err);
-			}
-		});
-	},
-	onShow: function() {
-		//移除高级筛选参数数据
-		// wx.removeStorageSync('hsQueryData');
-		getApp().globalData.hsQueryData = '';
 	},
 	//获取banner
-	getBanners: function() {
-		var that = this;
-		wx.showLoading({
-			title: '加载banners..',
-			mask: true
-		})
+	getBanners: function(that) {
 		wx.request({
 			url: 'https://www.m10027.com/WeChatServices/xiaochengxu.ashx?',
 			data: {
@@ -393,16 +282,16 @@ Page({
 			},
 			dataType: JSON,
 			success: function(resData) {
-				wx.hideLoading();
 				var resJson = JSON.parse(resData.data); //Json 转 字符串
 				if (resJson.Status) {
 					that.setData({
 						banners: resJson.ls
 					});
+					//首页特卖靓号展示
+					that.getTmIndexInfo(that);
 				}
 			},
 			fail: function(res) {
-				wx.hideLoading();
 				console.log(res)
 				wx.showModal({
 					title: '提示',
@@ -445,6 +334,85 @@ Page({
 				}
 			})
 		}
+	},
+	//获取首页本月特卖号码资源
+	getTmIndexInfo: function(that){
+		var liangNum = [];
+		var qinglvNum = [];
+		wx.request({
+			url: ajaxUrl + 'cardServiceController.do?tMIndexList',
+			method: 'POST',
+			header: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			success: function(res) {
+				if (res.statusCode == 200) {
+					if (res.data.length) {
+						var numData = res.data;
+						numData.forEach(function(item, index) {
+							if (item.numberType == 0) {
+								qinglvNum.push(item);
+							} else if (item.numberType == 2) {
+								liangNum.push(item);
+							}
+						});
+						that.setData({
+							qinglvNumLists: qinglvNum,
+							liangNumLists: liangNum
+						});
+					} else {
+						that.setData({
+							tmListsNoData: true
+						});
+					};
+				} else {
+					that.setData({
+						tmListsNoData: true
+					});
+				};
+				//会员中心产品展示
+				that.getProductList(that);
+			},
+			fail: function(err) {
+				console.log(err);
+			}
+		});
+	},
+	//获取首页会员中心产品列表
+	getProductList: function(that){
+		wx.request({
+			url: 'https://www.m10027.com/BusinessServices/ServicesForBusiness.ashx?requestType=GetProductList',
+			method: 'POST',
+			header: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			success: res => {
+				if (res.data.Status == true) {
+					var productListsArr = res.data.list;
+					for (var i = 0; i < productListsArr.length; i++) {
+						if (productListsArr[i].productType == 1) {
+							productListsArr[i].imgSrc = '../../images/kuwo.png';
+							productListsArr[i].holderText = '酷我音乐';
+						} else if (productListsArr[i].productType == 2) {
+							productListsArr[i].imgSrc = '../../images/souhu.png';
+							productListsArr[i].holderText = '搜狐视频';
+						} else {
+							productListsArr[i].imgSrc = '../../images/mobike.png';
+							productListsArr[i].holderText = '摩拜单车';
+						};
+						var itemProductName = productListsArr[i].productName.split(' ')[0];
+						productListsArr[i].itemProductName = itemProductName;
+					};
+					that.setData({
+						productLists: productListsArr
+					})
+				};
+				wx.hideLoading();
+			},
+			fail: err => {
+				console.log(err);
+			}
+		});
 	},
 	//显示底部抽屉
 	showModal: function(e) {
@@ -539,10 +507,10 @@ Page({
 					mask: true,
 					title: '加载中'
 				});
-        if (!that.data.isSubscribe){
-          var openId = app.globalData.openId;
-          console.log(openId);
-        }
+				if (!that.data.isSubscribe) {
+					var openId = app.globalData.openId;
+					console.log(openId);
+				}
 				var itemId = that.data.itemId,
 					productType = that.data.productType,
 					productName = that.data.productName;
@@ -625,11 +593,7 @@ Page({
 		util.saveImgToPhotosAlbumTap(that, imgSrc);
 	},
 	/**获取服务状态 */
-	getServiceStatus: function() {
-		wx.showLoading({
-			title: '获取服务状态..',
-			mask: true
-		})
+	getServiceStatus: function(that) {
 		wx.request({
 			url: 'https://www.m10027.com/WeChatServices/ServicesForCommon.ashx?',
 			data: {
@@ -638,19 +602,43 @@ Page({
 			},
 			dataType: JSON,
 			success: function(resData) {
-				wx.hideLoading();
+				// wx.hideLoading();
 				var resJson = JSON.parse(resData.data); //Json 转 字符串
 				if (resJson.Status) {
 					wx.setStorageSync('ServiceStatus', resJson.Value);
 					//维护状态 值为1
-					if (resJson.Value === '0') {
+					if (resJson.Value === '1') {
 						wx.setStorageSync('weihumsg', resJson.Msg);
 						wx.redirectTo({
 							url: '../weihu/weihu',
 						})
+					} else {
+						//判断是否获取到用户信息
+						if (app.globalData.getUserInfoFail) {
+							var getUserOpenidSuccess = false;
+							that.setData({
+								'userModelInfo.showModelStatus': true,
+								'userModelInfo.title': '获取用户信息失败，请稍后再试。'
+							});
+						} else {
+							// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回 所以此处加入 callback 以防止这种情况
+							app.getUserInfoFailCallback = getUserInfoFail => {
+								if (getUserInfoFail) {
+									var getUserOpenidSuccess = false;
+									that.setData({
+										'userModelInfo.showModelStatus': true,
+										'userModelInfo.title': '获取用户信息失败，请稍后再试。'
+									});
+								}
+							}
+						};
+						if(!getUserOpenidSuccess){
+							//获取首页广告
+							that.getAds(that);
+						};
 					}
 				} else {
-					wx.hideLoading();
+					// wx.hideLoading();
 					wx.showModal({
 						title: '提示',
 						content: '抱歉，获取服务状态异常，请退出重试',

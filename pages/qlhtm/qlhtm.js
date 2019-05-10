@@ -163,97 +163,105 @@ Page({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: function(res) {
-				var qinglvData = res.data;
-				var pageIndex = that.data.pageIndex;
-				if (qinglvData.length == 0) {
-					//初始化进入没数据
-					if (searchType == 'pageIn') {
-						that.setData({
-							noNum: true,
-							moreNum: false,
-							time: 5
-						});
-						//重新搜索倒计时
-						var setTime;
-						var time = that.data.time;
-						setTime = setInterval(function() {
-							if (time <= 0) {
-								clearInterval(setTime);
-								var searchData = {
-									city: '全国',
-									number: '',
-									pageIndex: '0',
-									code: that.data.code
-								};
-								wx.showLoading({
-									mask: true,
-									title: '加载中'
-								});
-								that.setData({
-									city: '全国',
-									moreNum: false,
-									noNum: false,
-								});
-								that.getTmCardList(searchData, 'searchIn');
-							}
-							time--;
+				if (res.statusCode == 200) {
+					var qinglvData = res.data;
+					var pageIndex = that.data.pageIndex;
+					if (qinglvData.length == 0) {
+						//初始化进入没数据
+						if (searchType == 'pageIn') {
 							that.setData({
-								time: time
+								noNum: true,
+								moreNum: false,
+								time: 5
 							});
-						}, 1000);
-					} else if (searchType == 'searchIn') {
+							//重新搜索倒计时
+							var setTime;
+							var time = that.data.time;
+							setTime = setInterval(function() {
+								if (time <= 0) {
+									clearInterval(setTime);
+									var searchData = {
+										city: '全国',
+										number: '',
+										pageIndex: '0',
+										code: that.data.code
+									};
+									wx.showLoading({
+										mask: true,
+										title: '加载中'
+									});
+									that.setData({
+										city: '全国',
+										moreNum: false,
+										noNum: false,
+									});
+									that.getTmCardList(searchData, 'searchIn');
+								}
+								time--;
+								that.setData({
+									time: time
+								});
+							}, 1000);
+						} else if (searchType == 'searchIn') {
+							that.setData({
+								moreNum: true,
+								noNum: false,
+								reachBottomStatus: false,
+								moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
+							});
+						};
+					} else if (qinglvData.length > 0 && qinglvData.length < 30) {
 						that.setData({
 							moreNum: true,
 							noNum: false,
 							reachBottomStatus: false,
 							moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
 						});
-					};
-				} else if (qinglvData.length > 0 && qinglvData.length < 30) {
-					that.setData({
-						moreNum: true,
-						noNum: false,
-						reachBottomStatus: false,
-						moreText: '暂无更多号码啦，请客官试试搜索其他内容吧~'
-					});
-					var qinglvListData = that.data.qinglvListData;
-					if (qinglvListData == undefined) {
-						that.formatTelNum(qinglvData);
-						that.setData({
-							qinglvListData: qinglvData
-						});
-					} else {
-						that.formatTelNum(qinglvData);
-						var newLhArray = qinglvListData.concat(qinglvData);
+						var qinglvListData = that.data.qinglvListData;
+						if (qinglvListData == undefined) {
+							that.formatTelNum(qinglvData);
+							that.setData({
+								qinglvListData: qinglvData
+							});
+						} else {
+							that.formatTelNum(qinglvData);
+							var newLhArray = qinglvListData.concat(qinglvData);
 
+							that.setData({
+								qinglvListData: newLhArray
+							});
+						}
+					} else {
 						that.setData({
-							qinglvListData: newLhArray
+							moreNum: true,
+							noNum: false,
+							reachBottomStatus: true,
+							moreText: '上拉加载更多'
 						});
-					}
+						pageIndex++;
+						var qinglvListData = that.data.qinglvListData;
+						if (qinglvListData == undefined) {
+							that.formatTelNum(qinglvData);
+							that.setData({
+								qinglvListData: qinglvData,
+								pageIndex: pageIndex
+							});
+						} else {
+							that.formatTelNum(qinglvData);
+							var newLhArray = qinglvListData.concat(qinglvData);
+
+							that.setData({
+								qinglvListData: newLhArray,
+								pageIndex: pageIndex
+							});
+						}
+					};
 				} else {
 					that.setData({
 						moreNum: true,
 						noNum: false,
-						reachBottomStatus: true,
-						moreText: '上拉加载更多'
+						moreText: '请求失败，请刷新网页重试'
 					});
-					pageIndex++;
-					var qinglvListData = that.data.qinglvListData;
-					if (qinglvListData == undefined) {
-						that.formatTelNum(qinglvData);
-						that.setData({
-							qinglvListData: qinglvData,
-							pageIndex: pageIndex
-						});
-					} else {
-						that.formatTelNum(qinglvData);
-						var newLhArray = qinglvListData.concat(qinglvData);
-
-						that.setData({
-							qinglvListData: newLhArray,
-							pageIndex: pageIndex
-						});
-					}
 				};
 			},
 			fail: function(err) {

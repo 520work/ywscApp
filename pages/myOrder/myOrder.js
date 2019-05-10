@@ -12,8 +12,21 @@ Page({
 			mask: true,
 			title: '订单加载中'
 		});
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		that.getOrderLists(openId, that);
+	},
+	onShow: function(options){
+		var that = this;
+		//获取订单
+		wx.showLoading({
+			mask: true,
+			title: '订单加载中'
+		});
+		var openId = app.globalData.payOpenId;
+		that.getOrderLists(openId, that);
+		that.setData({
+			navid: 0
+		});
 	},
 	//获取订单列表信息
 	getOrderLists: function(openId, that) {
@@ -25,7 +38,7 @@ Page({
 				var vipmall = [];
 				var ekamall = [];
 				var ikamall = [];
-				if (res.data != null) {
+				if (res.data != '') {
 					res.data.forEach(function(item, index) {
 						if (item.del == 0) {
 							if (item.ywscOrderType == 1) {
@@ -302,7 +315,7 @@ Page({
 					icon: 'success',
 					duration: 2000
 				});
-				var openId = app.globalData.openId;
+				var openId = app.globalData.payOpenId;
 				var that = this;
 				var navid = that.data.navid;
 				that.getOrderLists(openId, that);
@@ -352,7 +365,7 @@ Page({
 						icon: 'success',
 						duration: 2000
 					});
-					var openId = app.globalData.openId;
+					var openId = app.globalData.payOpenId;
 					var navid = that.data.navid;
 					that.getOrderLists(openId, that);
 					that.setData({
@@ -382,7 +395,7 @@ Page({
 						icon: 'success',
 						duration: 2000
 					});
-					var openId = app.globalData.openId;
+					var openId = app.globalData.payOpenId;
 					var navid = that.data.navid;
 					that.getOrderLists(openId, that);
 					that.setData({

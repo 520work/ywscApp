@@ -28,7 +28,7 @@ Page({
 			maxBuyCardNum: maxBuyCardNum
 		});
 		//地址显示
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		wx.request({
 			url: ajaxUrl + 'userAddressController.do?addressList' + '&openid=' + openId,
 			success: function(res) {
@@ -222,7 +222,7 @@ Page({
 		});
 		//验证购买数量
 		var buyNum = this.data.num;
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		wx.request({
 			url: ajaxUrl + 'iCardServiceController.do?selectTime',
 			method: 'POST',

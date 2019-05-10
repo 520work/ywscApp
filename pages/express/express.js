@@ -25,28 +25,40 @@ Page({
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			success: res => {
-				wx.hideLoading();
-				console.log(res);
+				if (res.statusCode == 200) {
+					wx.hideLoading();
+					console.log(res);
 
-				var arr = [];
-				var arr1 = [];
-				if (res.data == "") {
+					var arr = [];
+					var arr1 = [];
+					if (res.data == "") {
+						that.setData({
+							noExpress: true
+						});
+					} else {
+						arr = res.data;
+						arr1 = arr.reverse();
+						for (var i = 0; i < arr1.length; i++) {
+							var itemDay = arr1[i].AcceptTime.split(" ")[0];
+							var itemTime = arr1[i].AcceptTime.split(" ")[1];
+							arr1[i].itemDay = itemDay;
+							arr1[i].itemTime = itemTime;
+							that.setData({
+								expressLists: arr1
+							});
+						}
+					};
+				} else {
+					wx.hideLoading();
 					that.setData({
 						noExpress: true
 					});
-				} else {
-					arr = res.data;
-					arr1 = arr.reverse();
-					for (var i = 0; i < arr1.length; i++) {
-						var itemDay = arr1[i].AcceptTime.split(" ")[0];
-						var itemTime = arr1[i].AcceptTime.split(" ")[1];
-						arr1[i].itemDay = itemDay;
-						arr1[i].itemTime = itemTime;
-						that.setData({
-							expressLists: arr1
-						});
-					}
-				};
+					wx.showToast({
+						title: '请稍后再试~',
+						icon: 'none',
+						duration: 2000
+					});
+				}
 			},
 			fail: err => {
 				wx.hideLoading();

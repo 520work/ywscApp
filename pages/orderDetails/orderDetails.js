@@ -14,7 +14,7 @@ Page({
 	onLoad: function(options) {
 		console.log(options);
 		var that = this,
-			openId = app.globalData.openId,
+			openId = app.globalData.payOpenId,
 			orderType = options.orderType,
 			orderId = options.orderId,
 			imgSource = options.imgSource,

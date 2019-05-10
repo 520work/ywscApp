@@ -142,46 +142,6 @@ var chooseTaocan = function(telNum, whereFrom, occupyMoney, doubleNumStatus, qlT
 	});
 };
 
-//获取用户当前位置（市）
-// var getUserLocation = function(that) {
-// 	wx.getLocation({
-// 		type: 'wgs84',
-// 		success: function(res) {
-// 			var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-// 			var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-// 			wx.request({
-// 				url: 'https://www.m10027.com/WeChatServices/ServicesForCommon.ashx?requestType=getcoder',
-// 				data: {
-// 					lat: latitude,
-// 					lng: longitude
-// 				},
-// 				header: {
-// 					'content-type': 'application/json'
-// 				},
-// 				success: function(res) {
-// 					console.log(res);
-// 					var location = res.data.info.city.replace('市', '');
-// 					that.setData({
-// 						'city': location,
-// 					});
-// 				},
-// 				fail: err => {
-// 					wx.setStorage({
-// 						key: "city",
-// 						data: '全国'
-// 					});
-// 				}
-// 			});
-// 		},
-// 		fail: err => {
-// 			wx.setStorage({
-// 				key: "city",
-// 				data: '全国'
-// 			});
-// 		}
-// 	});
-// };
-
 //付款接口
 var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 	wx.request({
@@ -203,8 +163,6 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 			"Content-Type": "application/x-www-form-urlencoded"
 		},
 		success: res => {
-			wx.hideLoading();
-			console.log(res);
 			if (res.statusCode == 200) {
 				wx.requestPayment({
 					timeStamp: res.data.timeStamp,
@@ -213,6 +171,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 					signType: res.data.signType,
 					paySign: res.data.paySign,
 					success(res) {
+						wx.hideLoading();
 						wx.showLoading({
 							mask: true,
 							title: '支付结果确认中'
@@ -223,7 +182,7 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 						});
 					},
 					fail(res) {
-						console.log(res);
+						wx.hideLoading();
 						wx.showLoading({
 							mask: true,
 							title: '支付结果确认中'
@@ -253,6 +212,22 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 					'tipsModelInfo.btn': '确定',
 					'tipsModelInfo.showModelStatus': true
 				});
+				var orderId = app.globalData.orderId;
+				wx.request({
+					url: ajaxUrl + 'orderCardServiceController.do?updateOrder',
+					method: 'POST',
+					data: {
+						id: orderId
+					},
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					success: res => {
+						wx.redirectTo({
+							url: '../pay/payFail/payFail'
+						})
+					}
+				});
 			};
 		},
 		fail: err => {
@@ -261,6 +236,22 @@ var wxPay = function(payOpenId, paidMoney, orderNo, that, spName) {
 				'tipsModelInfo.title': '支付异常,请稍后再试',
 				'tipsModelInfo.btn': '确定',
 				'tipsModelInfo.showModelStatus': true
+			});
+			var orderId = app.globalData.orderId;
+			wx.request({
+				url: ajaxUrl + 'orderCardServiceController.do?updateOrder',
+				method: 'POST',
+				data: {
+					id: orderId
+				},
+				header: {
+					"Content-Type": "application/x-www-form-urlencoded"
+				},
+				success: res => {
+					wx.redirectTo({
+						url: '../pay/payFail/payFail'
+					})
+				}
 			});
 		}
 	});
@@ -304,7 +295,6 @@ module.exports = {
 	initAddress: initAddress,
 	ajaxUrl: ajaxUrl,
 	chooseTaocan: chooseTaocan,
-	// getUserLocation: getUserLocation,
 	wxPay: wxPay,
 	saveImgToPhotosAlbumTap: saveImgToPhotosAlbumTap
 }

@@ -88,7 +88,7 @@ Page({
 			});
 			return false;
 		};
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		if (this.data.editDataStatus) {
 			var id = this.data.editData.id
 		} else {

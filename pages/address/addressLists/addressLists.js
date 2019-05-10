@@ -45,13 +45,13 @@ Page({
 			title: '加载中'
 		});
 		//获取用户地址列表
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		that.getAddressLists(that, openId);
 	},
 	onShow: function(options) {
 		//获取用户地址列表
 		var that = this;
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		that.getAddressLists(that, openId);
 	},
 	//获取用户地址列表
@@ -59,32 +59,41 @@ Page({
 		wx.request({
 			url: ajaxUrl + 'userAddressController.do?addressList' + '&openid=' + openId,
 			success: function(res) {
-				wx.hideLoading();
-				if (res.data == "") {
-					that.setData({
-						noAddress: true,
-						haveAddress: false
-					});
-				} else {
-					var addressLists = res.data;
-					for (var i = 0; i < addressLists.length; i++) {
-						if (addressLists[i].sort == 1) {
-							that.setData({
-								defaultAddress: addressLists[i]
-							});
+				if (res.statusCode == 200) {
+					wx.hideLoading();
+					if (res.data == "") {
+						that.setData({
+							noAddress: true,
+							haveAddress: false
+						});
+					} else {
+						var addressLists = res.data;
+						for (var i = 0; i < addressLists.length; i++) {
+							if (addressLists[i].sort == 1) {
+								that.setData({
+									defaultAddress: addressLists[i]
+								});
+							};
 						};
+						for (var i = 0; i < addressLists.length; i++) {
+							if (addressLists[i].sort == 0) {
+								addressLists[i].checkValue = false;
+							} else {
+								addressLists[i].checkValue = true;
+							};
+						}
+						that.setData({
+							noAddress: false,
+							haveAddress: true,
+							addressLists: addressLists
+						});
 					};
-					for (var i = 0; i < addressLists.length; i++) {
-						if (addressLists[i].sort == 0) {
-							addressLists[i].checkValue = false;
-						} else {
-							addressLists[i].checkValue = true;
-						};
-					}
-					that.setData({
-						noAddress: false,
-						haveAddress: true,
-						addressLists: addressLists
+				} else {
+					wx.hideLoading();
+					wx.showToast({
+						title: '获取用户地址失败',
+						icon: 'none',
+						duration: 2000
 					});
 				};
 			},
@@ -110,7 +119,7 @@ Page({
 				changeAddressData = addressLists[i];
 			};
 		};
-		var openId = app.globalData.openId;
+		var openId = app.globalData.payOpenId;
 		var contacts = changeAddressData.contacts;
 		var phonenumber = changeAddressData.phonenumber;
 		var address = changeAddressData.address;
@@ -201,7 +210,7 @@ Page({
 						"delModelInfo.showModelStatus": false,
 						"delSuccessModel.showModelStatus": true
 					});
-					var openId = app.globalData.openId;
+					var openId = app.globalData.payOpenId;
 					that.getAddressLists(that, openId);
 				};
 			},
