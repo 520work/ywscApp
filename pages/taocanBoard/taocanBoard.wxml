@@ -141,7 +141,7 @@
 				</view>
 				<view class="order_con">
 					<view class="textlists">
-						<text class="left">号码占用费</text>
+						<text class="left">制卡激活服务费</text>
 						<text class="right">{{occupyMoney}}</text>
 					</view>
 					<view class="textlists">
@@ -183,10 +183,10 @@
 			<label>
 				我已阅读并同意
 			</label>
-			<text class="xieyitext">《远特客户入网服务协议》</text>
+			<text class="xieyitext" bindtap="hkscxy">《号卡商城购卡协议》</text>
 		</view>
 		<view class="xieyishuoming">
-			<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《远特客户入网服务协议》</text>
+			<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《号卡商城购卡协议》</text>
 		</view>
 	</view>
 	<view class="pay" bindtap="goToPay">
@@ -195,6 +195,7 @@
 	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
 	<template is="taocan-model" data="{{...tcModelInfo}}"></template>
 	<template is="zifei-model" data="{{...zfModelInfo}}"></template>
+	<template is="xieyi-model" data="{{...xieyiStatus}}"></template>
 	<!-- 五一活动弹窗 begin -->
 	<view class="hdrulewindow" wx:if="{{showRuleModel}}">
 		<view class="rulemask"></view>

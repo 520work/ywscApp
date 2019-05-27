@@ -14,7 +14,7 @@
 			<text>您的订单总价大于3000元，已受到微信支付额度限制。现可采取以下方式继续完成购买。</text>
 			<text>1、先支付1500元（定金）作为号码预定费用，可直接作为号码交易费用；</text>
 			<text>2、定金支付后，我们将在48小时内通过尾款支付渠道协助完成尾款支付；</text>
-			<text>3、若因您个人原因未在48小时内完成尾款支付，我们将扣除全部定金作为号码占用费；</text>
+			<text>3、若因您个人原因未在48小时内完成尾款支付，我们将扣除全部定金作为制卡激活服务费；</text>
 			<text>4、周末及节假日自动顺延48小时；</text>
 			<text>5、如您有疑问，可以直接拨打10027或添加远微商城客服微信yuanwe2015进行咨询。</text>
 		</view>
@@ -53,7 +53,7 @@
 			</view>
 			<view class="details-middle column">
 				<view class="row textstyle" style="margin-bottom: 20rpx;">
-					<text class="cardnumtitle">号码占用费</text>
+					<text class="cardnumtitle">制卡激活服务费</text>
 					<text class="textright">￥{{occupyMoney}}</text>
 				</view>
 				<view class="row textstyle" style="margin-bottom: 20rpx;">

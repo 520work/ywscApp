@@ -73,7 +73,7 @@
 }
 
 .btn-wrap .closebtn,
-.resetbtn {
+.resetbtn , .btnna{
 	background-color: #9D90D7;
 	border-bottom-left-radius: 32rpx;
 }
@@ -197,7 +197,7 @@
 	border-radius: 80rpx;
 }
 /* 资费弹窗 */
-.zifei-con{
+.zifei-con, .xieyi-con{
 	width: 640rpx;
 	position: fixed;
 	top: 7%;
@@ -233,4 +233,27 @@
 }
 .forever-model .modalDlg .title{
   color: #fff;
+}
+.xytitle{
+	font-size: 32rpx;
+	text-align: center;
+	font-weight: bold;
+	padding: 40rpx 0 10rpx;
+}
+.xytiaokuan{
+	padding: 0rpx 30rpx 70rpx;
+	height: 800rpx;
+	overflow: scroll;
+	margin-top: 30rpx;
+}
+.xytiaokuan text{
+	font-size: 24rpx;
+	text-indent: 40rpx;
+	padding: 20rpx 0;
+}
+.xytiaokuan .textf{
+	text-indent: 0rpx;
+}
+.xytiaokuan .weight{
+	font-weight: bold;
 }

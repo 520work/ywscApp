@@ -25,7 +25,7 @@
 						<image src="../../images/cart.jpg"></image>
 						<view class="column">
 							<text class="cardnum">远特信时空号卡：{{item.phoneNumber}}</text>
-							<text>号码占用费：{{item.om}}</text>
+							<text>制卡激活服务费：{{item.om}}</text>
 							<text>预存话费：{{item.pd}}</text>
 						</view>
 					</view>

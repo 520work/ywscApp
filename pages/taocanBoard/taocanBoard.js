@@ -175,7 +175,7 @@ Page({
 				liuliangData[0].name = defaultPackage.PackageList[0].title; //标题
 				liuliangData[0].price = false; //价格
 			} else {
-				var lltitle = liuliangTitle.split("<br/>");
+				var lltitle = liuliangInfo.split("<br/>");
 				liuliangData[0] = {};
 				liuliangData[0].name = lltitle[0]; //标题
 				liuliangData[0].price = lltitle[1]; //价格
@@ -491,7 +491,7 @@ Page({
 	useCoupon: function(e) {
 		var discount = e.currentTarget.dataset.discount;
 		var yhqCode = e.currentTarget.dataset.yhqcode;
-		var hmzyf = this.data.occupyMoney; //号码占用费
+		var hmzyf = this.data.occupyMoney; //制卡激活服务费
 		var yhje = this.keepTwoFloor(hmzyf * (1 - discount));
 		this.setData({
 			yhje: yhje,
@@ -539,7 +539,7 @@ Page({
 	// 					};
 	// 					//默认优惠券
 	// 					if (canUseCouArr.length > 0) {
-	// 						var hmzyf = that.data.occupyMoney; //号码占用费
+	// 						var hmzyf = that.data.occupyMoney; //制卡激活服务费
 	// 						var discount = canUseCouArr[0].faceValue / 1000; //折扣
 	// 						var yhje = that.keepTwoFloor(hmzyf * (1 - discount));
 	// 						var yhqCode = canUseCouArr[0].ticketCode;
@@ -592,7 +592,7 @@ Page({
 					if (res.data.code == 201) {
 						console.log("未查询到该号码信息");
 					} else {
-						if (res.statusCode == 500 || res.statusCode == 404) {
+						if (res.statusCode != 200) {
 							wx.showModal({
 								title: '提示',
 								content: '套餐查询失败，请稍后重试',
@@ -654,7 +654,7 @@ Page({
 					liuliangData[0].name = defaultPackage.PackageList[0].title; //标题
 					liuliangData[0].price = false; //价格
 				} else {
-					var lltitle = liuliangTitle.split("<br/>");
+					var lltitle = liuliangInfo.split("<br/>");
 					liuliangData[0] = {};
 					liuliangData[0].name = lltitle[0]; //标题
 					liuliangData[0].price = lltitle[1]; //价格
@@ -804,7 +804,7 @@ Page({
 		var checkValue = this.data.checkValue;
 		if (checkValue == false) {
 			wx.showToast({
-				title: "请阅读并同意《远微商城购卡协议》",
+				title: "请阅读并同意《号卡商城购卡协议》",
 				icon: "none"
 			});
 			return false;
@@ -978,6 +978,27 @@ Page({
 	checkChange: function(e) {
 		this.setData({
 			checkValue: !this.data.checkValue
+		});
+	},
+	//协议弹窗
+	hkscxy: function(e){
+		console.log()
+		this.setData({
+			'xieyiStatus.showModelStatus': true
+		});
+	},
+	//同意协议
+	agree: function(e){
+		this.setData({
+			checkValue: true,
+			'xieyiStatus.showModelStatus': false
+		});
+	},
+	//不同意协议
+	noAgree: function(e){
+		this.setData({
+			checkValue: false,
+			'xieyiStatus.showModelStatus': false
 		});
 	},
 	//隐藏号码售卖状态弹窗

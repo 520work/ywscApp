@@ -65,7 +65,7 @@
 			</view>
 			<view class="details-middle column">
 				<view class="row textstyle" style="margin-bottom: 20rpx;">
-					<text class="cardnumtitle">号码占用费</text>
+					<text class="cardnumtitle">制卡激活服务费</text>
 					<text class="textright">￥{{occupyMoney}}</text>
 				</view>
 				<view class="row textstyle" style="margin-bottom: 20rpx;">

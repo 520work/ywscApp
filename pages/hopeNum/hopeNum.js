@@ -260,8 +260,10 @@ Page({
 				duration: 2000
 			});
 		};
+		var totalPrice = 20 * num;
 		this.setData({
-			num: num
+			num: num,
+			totalPrice: totalPrice
 		});
 	},
 	//显示底部抽屉
@@ -404,6 +406,27 @@ Page({
 			checkValue: !this.data.checkValue
 		});
 	},
+	//协议弹窗
+	hkscxy: function(e){
+		console.log()
+		this.setData({
+			'xieyiStatus.showModelStatus': true
+		});
+	},
+	//同意协议
+	agree: function(e){
+		this.setData({
+			checkValue: true,
+			'xieyiStatus.showModelStatus': false
+		});
+	},
+	//不同意协议
+	noAgree: function(e){
+		this.setData({
+			checkValue: false,
+			'xieyiStatus.showModelStatus': false
+		});
+	},
 	//去购买
 	goToPay: function(e) {
 		var that = this;
@@ -421,7 +444,7 @@ Page({
 		var checkValue = that.data.checkValue;
 		if (checkValue == false) {
 			wx.showToast({
-				title: "请阅读并同意《远微商城购卡协议》",
+				title: "请阅读并同意《号卡商城购卡协议》",
 				icon: "none"
 			});
 			return false;

@@ -64,10 +64,10 @@
 									<label>
 										我已阅读并同意
 									</label>
-									<text class="xieyitext">《远特客户入网服务协议》</text>
+									<text class="xieyitext" bindtap="hkscxy">《号卡商城购卡协议》</text>
 								</view>
 								<view class="buycardfont2 xieyishuoming">
-									<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《远特客户入网服务协议》</text>
+									<text>如果您选择立即购买，\n则视为您已仔细阅读并同意《号卡商城购卡协议》</text>
 								</view>
 							</view>
 							
@@ -88,4 +88,5 @@
 	</view>	
 	<template is="tip-model" data="{{...tipsModelInfo}}"></template>
 	<template is="down-model" data="{{...downModelInfo}}"></template>
+	<template is="xieyi-model" data="{{...xieyiStatus}}"></template>
 </view>

@@ -52,7 +52,7 @@
 		</view>
 		<view wx:if="{{haokaPriceDetails}}" class="pricedetails">
 			<view class="row between">
-				<text>号码占用费</text>
+				<text>制卡激活服务费</text>
 				<text>￥{{occupyMoney}}</text>
 			</view>
 			<view class="row between">

@@ -12,7 +12,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.3.0",
+	"libVersion": "2.7.0",
 	"appid": "wxee6388a3b1c5ff55",
 	"projectname": "ywscApp",
 	"debugOptions": {
