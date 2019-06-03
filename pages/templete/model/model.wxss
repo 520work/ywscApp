@@ -144,24 +144,45 @@
 }
 
 /* 重置模态框 end */
+.del-model .modalDlg text{
+	font-size: 34rpx;
+}
+.del-model .modalDlg .title, .del-model .modalDlg .content{
+	line-height: 100rpx;
+	line-height: 100rpx;
+	padding-top: 0;
+}
+.del-model .modalDlg{
+	padding-bottom: 114rpx;
+}
 .del-model .title {
-	background-color: #ccc;
+	background-color: #fff;
 	border-top-left-radius: 32rpx;
 	border-top-right-radius: 32rpx;
-	color: #fff;
+	color: #666;
 }
-
 .del-model .modalDlg text,
 .tip-model .modalDlg text {
 	text-align: center;
 }
-
 .tip-model .modalDlg .title {
 	padding: 40rpx 40rpx 0;
 	line-height: 40rpx;
 }
 .del-model .btn-wrap text{
 	color: #fff;
+}
+.del-model .btn-wrap text {
+	background: #fff;
+}
+.del-model .btn-wrap .closebtn{
+	color: #999;
+	border-top: 1px solid #efefef;
+	border-right: 1px solid #efefef;
+}
+.del-model .btn-wrap .cancelbtn{
+	color: #6D50FF;
+	border-top: 1px solid #efefef;
 }
 /* 下载模态框 */
 .down-con{
